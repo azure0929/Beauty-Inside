@@ -87,6 +87,15 @@ const Main = () => {
     letter-spacing: -.05em;
   `
 
+  const Thumbnail = styled.div`
+    margin-top: 180px;
+    > img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+  `
+
   return (
     <div>
       <GlobalStyle />
@@ -134,6 +143,9 @@ const Main = () => {
         </div>
       </SummerMakeup>
       <NewList />
+      <Thumbnail>
+        <img src='assets/main/thumbnail.jpg' alt='thumbnail' />
+      </Thumbnail>
     </div>
   )
 }
