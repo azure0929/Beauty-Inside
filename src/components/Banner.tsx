@@ -5,6 +5,8 @@ import banner02 from '../../public/assets/main/banner/banner02.jpg'
 import banner03 from '../../public/assets/main/banner/banner03.jpg'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectFade, Autoplay, Navigation } from 'swiper'
+import SlideNextButton from './SlideNextButton'
+import SlidePrevButton from './SlidePrevButton'
 
 import 'swiper/css'
 import 'swiper/css/effect-fade'
@@ -39,6 +41,8 @@ const Banner = () => {
             <SwiperSlide><ProductLink href='javascript:void(0)'><img src={banner01}/></ProductLink></SwiperSlide>
             <SwiperSlide><ProductLink href='javascript:void(0)'><img src={banner02}/></ProductLink></SwiperSlide>
             <SwiperSlide><ProductLink href='javascript:void(0)'><img src={banner03}/></ProductLink></SwiperSlide>
+            <SlidePrevButton />
+            <SlideNextButton />
           </Swiper>
         </div>
       </Banner>
