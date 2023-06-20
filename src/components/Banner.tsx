@@ -12,6 +12,9 @@ const Banner = () => {
       <GlobalStyle />
       <Banner>
         <div className='inner'>
+          <ProductLink href='javascript:void(0)'><img src={banner01}/></ProductLink>
+          <ProductLink href='javascript:void(0)'><img src={banner01}/></ProductLink>
+          <ProductLink href='javascript:void(0)'><img src={banner01}/></ProductLink>
         </div>
       </Banner>
     </div>
