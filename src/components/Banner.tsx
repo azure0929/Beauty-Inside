@@ -10,7 +10,12 @@ const Banner = () => {
     position: relative;
   `
 
-  
+  const ProductLink = styled.a`
+    > img {
+      width: 100%;
+      display: block;
+    }
+  `
 
   return (
     <div>
