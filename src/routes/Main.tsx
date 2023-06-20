@@ -2,6 +2,7 @@ import GlobalStyle from '../styles/GlobalStyles'
 import styled from 'styled-components'
 import Banner from '../components/Banner'
 import MainBest from '../components/MainBest'
+import NewList from '../components/NewList'
 
 const Main = () => {
 
@@ -132,6 +133,7 @@ const Main = () => {
           </div>
         </div>
       </SummerMakeup>
+      <NewList />
     </div>
   )
 }
