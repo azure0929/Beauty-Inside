@@ -1,6 +1,7 @@
 import GlobalStyle from '../styles/GlobalStyles'
 import styled from 'styled-components'
 import Banner from '../components/Banner'
+import MainBest from '../components/MainBest'
 
 const Main = () => {
 
@@ -10,6 +11,7 @@ const Main = () => {
     <div>
       <GlobalStyle />
       <Banner />
+      <MainBest />
     </div>
   )
 }
