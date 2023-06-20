@@ -1,7 +1,7 @@
 import GlobalStyle from '../styles/GlobalStyles'
 import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper'
+import { Autoplay, Navigation } from 'swiper'
 import SlideNextButton from './SlideNextButton'
 import SlidePrevButton from './SlidePrevButton'
 
@@ -93,7 +93,7 @@ const MainBest = () => {
         <div className="inner">
           <h1>BEST</h1>
           <Swiper
-            modules={[Autoplay]}
+            modules={[Autoplay, Navigation ]}
             slidesPerView={1}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
