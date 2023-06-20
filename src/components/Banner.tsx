@@ -41,8 +41,8 @@ const Banner = () => {
             <SwiperSlide><ProductLink href='javascript:void(0)'><img src={banner01}/></ProductLink></SwiperSlide>
             <SwiperSlide><ProductLink href='javascript:void(0)'><img src={banner02}/></ProductLink></SwiperSlide>
             <SwiperSlide><ProductLink href='javascript:void(0)'><img src={banner03}/></ProductLink></SwiperSlide>
-            <SlidePrevButton />
-            <SlideNextButton />
+            <Prevbtn><SlidePrevButton /></Prevbtn>
+            <Nextbtn><SlideNextButton /></Nextbtn>
           </Swiper>
         </div>
       </Banner>
