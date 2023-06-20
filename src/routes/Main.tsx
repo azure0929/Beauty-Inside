@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Banner from '../components/Banner'
 import MainBest from '../components/MainBest'
 import NewList from '../components/NewList'
+import HueList from '../components/HueList'
 
 const Main = () => {
 
@@ -146,6 +147,7 @@ const Main = () => {
       <Thumbnail>
         <img src='assets/main/thumbnail.jpg' alt='thumbnail' />
       </Thumbnail>
+      <HueList />
     </div>
   )
 }
