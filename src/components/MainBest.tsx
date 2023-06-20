@@ -104,7 +104,7 @@ const MainBest = () => {
               <BestList>
                 <li>
                   <div className='thumbnail'>
-                    <a href='/ProductDetail'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwd84a46eb/hi-res/NARS_SU20_AirMatteLipColor_PDPCrop_PDPCrop_Soldier_Pinup_GLBL_2400x2400_B.jpg?sw=856&sh=750&sm=fit' alt='에어 매트 립 컬러' /></a>
+                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwd84a46eb/hi-res/NARS_SU20_AirMatteLipColor_PDPCrop_PDPCrop_Soldier_Pinup_GLBL_2400x2400_B.jpg?sw=856&sh=750&sm=fit' alt='에어 매트 립 컬러' /></a>
                   </div>
                   <div className='contents'>
                     <h3>에어 매트 립 컬러</h3>
