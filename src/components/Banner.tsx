@@ -24,6 +24,22 @@ const Banner = () => {
     }
   `
 
+  const Prevbtn = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 162px;
+    transform: translateY(-50%);
+    z-index: 9;
+  `
+
+  const Nextbtn = styled.div`
+    position: absolute;
+    top: 50%;
+    right: 162px;
+    transform: translateY(-50%);
+    z-index: 9;
+  `
+
   return (
     <div>
       <GlobalStyle />
