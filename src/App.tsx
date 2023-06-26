@@ -9,22 +9,24 @@ import SignIn from './routes/SignIn'
 import SignUp from './routes/SignUp'
 import Cart from './routes/Cart/Cart'
 import Mypage from './routes/MyPage/MyPage'
+import { Payment } from './routes/Payment'
 import ScrollToTop from './components/ScrollToTop'
 
 function App() {
   return (
     <div>
       <Header />
-      <div className='container'>
+      <div className="container">
         <Routes>
-          <Route path='/' element={<Main />} />
-          <Route path='/PersonalColor' element={<PersonalColor />} />
-          <Route path='/Best' element={<Best />} />
-          <Route path='/Makeup' element={<Makeup />} />
-          <Route path='/SignIn' element={<SignIn />} />
-          <Route path='/SignUp' element={<SignUp />} />
-          <Route path='/Cart' element={<Cart />} />
-          <Route path='/Mypage' element={<Mypage />} />
+          <Route path="/" element={<Main />} />
+          <Route path="/PersonalColor" element={<PersonalColor />} />
+          <Route path="/Best" element={<Best />} />
+          <Route path="/Makeup" element={<Makeup />} />
+          <Route path="/SignIn" element={<SignIn />} />
+          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/Cart" element={<Cart />} />
+          <Route path="/Mypage" element={<Mypage />} />
+          <Route path="/Payment" element={<Payment />} />
         </Routes>
       </div>
       <Footer />
