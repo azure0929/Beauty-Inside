@@ -9,6 +9,7 @@ import SignIn from './routes/SignIn'
 import SignUp from './routes/SignUp'
 import Cart from './routes/Cart/Cart'
 import Mypage from './routes/MyPage/MyPage'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         </Routes>
       </div>
       <Footer />
+      <ScrollToTop />
     </div>
   )
 }
