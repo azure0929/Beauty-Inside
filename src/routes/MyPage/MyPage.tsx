@@ -1,20 +1,31 @@
 import GlobalStyle from '../../styles/GlobalStyles'
 import styled from 'styled-components'
+import { SideNav } from '../../components/mypage/SideNav'
+import { Outlet } from 'react-router-dom'
 
 const Mypage = () => {
-  // Title 부분은 테스트용입니다. const Title 부분과 <Title> 줄을 지우고 내용을 넣으시면 됩니다.
-  const Title = styled.h1`
-    font-family: 'Noto Sans KR';
-    text-align: center;
-    margin-top: 100px;
-  `
-
   return (
-    <div>
+    <>
       <GlobalStyle />
-      <Title>마이페이지</Title>
-    </div>
+      <MypageWrap>
+        <Inner>
+          <SideNav></SideNav>
+          <Outlet></Outlet>
+        </Inner>
+      </MypageWrap>
+    </>
   )
 }
 
 export default Mypage
+
+const MypageWrap = styled.div`
+  width: 900px;
+  margin: 0 auto;
+`
+const Inner = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  margin-left: -100px;
+`

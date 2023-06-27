@@ -23,9 +23,9 @@ const Header = () => {
         transform: translateX(-40%);
         a {
           width: 100%;
-          height: 100%;
           > img {
             width: 134px;
+            object-fit: cover;
           }
         }
       }
@@ -68,7 +68,7 @@ const Header = () => {
     &.active {
       color: #ffa9be;
     }
-`
+  `
 
   return (
     <div>
