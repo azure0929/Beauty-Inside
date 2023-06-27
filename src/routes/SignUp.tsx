@@ -10,7 +10,7 @@ const Section = styled.div`
   align-items: center;
   > h1 {
     font-size: 26px;
-    margin-bottom: 3px;
+    margin-bottom: 12px;
     font-weight: 500;
     letter-spacing: -.05em;
   }
