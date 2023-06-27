@@ -3,7 +3,7 @@ import GlobalStyle from '../../styles/GlobalStyles'
 import styled from 'styled-components'
 
 const PersonalColor = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   //섹션-퍼스널컬러
   const Section = styled.div`
@@ -16,7 +16,7 @@ const PersonalColor = () => {
       > p {
         font-family: 'InkLipquid';
         font-size: 42px;
-        letter-spacing: -.05em;
+        letter-spacing: -0.05em;
         > span {
           color: #ffa9be;
         }
@@ -42,26 +42,35 @@ const PersonalColor = () => {
     margin-top: 50px;
     padding: 12px 60px;
     border-radius: 30px;
-    transition: .3s;
+    transition: 0.3s;
     cursor: pointer;
     &:hover {
       background-color: #ffa9be;
     }
   `
 
- 
   return (
     <div>
       <GlobalStyle />
       <Section>
         <div>
-          <p>나에게 가장 잘 어울리는 <br /><span>퍼스널 컬러</span> 찾기</p>
+          <p>
+            나에게 가장 잘 어울리는 <br />
+            <span>퍼스널 컬러</span> 찾기
+          </p>
           <Contents>
-            <img src='assets/personallogo.png' alt="퍼스널 진단" />
+            <img src="assets/personallogo.png" alt="퍼스널 진단" />
           </Contents>
-          <Button onClick={ () => {navigate('/PersonalColorTest')}}>진단하기</Button>
+          <Button
+            onClick={() => {
+              navigate('/PersonalColorTest')
+            }}
+          >
+            진단하기
+          </Button>
         </div>
       </Section>
+    </div>
   )
 }
 
