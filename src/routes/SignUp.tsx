@@ -11,6 +11,8 @@ const Section = styled.div`
   > h1 {
     font-size: 26px;
     margin-bottom: 3px;
+    font-weight: 500;
+    letter-spacing: -.05em;
   }
   > div {
     > p {
@@ -18,6 +20,7 @@ const Section = styled.div`
       text-align: center;
       margin-bottom: 58px;
       color: #8E8E8E;
+      letter-spacing: -.05em;
       > span {
       font-size: 20px;
       color: #ffa9be;
@@ -34,8 +37,7 @@ const Section = styled.div`
       height: 46px;
       border-radius: 6px;
       margin-bottom: 12px;
-      border-color: #dedede;
-      border-style: solid;
+      border: 1px solid #8e8e8e;
       &:focus {
         border: 2px solid #FFA9BE;
         outline: none;
