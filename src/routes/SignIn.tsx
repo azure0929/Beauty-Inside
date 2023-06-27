@@ -1,6 +1,5 @@
 import GlobalStyle from '../styles/GlobalStyles';
 import styled from 'styled-components';
-import SignUp from './SignUp';
 import { useState, FormEvent } from 'react';
 import { signIn } from '../apis/api';
 
