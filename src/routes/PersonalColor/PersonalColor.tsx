@@ -62,7 +62,6 @@ const PersonalColor = () => {
           <Button onClick={ () => {navigate('/PersonalColorTest')}}>진단하기</Button>
         </div>
       </Section>
-    </div>
   )
 }
 
