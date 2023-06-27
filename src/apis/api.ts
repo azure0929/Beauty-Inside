@@ -8,12 +8,6 @@ const headers = {
 
 const requestApi = axios.create({
   baseURL: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api',
-  headers: {
-    'Content-Type': 'application/json',
-    'apikey': 'KDT5_nREmPe9B',
-    'username': 'KDT5_Team4',
-  },
-});
   headers,
 })
 
