@@ -13,6 +13,7 @@ import { Payment } from './routes/Payment'
 import { OrderList } from './routes/MyPage/OrderList'
 import { AccountManage } from './routes/MyPage/AccountManage'
 import { InfoEdit } from './routes/MyPage/InfoEdit'
+import ScrollToTop from './components/ScrollToTop'
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         </Routes>
       </div>
       <Footer />
+      <ScrollToTop />
     </div>
   )
 }

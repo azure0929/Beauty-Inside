@@ -54,7 +54,8 @@ const NewList = () => {
         }
         > span {
           display: block;
-          font-family: 'Spoqa Han Sans Neo';
+          font-family: 'Noto Sans KR';
+          letter-spacing: -.05em;
           font-size: 12px;
           color: #8e8e8e;
         }
@@ -105,85 +106,89 @@ const NewList = () => {
           >
             <SwiperSlide>
               <NewList>
-                <li>
+              <li>
                   <div className='thumbnail'>
-                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwb84ad732/NARS_SU23_PureParadiseCollection_PDPCrop_Soldier_CRTN_NRLFC_Case_Asia_EMEA_B_2000x2000.jpg?sw=856&sh=750&sm=fit' alt='네츄럴 래디언트 롱웨어 쿠션 파운데이션 케이스' /></a>
+                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwc2bb73af/hi-res/0607845053392.jpg?sw=856&sh=750&sm=fit' alt='하드와이어드 아이섀도우-멘도자' /></a>
                   </div>
                   <div className='contents'>
-                    <h3>네츄럴 래디언트 롱웨어 쿠션 파운데이션 케이스</h3>
+                    <h3>하드와이어드 아이섀도우</h3>
+                    <span>멘도자</span>
                   </div>
-                  <p><span>74,000</span>원</p>
+                  <p><span>32,000</span>원</p>
                 </li>
                 <li>
                   <div className='thumbnail'>
-                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwedd0d55b/NARS_SU23_PureParadiseCollection_PDPCrop_Soldier_Blush_Orgasm_Open_Asia_B.jpg?sw=856&sh=750&sm=fit' alt='라이트 리플렉팅 블러쉬' /></a>
+                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwa5933760/hi-res/0607845053088.jpg?sw=856&sh=750&sm=fit' alt='싱글 아이섀도우-나이트 스타' /></a>
                   </div>
                   <div className='contents'>
-                    <h3>라이트 리플렉팅 블러쉬</h3>
+                    <h3>싱글 아이섀도우</h3>
+                    <span>나이트 스타</span>
                   </div>
-                  <p><span>68,000</span>원</p>
+                  <p><span>30,000</span>원</p>
                 </li>
                 <li>
                   <div className='thumbnail'>
-                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwdebcefde/hi-res/NARS_SU23_PureParadiseCollection_PDPCrop_Soldier_Quad_EyeshadowPalette_Open_Asia_B.jpg?sw=856&sh=750&sm=fit' alt='라이트 리플렉팅 쿼드 아이섀도우' /></a>
+                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw638bf00a/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Roman_Holliday_Sheer_GLBL_B_square_0607845029489.jpg?sw=856&sh=750&sm=fit' alt='립스틱-로만 홀리데이' /></a>
                   </div>
                   <div className='contents'>
-                    <h3>라이트 리플렉팅 쿼드 아이섀도우</h3>
+                    <h3>립스틱</h3>
+                    <span>로만 홀리데이</span>
                   </div>
-                  <p><span>68,000</span>원</p>
+                  <p><span>40,000</span>원</p>
                 </li>
                 <li>
                   <div className='thumbnail'>
-                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw8bbd5316/NARS_SU23_PureParadiseCollection_PDPCrop_Soldier_PMLS_Shade1_Open_GLBL_B.jpg?sw=856&sh=750&sm=fit' alt='파워매트 립스틱' /></a>
+                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwbac184f2/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Catfight_Matte_GLBL_B_square_0607845029717.jpg?sw=856&sh=750&sm=fit' alt='립스틱-캣파이트' /></a>
                   </div>
                   <div className='contents'>
-                    <h3>파워매트 립스틱</h3>
+                    <h3>립스틱</h3>
+                    <span>캣파이트</span>
                   </div>
-                  <p><span>45,000</span>원</p>
+                  <p><span>40,000</span>원</p>
                 </li>
               </NewList>
             </SwiperSlide>
             <SwiperSlide>
               <NewList>
-                <li>
+              <li>
                   <div className='thumbnail'>
-                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw139f8488/hi-res/0607845024880.jpg?sw=856&sh=750&sm=fit' alt='벨벳 매트 립 펜슬' /></a>
+                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw2a7d68cf/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Red_Lizard_Matte_GLBL_B_square_0607845029632.jpg?sw=856&sh=750&sm=fit' alt='오리지널 립스틱-레드 리자드' /></a>
                   </div>
                   <div className='contents'>
-                    <h3>벨벳 매트 립 펜슬</h3>
-                    <span>27 SHADES</span>
+                    <h3>오리지널 립스틱</h3>
+                    <span>레드 리자드</span>
                   </div>
                   <p><span>40,000</span>원</p>
                 </li>
                 <li>
                   <div className='thumbnail'>
-                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwbe01178d/hi-res/NARS_SP22_LightReflectingFoundation_PDPCrop_Soldier07_DEAUVILLE_GLBL_2400x2400_B.jpg?sw=856&sh=750&sm=fit' alt='라이트 리플렉팅 파운데이션' /></a>
+                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwcb3182c7/hi-res/0607845039709.jpg?sw=856&sh=750&sm=fit' alt='쿼드 아이섀도우-모하비' /></a>
                   </div>
                   <div className='contents'>
-                    <h3>라이트 리플렉팅 파운데이션</h3>
-                    <span>20 SHADES</span>
+                    <h3>쿼드 아이섀도우</h3>
+                    <span>모하비</span>
                   </div>
-                  <p><span>76,000</span>원</p>
+                  <p><span>68,000</span>원</p>
                 </li>
                 <li>
                   <div className='thumbnail'>
-                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwbc7bfadb/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Afghan_Red_Satin_GLBL_B_square_0607845029113.jpg?sw=856&sh=750&sm=fit' alt='립스틱' /></a>
+                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw94bc3a5f/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Bulgarian_Rose_Sheer_GLBL_B_square_0607845029571.jpg?sw=856&sh=750&sm=fit' alt='립스틱-불가리안 로즈' /></a>
                   </div>
                   <div className='contents'>
                     <h3>립스틱</h3>
-                    <span>42 SHADES</span>
+                    <span>불가리안 로즈</span>
                   </div>
                   <p><span>40,000</span>원</p>
                 </li>
                 <li>
                   <div className='thumbnail'>
-                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw29f65ad4/1027/SEOUL.jpg?sw=856&sh=750&sm=fit' alt='네츄럴 래디언트 롱웨어 쿠션 파운데이션 SPF50/PA+++ 싱글 패키지' /></a>
+                    <a href='javascript:void(0)'><img src='https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwa5506e71/hi-res/0607845053446.jpg?sw=856&sh=750&sm=fit' alt='하드와이어드 아이섀도우-피렌체' /></a>
                   </div>
                   <div className='contents'>
-                    <h3>네츄럴 래디언트 롱웨어 쿠션 파운데이션 SPF50/PA+++ 싱글 패키지</h3>
-                    <span>6 SHADES</span>
+                    <h3>하드와이어드 아이섀도우</h3>
+                    <span>피렌체</span>
                   </div>
-                  <p><span>44,000</span>원</p>
+                  <p><span>32,000</span>원</p>
                 </li>
               </NewList>
             </SwiperSlide>
