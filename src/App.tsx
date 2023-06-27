@@ -10,6 +10,9 @@ import SignUp from './routes/SignUp'
 import Cart from './routes/Cart/Cart'
 import Mypage from './routes/MyPage/MyPage'
 import { Payment } from './routes/Payment'
+import { OrderList } from './routes/MyPage/OrderList'
+import { AccountManage } from './routes/MyPage/AccountManage'
+import { InfoEdit } from './routes/MyPage/InfoEdit'
 import ScrollToTop from './components/ScrollToTop'
 
 function App() {
@@ -25,7 +28,11 @@ function App() {
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Cart" element={<Cart />} />
-          <Route path="/Mypage" element={<Mypage />} />
+          <Route path="/Mypage/*" element={<Mypage />}>
+            <Route path="OrderList" element={<OrderList />} />
+            <Route path="Account" element={<AccountManage />} />
+            <Route path="MyInfo" element={<InfoEdit />} />
+          </Route>
           <Route path="/Payment" element={<Payment />} />
         </Routes>
       </div>
