@@ -37,6 +37,7 @@ const Section = styled.div`
       height: 46px;
       border-radius: 6px;
       margin-bottom: 12px;
+      padding: 10px;
       border: 1px solid #8e8e8e;
       &:focus {
         border: 2px solid #FFA9BE;
