@@ -11,6 +11,7 @@ import Cart from './routes/Cart/Cart'
 import Mypage from './routes/MyPage/MyPage'
 import { Payment } from './routes/Payment'
 import ScrollToTop from './components/ScrollToTop'
+import ProductDetail from './routes/ProductDetail'
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/Cart" element={<Cart />} />
           <Route path="/Mypage" element={<Mypage />} />
           <Route path="/Payment" element={<Payment />} />
+          <Route path="/ProductDetail" element={<ProductDetail />} />
         </Routes>
       </div>
       <Footer />
