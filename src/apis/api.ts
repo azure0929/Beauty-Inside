@@ -93,4 +93,16 @@ export const deleteAccount = async ({ id, signature }) => {
     console.warn('계좌 삭제에 실패했습니다.')
     return false
   }
+};
+
+//단일제품상세조회 // products/:productId
+export const getProduct = async (id: string) => {
+  try {
+    const { data } = await requestApi.get('products/' + id)
+    return data
+  } catch (error) {
+    console.warn(error)
+    console.warn('fail to load product')
+    return false
+  }
 }

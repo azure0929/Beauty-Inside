@@ -20,6 +20,7 @@ import { AccountManage } from './routes/MyPage/AccountManage'
 import { InfoEdit } from './routes/MyPage/InfoEdit'
 import ScrollToTop from './components/ScrollToTop'
 import { PurchaseDetails } from './routes/MyPage/PurchaseDetails'
+import ProductDetail from './routes/ProductDetail'
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
             <Route path="MyInfo" element={<InfoEdit />} />
           </Route>
           <Route path="/Payment" element={<Payment />} />
+          <Route path="/ProductDetail" element={<ProductDetail />} />
         </Routes>
       </div>
       <Footer />
