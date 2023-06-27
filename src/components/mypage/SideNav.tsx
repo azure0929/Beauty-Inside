@@ -5,11 +5,11 @@ export const SideNav = () => {
   return (
     <NavWrap>
       <p className="nav-title">마이페이지</p>
-      <NavButton to="/MyPage/OrderList" className={({ isActive }) => (isActive ? 'active' : '')}>
-        주문내역
+      <NavButton to="/MyPage/PurchaseList" className={({ isActive }) => (isActive ? 'active' : '')}>
+        구매 내역
       </NavButton>
       <NavButton to="/MyPage/Account" className={({ isActive }) => (isActive ? 'active' : '')}>
-        계좌관리
+        계좌 관리
       </NavButton>
       <NavButton to="/MyPage/MyInfo" className={({ isActive }) => (isActive ? 'active' : '')}>
         개인 정보 수정
