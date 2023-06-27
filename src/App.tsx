@@ -39,9 +39,9 @@ function App() {
           <Route path="/Best" element={<Best />} />
           <Route path="/Makeup" element={<Makeup />} />
           <Route path="/Mypage/*" element={<Mypage />}>
-            <Route path="OrderList" element={<OrderList />} />
-            <Route path="Account" element={<AccountManage />} />
-            <Route path="MyInfo" element={<InfoEdit />} />
+          <Route path="OrderList" element={<OrderList />} />
+          <Route path="Account" element={<AccountManage />} />
+          <Route path="MyInfo" element={<InfoEdit />} />
           </Route>
           <Route path="/Payment" element={<Payment />} />
         </Routes>
