@@ -15,10 +15,11 @@ import SignIn from './routes/SignIn'
 import SignUp from './routes/SignUp'
 import Mypage from './routes/MyPage/MyPage'
 import { Payment } from './routes/Payment'
-import { OrderList } from './routes/MyPage/OrderList'
+import { PurchaseList } from './routes/MyPage/PurchaseList'
 import { AccountManage } from './routes/MyPage/AccountManage'
 import { InfoEdit } from './routes/MyPage/InfoEdit'
 import ScrollToTop from './components/ScrollToTop'
+import { PurchaseDetails } from './routes/MyPage/PurchaseDetails'
 
 function App() {
   return (
@@ -39,9 +40,10 @@ function App() {
           <Route path="/Best" element={<Best />} />
           <Route path="/Makeup" element={<Makeup />} />
           <Route path="/Mypage/*" element={<Mypage />}>
-          <Route path="OrderList" element={<OrderList />} />
-          <Route path="Account" element={<AccountManage />} />
-          <Route path="MyInfo" element={<InfoEdit />} />
+            <Route path="PurchaseList" element={<PurchaseList />} />
+            <Route path="PurchaseDetails" element={<PurchaseDetails />} />
+            <Route path="Account" element={<AccountManage />} />
+            <Route path="MyInfo" element={<InfoEdit />} />
           </Route>
           <Route path="/Payment" element={<Payment />} />
         </Routes>
