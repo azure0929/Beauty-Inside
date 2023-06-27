@@ -3,72 +3,75 @@ import GlobalStyle from '../../styles/GlobalStyles'
 import styled from 'styled-components'
 import { NavLink } from'react-router-dom'
 
-const Header = () => {
 
-  const Inner = styled.div`
-    width: calc(100% - 334px);
-    margin: 0 auto;
-  `
-  
-  const GnbMenu = styled.div`
-    position: relative;
-    height: 140px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    > div {
-      &:first-child {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-40%);
-        a {
+const Inner = styled.div`
+  width: calc(100% - 334px);
+  margin: 0 auto;
+`
+
+const GnbMenu = styled.div`
+  position: relative;
+  height: 140px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  > div {
+    &:first-child {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-40%);
+      > a {
+        width: 134px;
+        display: block;
+        > img {
           width: 100%;
-          > img {
-            width: 134px;
-            object-fit: cover;
-          }
-        }
-      }
-      &:last-child {
-        display: flex;
-        gap: 30px;
-        font-family: 'Noto Sans KR';
-        font-size: 14px;
-        letter-spacing: -.025em;
-        color: #191919;
-        text-align: right;
-        margin-right: 30px;
-        &:last-child {
-          margin-right: 0px;
+          display: block;
         }
       }
     }
-  `
-
-  const Nav = styled.ul`
-    height: 80px;
-    line-height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 100px;
-    > li {
+    &:last-child {
+      display: flex;
+      gap: 30px;
       font-family: 'Noto Sans KR';
-      font-size: 16px;
+      font-size: 14px;
       letter-spacing: -.025em;
       color: #191919;
+      text-align: right;
+      margin-right: 30px;
+      &:last-child {
+        margin-right: 0px;
+      }
     }
-  `
+  }
+`
 
-  const NavStyle = styled(NavLink)`
+const Nav = styled.ul`
+  height: 80px;
+  line-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+  > li {
+    font-family: 'Noto Sans KR';
+    font-size: 16px;
+    letter-spacing: -.025em;
     color: #191919;
-    &:link {
-      transition : .2s;
-    }
-    &.active {
-      color: #ffa9be;
-    }
-  `
+  }
+`
+
+const NavStyle = styled(NavLink)`
+  color: #191919;
+  &:link {
+    transition : .2s;
+  }
+  &.active {
+    color: #ffa9be;
+  }
+`
+
+
+const Header = () => {
 
   return (
     <div>
@@ -96,6 +99,5 @@ const Header = () => {
     </div>
   )
 }
-
 
 export default Header
