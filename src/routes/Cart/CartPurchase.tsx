@@ -220,7 +220,11 @@ const CartPurchase = () => {
   }
   // 주문서로 이동
   const navigateToPayment = () => {
-    navigate('/Payment')
+    navigate('/Payment', {
+      state: {
+        productList,
+      },
+    })
   }
 
   useEffect(() => {
@@ -240,6 +244,11 @@ const CartPurchase = () => {
 
   productList.map((product) => (producttotal = producttotal + product.price))
   total = producttotal + DELIVERY_CHARGE
+
+  const deleteitem = (id) => {
+    const newlist = productList.filter((item) => item.id !== id)
+    setproductList(newlist)
+  }
 
   return (
     <div>
@@ -268,6 +277,7 @@ const CartPurchase = () => {
                         <h3>{product.title.split('-')[0]}</h3>
                         <span>{product.title.split('-')[1]}</span>
                       </div>
+                      <button onClick={() => deleteitem(product.id)}>삭제</button>
                     </li>
                   ))
                 ) : (

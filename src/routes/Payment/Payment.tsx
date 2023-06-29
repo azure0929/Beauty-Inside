@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import GlobalStyle from '../../styles/GlobalStyles'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { authVerification, getUserAccounts, requestBuy } from '../../apis/api'
 
@@ -36,6 +36,9 @@ export const Payment = () => {
   const [userAccounts, setuserAccounts] = useState([])
   //const [selectedAccount, setselectedAccount] = useState('')
   const [accountId, setAccountId] = useState('')
+
+  const [productList, setproductList] = useState([])
+
   // navigate
   const navigate = useNavigate()
 
@@ -58,9 +61,17 @@ export const Payment = () => {
 
   //결제완료
   const handleClickPayment = () => {
+    const STORAGE_KEY = 'detail'
+
     requestAllBuy()
-    //navigate('/PaymentCompleted')
+    navigate('/PaymentCompleted')
+    let list = localStorage.getItem(STORAGE_KEY)
+    list = []
+    localStorage.setItem(STORAGE_KEY, list)
   }
+
+  const location = useLocation()
+  const list = location.state
 
   useEffect(() => {
     ;(async () => {
@@ -69,6 +80,7 @@ export const Payment = () => {
         const data = await authVerification()
         setuserInfo(data)
         setuserAccounts(account.accounts)
+        setproductList(Object.values(list)[0])
       } catch (error) {
         console.error('Error fetching:', error)
       }
@@ -81,16 +93,16 @@ export const Payment = () => {
       <PaymentWrap>
         <Title>주문서</Title>
         <Inner>
-          <p className="inner-title">주문상품 {items.length}개</p>
-          {items.map((item, index) => (
+          <p className="inner-title">주문상품 {productList.length}개</p>
+          {productList.map((item, index) => (
             <OrderItem key={index}>
               <ImageBox>
-                <img src={item.src} alt="" />
+                <img src={item.thumbnail} alt="" />
               </ImageBox>
               <Info>
-                <p className="item-title">{item.name.split('-')[0]}</p>
+                <p className="item-title">{item.title.split('-')[0]}</p>
                 <p className="item-name">
-                  {item.name.split('-')[1]} <span className="item-number">/ 1개</span>
+                  {item.title.split('-')[1]} <span className="item-number">/ 1개</span>
                 </p>
                 <p className="item-price">{item.price.toLocaleString('ko-KR')}원</p>
               </Info>
