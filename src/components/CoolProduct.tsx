@@ -10,15 +10,16 @@ import 'swiper/css'
 import 'swiper/css/effect-fade'
 
 
-const New = styled.div`
+const CoolList = styled.div`
 margin-top: 180px;
 > div.inner {
     position: relative;
     width: calc(100% - 500px);
     margin: 0 auto;
     > h1 {
-      font-family: 'Spoqa Han Sans Neo';
+      font-family: 'Noto Sans KR';
       font-size: 32px;
+      letter-spacing: -.05em;
       font-weight: 500;
     }
   }
@@ -82,25 +83,17 @@ const Nextbtn = styled.div`
 `
 
 
-const NewList = () => {
+const CoolProduct = () => {
 
   const navigate = useNavigate()
 
   const Product = [
     {
-      id: 'RIOZemEhYVhghqYfqOqI', 
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwc2bb73af/hi-res/0607845053392.jpg?sw=856&sh=750&sm=fit', 
+      id: 'KuVFr4I445aq3zjQoE4M', 
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw8f48591b/hi-res/0607845053347.jpg?sw=856&sh=750&sm=fit', 
       category: '하드와이어드 아이섀도우',
-      name: '멘도자', 
+      name: '멜로즈', 
       price: '32,000'
-    },
-
-    {
-      id: 'cERZ06rbjCYlB9oKmMIl',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwa5933760/hi-res/0607845053088.jpg?sw=856&sh=750&sm=fit', 
-      category: '싱글 아이섀도우',
-      name: '나이트 스타', 
-      price: '30,000',
     },
 
     {
@@ -112,10 +105,18 @@ const NewList = () => {
     },
 
     {
-      id: 'kr4KyIJtbXLg1RUoADAH',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwbac184f2/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Catfight_Matte_GLBL_B_square_0607845029717.jpg?sw=856&sh=750&sm=fit', 
+      id: 'VNcxrsNJGhNPiRTmqYfu',
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwe698e13a/hi-res/0607845053101.jpg?sw=856&sh=750&sm=fit', 
+      category: '싱글 아이섀도우',
+      name: '카보 산 루카스', 
+      price: '30,000',
+    },
+
+    {
+      id: 'HVUfcgBBKR2iVPEjci79',
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwf16c17e3/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Tolede_Satin_GLBL_B_square_0607845029137.jpg?sw=856&sh=750&sm=fit', 
       category: '립스틱',
-      name: '캣파이트', 
+      name: '톨레도', 
       price: '40,000',
     },
 
@@ -128,18 +129,18 @@ const NewList = () => {
     },
 
     {
-      id: 'xB5Zj1NUavjuWiFbmQnn',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwcb3182c7/hi-res/0607845039709.jpg?sw=856&sh=750&sm=fit', 
-      category: '쿼드 아이섀도우',
-      name: '모하비', 
-      price: '68,000',
+      id: 'HSyGIMka7PkaKdsFVxM2',
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw34453553/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Impulse_Satin_GLBL_B_square_0607845029298.jpg?sw=856&sh=750&sm=fit', 
+      category: '립스틱',
+      name: '임펄스', 
+      price: '40,000',
     },
 
     {
-      id: 'QltRkohtiA2S8AObj0Qt',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw94bc3a5f/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Bulgarian_Rose_Sheer_GLBL_B_square_0607845029571.jpg?sw=856&sh=750&sm=fit', 
-      category: '립스틱',
-      name: '불가리안 로즈', 
+      id: 'WTJ1zwIKx68j3W8oLtXP',
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwf0f20c62/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Trans_Siberian_Matte_GLBL_B_square_0607845029656.jpg?sw=856&sh=750&sm=fit', 
+      category: '오리지널 립스틱',
+      name: '트랜스 시베리안', 
       price: '40,000',
     },
 
@@ -163,9 +164,9 @@ const NewList = () => {
   return (
     <div>
       <GlobalStyle />
-      <New>
+      <CoolList>
         <div className="inner">
-          <h1>NEW</h1>
+          <h1>추천 제품</h1>
           <Swiper
             modules={[Autoplay, Navigation]}
             slidesPerView={4}
@@ -192,9 +193,9 @@ const NewList = () => {
             <Nextbtn><SlideNextButton /></Nextbtn>
           </Swiper>
         </div>
-      </New>
+      </CoolList>
     </div>
   )
 }
 
-export default NewList
+export default CoolProduct

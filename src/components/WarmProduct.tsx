@@ -10,15 +10,16 @@ import 'swiper/css'
 import 'swiper/css/effect-fade'
 
 
-const New = styled.div`
+const WarmList = styled.div`
 margin-top: 180px;
 > div.inner {
     position: relative;
     width: calc(100% - 500px);
     margin: 0 auto;
     > h1 {
-      font-family: 'Spoqa Han Sans Neo';
+      font-family: 'Noto Sans KR';
       font-size: 32px;
+      letter-spacing: -.05em;
       font-weight: 500;
     }
   }
@@ -82,17 +83,33 @@ const Nextbtn = styled.div`
 `
 
 
-const NewList = () => {
+const WarmProduct = () => {
 
   const navigate = useNavigate()
 
   const Product = [
     {
-      id: 'RIOZemEhYVhghqYfqOqI', 
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwc2bb73af/hi-res/0607845053392.jpg?sw=856&sh=750&sm=fit', 
-      category: '하드와이어드 아이섀도우',
-      name: '멘도자', 
-      price: '32,000'
+      id: 'euSsDf0TQW8QzdEz6iiE', 
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwf4074b8d/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Lovin_Lips_Matte_GLBL_B_square_0607845029809.jpg?sw=856&sh=750&sm=fit', 
+      category: '립스틱',
+      name: '러빙 립스', 
+      price: '40,000'
+    },
+
+    {
+      id: '6O8YPJIMZbOcyNDMn8YU',
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw73a7bdcc/hi-res/NARS_SP22_SpringEdit_Afterglow_PDPCrop_Soldier_Afterglow_Lipshine_LoverToLover_GLBL_2000x2000.jpg?sw=856&sh=750&sm=fit', 
+      category: '에프터글로우 립 샤인',
+      name: '러버 투 러버', 
+      price: '37,000',
+    },
+
+    {
+      id: 'i3yOg0gUQXpVb6n5Yah6',
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw594c7940/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Heat_Wave_Matte_GLBL_B_square_0607845029618.jpg?sw=856&sh=750&sm=fit', 
+      category: '오리지널 립스틱',
+      name: '히트 웨이브', 
+      price: '40,000',
     },
 
     {
@@ -104,51 +121,35 @@ const NewList = () => {
     },
 
     {
-      id: '4XrXRmzHQpuk0hWRspZO',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw638bf00a/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Roman_Holliday_Sheer_GLBL_B_square_0607845029489.jpg?sw=856&sh=750&sm=fit', 
-      category: '립스틱',
-      name: '로만 홀리데이', 
-      price: '40,000',
-    },
-
-    {
-      id: 'kr4KyIJtbXLg1RUoADAH',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwbac184f2/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Catfight_Matte_GLBL_B_square_0607845029717.jpg?sw=856&sh=750&sm=fit', 
-      category: '립스틱',
-      name: '캣파이트', 
-      price: '40,000',
-    },
-
-    {
-      id: 'lMwtCFaYYlscqrXxSPZh',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw2a7d68cf/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Red_Lizard_Matte_GLBL_B_square_0607845029632.jpg?sw=856&sh=750&sm=fit', 
+      id: 'mdUg1DmAkefBYlftcUnq',
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw856e9a59/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Casablanca_Satin_GLBL_B_square_0607845029205.jpg?sw=856&sh=750&sm=fit', 
       category: '오리지널 립스틱',
-      name: '레드 리자드', 
+      name: '카사블랑카', 
       price: '40,000',
     },
 
     {
-      id: 'xB5Zj1NUavjuWiFbmQnn',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwcb3182c7/hi-res/0607845039709.jpg?sw=856&sh=750&sm=fit', 
-      category: '쿼드 아이섀도우',
-      name: '모하비', 
-      price: '68,000',
-    },
-
-    {
-      id: 'QltRkohtiA2S8AObj0Qt',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw94bc3a5f/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Bulgarian_Rose_Sheer_GLBL_B_square_0607845029571.jpg?sw=856&sh=750&sm=fit', 
+      id: 'HVUfcgBBKR2iVPEjci79',
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwf16c17e3/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Tolede_Satin_GLBL_B_square_0607845029137.jpg?sw=856&sh=750&sm=fit', 
       category: '립스틱',
-      name: '불가리안 로즈', 
+      name: '톨레도', 
       price: '40,000',
     },
 
     {
-      id: 'CvHwdrBls4NpkxmD93Px',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwa5506e71/hi-res/0607845053446.jpg?sw=856&sh=750&sm=fit', 
-      category: '하드와이어드 아이섀도우',
-      name: '피렌체', 
-      price: '32,000',
+      id: 'v51IqksbGctAov6qMuDn',
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw5471c7eb/hi-res/0607845053095.jpg?sw=856&sh=750&sm=fit', 
+      category: '싱글 아이섀도우',
+      name: '네팔', 
+      price: '30,000',
+    },
+
+    {
+      id: 'uk5Bhp1GJwFFLn40gK0Y',
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw2b1b929c/hi-res/0607845053217.jpg?sw=856&sh=750&sm=fit', 
+      category: '싱글 아이섀도우',
+      name: '라호르', 
+      price: '30,000',
     }
   ]
 
@@ -163,9 +164,9 @@ const NewList = () => {
   return (
     <div>
       <GlobalStyle />
-      <New>
+      <WarmList>
         <div className="inner">
-          <h1>NEW</h1>
+          <h1>추천 제품</h1>
           <Swiper
             modules={[Autoplay, Navigation]}
             slidesPerView={4}
@@ -192,9 +193,9 @@ const NewList = () => {
             <Nextbtn><SlideNextButton /></Nextbtn>
           </Swiper>
         </div>
-      </New>
+      </WarmList>
     </div>
   )
 }
 
-export default NewList
+export default WarmProduct
