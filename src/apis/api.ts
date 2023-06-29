@@ -93,7 +93,7 @@ export const deleteAccount = async ({ id, signature }) => {
     console.warn('계좌 삭제에 실패했습니다.')
     return false
   }
-};
+}
 
 //단일제품상세조회 // products/:productId
 export const getProduct = async (id: string) => {
@@ -103,6 +103,87 @@ export const getProduct = async (id: string) => {
   } catch (error) {
     console.warn(error)
     console.warn('fail to load product')
+    return false
+  }
+}
+
+//사용자: 인증 확인
+export const authVerification = async () => {
+  try {
+    const { data } = await requestApi.post(
+      'auth/me',
+      {},
+      {
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      },
+    )
+    return data
+  } catch (error) {
+    console.warn(error)
+    console.warn('인증 확인에 실패했습니다.')
+    return false
+  }
+}
+
+//사용자: 구매 신청
+export const requestBuy = async ({ productId, accountId }) => {
+  try {
+    const { data } = await requestApi.post(
+      'products/buy',
+      { productId, accountId },
+      {
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      },
+    )
+    return data
+  } catch (error) {
+    console.warn(error)
+    console.log('데이터', productId, accountId)
+    console.warn('구매 신청에 실패했습니다.')
+    return false
+  }
+}
+
+//사용자: 구매 내역 조회
+export const getPurchaselist = async () => {
+  try {
+    const { data } = await requestApi.get('products/transactions/details', {
+      headers: {
+        ...headers,
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    return data
+  } catch (error) {
+    console.warn(error)
+    console.warn('fail to load purchaselist')
+    return false
+  }
+}
+
+//사용자: 구매 내역 상세 조회
+export const getPurchaseDetail = async (id) => {
+  try {
+    const { data } = await requestApi.post(
+      'products/transactions/detail',
+      { detailId: id },
+      {
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      },
+    )
+    return data
+  } catch (error) {
+    console.warn(error)
+    console.warn('fail to load purchasedetail')
     return false
   }
 }

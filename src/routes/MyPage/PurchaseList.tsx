@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ListPagination } from '../../components/mypage/ListPagination'
 import { PageHeader } from '../../components/mypage/PageHeader'
 import { styled } from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import { getPurchaselist } from '../../apis/api'
+import { LoadingSpinner } from '../../components/common/LoadingSpinner'
 
 export const PurchaseList = () => {
   const navigate = useNavigate()
@@ -117,6 +119,10 @@ export const PurchaseList = () => {
   ]
   const [curPage, setCurPage] = useState(1)
   const [limitPage, setLimitPage] = useState(4) //한번에 보여질 개수
+  const [dataLoading, setdataLoading] = useState(false)
+  const [purchaseList, setpurchaseList] = useState([])
+
+  const [noList, setnoList] = useState(false)
 
   //페이지 계산
   const lastPage = curPage * limitPage
@@ -128,7 +134,6 @@ export const PurchaseList = () => {
   }
 
   const handleClickMore = (id) => {
-    console.log(id)
     navigate('/MyPage/PurchaseDetails', {
       state: {
         id,
@@ -136,34 +141,63 @@ export const PurchaseList = () => {
     })
   }
 
+  useEffect(() => {
+    ;(async () => {
+      try {
+        setdataLoading(true)
+        const data = await getPurchaselist()
+        setpurchaseList(data)
+      } catch (error) {
+        setdataLoading(false)
+        console.error('Error fetching purchase list:', error)
+        setnoList(true)
+      } finally {
+        setdataLoading(false)
+      }
+    })()
+  }, [])
+
   return (
     <Wrap>
-      <PageHeader title="구매 내역" />
-      <Total>({mockdata.length})</Total>
-      <Inner>
-        {currentPages(mockdata).map((data) => (
-          <ListItem>
-            <ImageBox>
-              <img src="" alt="" />
-            </ImageBox>
-            <Info>
-              <p className="title">{data.product.title.split('-')[0]}</p>
-              <p className="name">{data.product.title.split('-')[1]} / 1개</p>
-              <p className="price">{data.product.price.toLocaleString('ko-KR')}원</p>
-              <p className="time">{data.timePaid.slice(0, 10)}</p>
-            </Info>
-            <MoreButton onClick={() => handleClickMore(data.detailId)}>자세히</MoreButton>
-          </ListItem>
-        ))}
-      </Inner>
-      <BottomInner>
-        <ListPagination
-          limitPage={limitPage}
-          total={mockdata.length}
-          paginate={setCurPage}
-          curpage={curPage}
-        />
-      </BottomInner>
+      {purchaseList.length === 0 ? <p>구매내역이 없습니다.</p> : ''}
+      <p>구매내역이 없습니다.</p>
+      {/* <PageHeader title="구매 내역" />
+      {noList ? (
+        <p>구매내역이 없습니다.</p>
+      ) : (
+        <>
+          <Total>({purchaseList.length})</Total>
+          <Inner>
+            {currentPages(purchaseList).map((data, index) => (
+              <ListItem key={index}>
+                <ImageBox>
+                  <img src={data.product.thumbnail} alt="" />
+                </ImageBox>
+                <Info>
+                  <p className="title">{data.product.title.split('-')[0]}</p>
+                  <p className="name">{data.product.title.split('-')[1]} / 1개</p>
+                  <p className="price">{data.product.price.toLocaleString('ko-KR')}원</p>
+                  <p className="time">{data.timePaid.slice(0, 10)}</p>
+                </Info>
+                <MoreButton onClick={() => handleClickMore(data.detailId)}>자세히</MoreButton>
+              </ListItem>
+            ))}
+          </Inner>
+          <BottomInner>
+            {purchaseList.length > 0 ? (
+              <ListPagination
+                limitPage={limitPage}
+                total={purchaseList.length}
+                paginate={setCurPage}
+                curpage={curPage}
+              />
+            ) : (
+              ''
+            )}
+          </BottomInner>
+          {dataLoading && <LoadingSpinner />}
+        </>
+      )} */}
     </Wrap>
   )
 }
@@ -190,6 +224,9 @@ const ImageBox = styled.div`
   width: 120px;
   height: 120px;
   border: 1px solid #8e8e8e;
+  img {
+    width: 100%;
+  }
 `
 const Info = styled.div`
   height: 120px;
