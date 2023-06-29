@@ -5,8 +5,6 @@ import PersonalColor from './routes/PersonalColor/PersonalColor'
 import PersonalColorTest from './routes/PersonalColor/PersonalColorTest'
 import PersonalColorCool from './routes/PersonalColor/PersonalColorCool'
 import PersonalColorWarm from './routes/PersonalColor/PersonalColorWarm'
-import Cart from './routes/Cart/Cart'
-import CartProduct from './routes/Cart/CartProduct'
 import CartPurchase from './routes/Cart/CartPurchase'
 import Main from './routes/Main'
 import Best from './routes/Best'
@@ -37,8 +35,6 @@ function App() {
           <Route path="/PersonalColorWarm" element={<PersonalColorWarm />} />
           <Route path="/SignIn" element={<SignIn />} />
           <Route path="/SignUp" element={<SignUp />} />
-          <Route path="/Cart" element={<Cart />} />
-          <Route path="/CartProduct" element={<CartProduct />} />
           <Route path="/CartPurchase" element={<CartPurchase />} />
           <Route path="/Best" element={<Best />} />
           <Route path="/Makeup" element={<Makeup />} />
