@@ -50,13 +50,14 @@ const Product = styled.div`
     > ul.product-list {
       margin-bottom: 94px;
       > li {
-        width: 300px;
+        display: flex;
         margin-right: 16px;
         &:last-child {
           margin-right: 0px;
         }
         > div.thumbnail {
           > a {
+            width: 200px;
             > img {
               width: 100%;
               display: block;
@@ -80,16 +81,31 @@ const Product = styled.div`
             font-size: 14px;
             color: #8e8e8e;
           }
+          > p {
+            margin-top: 30px;
+            font-size: 14px;
+            > span {
+              font-family: 'Spoqa Han Sans Neo';
+              letter-spcing: 0;
+              font-size: 18px;
+              font-weight: 500;
+            }
+          }
         }
-        > p {
+        > button {
+          margin-left: 30px;
+          border: 1px solid #8e8e8e;
+          border-radius: 4px;
+          width: 50px;
+          height: 30px;
           font-family: 'Noto Sans KR';
-          letter-spacing: -0.05em;
-          text-align: right;
+          letter-spacing: -.05em;
           font-size: 14px;
-          > span {
-            font-family: 'Spoqa Han Sans Neo';
-            font-size: 18px;
-            font-weight: 700;
+          transition: .3s;
+          &:hover {
+            background-color: #ffa9be;
+            border-color: transparent;
+            color: #fff;
           }
         }
       }
@@ -245,9 +261,13 @@ const CartPurchase = () => {
   productList.map((product) => (producttotal = producttotal + product.price))
   total = producttotal + DELIVERY_CHARGE
 
-  const deleteitem = (id) => {
-    const newlist = productList.filter((item) => item.id !== id)
-    setproductList(newlist)
+
+  const deleteProduct = (id) => {
+    const newArray = productList.filter((item) => item.id !== id)
+    
+    setproductList (newArray)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newArray))
+
   }
 
   return (
@@ -265,7 +285,9 @@ const CartPurchase = () => {
             <div className="product">
               <h2>상품</h2>
               <ul className="product-list">
-                {productList.length > 0 ? (
+                {productList === null ? (
+                  <p>목록없음</p>
+                  ) : (
                   productList.map((product, index) => (
                     <li key={index}>
                       <div className="thumbnail">
@@ -276,12 +298,12 @@ const CartPurchase = () => {
                       <div className="contents">
                         <h3>{product.title.split('-')[0]}</h3>
                         <span>{product.title.split('-')[1]}</span>
+                        <p><span>{product.price.toLocaleString('ko-KR')}</span>원</p>
                       </div>
-                      <button onClick={() => deleteitem(product.id)}>삭제</button>
+
+                      <button type='button' onClick={() => deleteProduct(product.id)}>삭제</button>
                     </li>
                   ))
-                ) : (
-                  <p>목록없음</p>
                 )}
               </ul>
               {/* <div className="price">

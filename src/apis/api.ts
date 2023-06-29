@@ -23,6 +23,18 @@ export const signIn = async (email: string, password: string) => {
   }
 }
 
+//사용자: 로그아웃
+export const signOut = async () => {
+  try {
+    const { data } = await requestApi.post('auth/logout')
+    return data
+  } catch (error) {
+    console.warn(error)
+    console.warn('로그아웃에 실패했습니다.')
+    return false
+  }
+}
+
 //사용자: 등록가능한 계좌 조회
 export const getValidAccounts = async () => {
   try {

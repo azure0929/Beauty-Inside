@@ -44,17 +44,14 @@ const Section = styled.div`
             letter-spacing: -0.05em;
             margin-bottom: 4px;
           }
-          > span {
-            display: block;
-            font-family: 'Noto Sans KR';
-            font-size: 20px;
-            letter-spacing: -0.05em;
+          > p {
+            margin-top: 30px;
           }
         }
         > div.price {
           display: flex;
           justify-content: flex-end;
-          margin-bottom: 186px;
+          margin-bottom: 156px;
           > p {
             font-family: 'Noto Sans KR';
             font-size: 20px;

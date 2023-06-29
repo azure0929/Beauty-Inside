@@ -92,7 +92,7 @@ const Header = () => {
                 <NavLink to="/SignUp">회원가입</NavLink>
               </li>
               <li>
-                <NavLink to="/Cart">장바구니</NavLink>
+                <NavLink to="/CartPurchase">장바구니</NavLink>
               </li>
               <li>
                 <NavLink to="/MyPage/PurchaseList">마이페이지</NavLink>
