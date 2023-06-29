@@ -14,6 +14,9 @@ export const SideNav = () => {
       <NavButton to="/MyPage/MyInfo" className={({ isActive }) => (isActive ? 'active' : '')}>
         개인 정보 수정
       </NavButton>
+      <NavButton to="/MyPage/Logout" className={({ isActive }) => (isActive ? 'active' : '')}>
+        로그아웃
+      </NavButton>
     </NavWrap>
   )
 }

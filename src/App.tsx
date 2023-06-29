@@ -14,13 +14,15 @@ import Makeup from './routes/Makeup/Makeup'
 import SignIn from './routes/SignIn'
 import SignUp from './routes/SignUp'
 import Mypage from './routes/MyPage/MyPage'
-import { Payment } from './routes/Payment'
+import { Payment } from './routes/Payment/Payment'
 import { PurchaseList } from './routes/MyPage/PurchaseList'
 import { AccountManage } from './routes/MyPage/AccountManage'
 import { InfoEdit } from './routes/MyPage/InfoEdit'
 import ScrollToTop from './components/ScrollToTop'
 import { PurchaseDetails } from './routes/MyPage/PurchaseDetails'
 import ProductDetail from './routes/ProductDetail'
+import { PaymentCompleted } from './routes/Payment/PaymentCompleted'
+import { UserLogout } from './routes/MyPage/UserLogout'
 
 function App() {
   return (
@@ -45,8 +47,10 @@ function App() {
             <Route path="PurchaseDetails" element={<PurchaseDetails />} />
             <Route path="Account" element={<AccountManage />} />
             <Route path="MyInfo" element={<InfoEdit />} />
+            <Route path="Logout" element={<UserLogout />} />
           </Route>
           <Route path="/Payment" element={<Payment />} />
+          <Route path="/PaymentCompleted" element={<PaymentCompleted />} />
           <Route path="/ProductDetail" element={<ProductDetail />} />
         </Routes>
       </div>
