@@ -236,7 +236,11 @@ const CartPurchase = () => {
   }
   // 주문서로 이동
   const navigateToPayment = () => {
-    navigate('/Payment')
+    navigate('/Payment', {
+      state: {
+        productList,
+      },
+    })
   }
 
   useEffect(() => {
@@ -257,11 +261,13 @@ const CartPurchase = () => {
   productList.map((product) => (producttotal = producttotal + product.price))
   total = producttotal + DELIVERY_CHARGE
 
+
   const deleteProduct = (id) => {
     const newArray = productList.filter((item) => item.id !== id)
     
     setproductList (newArray)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newArray))
+
   }
 
   return (
@@ -294,6 +300,7 @@ const CartPurchase = () => {
                         <span>{product.title.split('-')[1]}</span>
                         <p><span>{product.price.toLocaleString('ko-KR')}</span>원</p>
                       </div>
+
                       <button type='button' onClick={() => deleteProduct(product.id)}>삭제</button>
                     </li>
                   ))
