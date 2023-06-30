@@ -1,8 +1,9 @@
 
-import GlobalStyle from '../styles/GlobalStyles';
 import styled from 'styled-components';
 import { useState, FormEvent } from 'react';
 import { signIn } from '../apis/api';
+import { useNavigate } from 'react-router-dom';
+
 
 const SignInBox = styled.div`
   font-family: 'Noto Sans KR';
@@ -69,9 +70,13 @@ const SignInBox = styled.div`
 `
 
 const SignIn = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isValidEmail, setIsValidEmail] = useState(false)
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [displayName, setDisplayName] = useState(''); 
+
 
   const headers = {
     'content-type': 'application/json',
@@ -102,12 +107,20 @@ const SignIn = () => {
     e.preventDefault()
 
     try {
-      const response = await signIn(email, password)
-      localStorage.setItem('token', response.accessToken)
-      // 처리 결과에 따른 동작 수행
+
+      const response = await signIn({ email, password }); // 이메일과 비밀번호를 body로 전달
+      if (response.success) {
+        alert('로그인에 성공하였습니다.');
+        setLoggedIn(true);
+        setDisplayName(response.data.user.displayName); 
+        navigate(-1);
+      } else {
+        alert('이메일이나 패스워드가 일치하지 않습니다.');
+      }
     } catch (error) {
-      console.warn(error)
-      console.warn('로그인에 실패하였습니다.')
+      console.error('로그인에 실패하였습니다.', error);
+      alert('로그인에 실패하였습니다.');
+
     }
   }
 

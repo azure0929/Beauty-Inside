@@ -1,7 +1,24 @@
 import companyLogo from '../../../public/assets/logo.png'
 import GlobalStyle from '../../styles/GlobalStyles'
 import styled from 'styled-components'
+
+import { NavLink } from'react-router-dom'
+import React, { useState } from 'react';
+
+
+
+const Header = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [displayName, setDisplayName] = useState('');
+
+  const handleLogout = () => {
+    // 로그아웃 처리를 수행하는 함수
+    setLoggedIn(false);
+    setDisplayName('');
+  };
+
 import { NavLink } from 'react-router-dom'
+
 
 
 const Inner = styled.div`
@@ -84,19 +101,22 @@ const Header = () => {
                 <img src={companyLogo} />
               </NavLink>
             </div>
-            <div>
-              <li>
-                <NavLink to="/SignIn">로그인</NavLink>
-              </li>
-              <li>
-                <NavLink to="/SignUp">회원가입</NavLink>
-              </li>
-              <li>
-                <NavLink to="/CartPurchase">장바구니</NavLink>
-              </li>
-              <li>
-                <NavLink to="/MyPage/PurchaseList">마이페이지</NavLink>
-              </li>
+
+            <div> 
+            {loggedIn ? (
+          <p>{`${displayName}님 안녕하세요`}</p>
+        ) : (
+          <>
+            <NavLink to="/SignIn">로그인</NavLink>
+            <NavLink to="/SignUp">회원가입</NavLink>
+          </>
+        )}
+        {/* 로그아웃 버튼 */}
+        {loggedIn && <button onClick={handleLogout}>로그아웃</button>}
+              <li><NavLink to='/SignUp'>회원가입</NavLink></li>
+              <li><NavLink to='/Cart'>장바구니</NavLink></li>
+              <li><NavLink to='/MyPage'>마이페이지</NavLink></li>
+
             </div>
           </GnbMenu>
           <Nav>
