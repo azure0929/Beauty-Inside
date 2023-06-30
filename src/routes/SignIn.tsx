@@ -87,6 +87,7 @@ const SignIn = () => {
     // 이메일 유효성 검사
     const regex = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
     return regex.test(input);
+   
   };
 
   const handleEmailChange = (e) => {
@@ -103,7 +104,7 @@ const SignIn = () => {
       if (response.success) {
         alert('로그인에 성공하였습니다.');
         setLoggedIn(true);
-        setDisplayName(response.data.user.displayName); // setUsername -> setDisplayName 변경
+        setDisplayName(response.data.user.displayName); 
         navigate(-1);
       } else {
         alert('비밀번호나 패스워드가 일치하지 않습니다.');

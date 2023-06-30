@@ -11,7 +11,7 @@ const requestApi = axios.create({
 
 export const signIn = async (email: string, password: string) => {
   try {
-    const { data } = await requestApi.post('login', { email, password });
+    const { data } = await requestApi.post('/login', { email, password });
     return data;
   } catch (error) {
     console.warn(error);
