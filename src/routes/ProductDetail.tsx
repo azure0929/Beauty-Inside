@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import { getProduct } from '../apis/api'
 import { useEffect, useState } from 'react'
 
-
 const Section = styled.div`
   margin-top: 180px;
   margin-bottom: 80px;
@@ -42,24 +41,21 @@ const Section = styled.div`
             font-family: 'Noto Sans KR';
             font-size: 32px;
             font-weight: 700;
-            letter-spacing: -.05em;
+            letter-spacing: -0.05em;
             margin-bottom: 4px;
           }
-          > span {
-            display: block;
-            font-family: 'Noto Sans KR';
-            font-size: 20px;
-            letter-spacing: -.05em;
+          > p {
+            margin-top: 30px;
           }
         }
         > div.price {
           display: flex;
           justify-content: flex-end;
-          margin-bottom: 186px;
+          margin-bottom: 156px;
           > p {
             font-family: 'Noto Sans KR';
             font-size: 20px;
-            letter-spacing: -.05em;
+            letter-spacing: -0.05em;
             > span {
               font-family: 'Spoqa Han Sans Neo';
               letter-spacing: 0;
@@ -85,8 +81,8 @@ const Button = styled.button`
   border-radius: 6px;
   font-family: 'Noto Sans KR';
   font-size: 16px;
-  letter-spacing: -.05em;
-  transition: .2s;
+  letter-spacing: -0.05em;
+  transition: 0.2s;
   &:last-child {
     margin-right: 0;
   }
@@ -97,16 +93,13 @@ const Button = styled.button`
   }
 `
 
-
 const ProductDetail = () => {
-
   const navigate = useNavigate()
   const location = useLocation()
   const id = location.state.id
 
-  const navigateToCartProduct = () => {
-    navigate('/CartProduct')
-  }
+  const STORAGE_KEY = 'detail'
+  let storage = [{}]
 
   const navigateToCartPurchase = () => {
     navigate('/CartPurchase')
@@ -123,6 +116,11 @@ const ProductDetail = () => {
         const data = await getProduct(id)
         console.log(data)
         setproductDetail(data)
+
+        //로컬스토리지 초기화
+        localStorage.getItem(STORAGE_KEY)
+          ? ''
+          : localStorage.setItem(STORAGE_KEY, JSON.stringify([]))
       } catch (error) {
         // setdataLoading(false)
         console.error('Error fetching products:', error)
@@ -132,24 +130,44 @@ const ProductDetail = () => {
     })()
   }, [])
 
+  const navigateToCartProduct = (product) => {
+    storage = localStorage.getItem(STORAGE_KEY)
+    storage = JSON.parse(storage)
+    storage.push(product)
+    //중복제거
+    const newArray = storage.filter((item, i) => {
+      return (
+        storage.findIndex((item2, j) => {
+          return item.id === item2.id
+        }) === i
+      )
+    })
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newArray))
+    navigate('/CartPurchase')
+  }
+
   return (
     <div>
       <GlobalStyle />
       <Section>
-        <div className='inner'>
-          <div className='product-info'>
-            <div className='photo'>
-              <img src={productDetail.thumbnail} alt='' />
+        <div className="inner">
+          <div className="product-info">
+            <div className="photo">
+              <img src={productDetail.thumbnail} alt="" />
             </div>
-            <div className='product-detail'>
-              <div className='detail-info'>
+            <div className="product-detail">
+              <div className="detail-info">
                 <h3>{productDetail.title}</h3>
+                <p>{productDetail.description}</p>
               </div>
-              <div className='price'>
-                <p><span>{productDetail.price}</span>원</p>
+              <div className="price">
+                <p>
+                  <span>{productDetail.price}</span>원
+                </p>
               </div>
-              <div className='link'>
-                <Button onClick={navigateToCartProduct}>장바구니</Button>
+              <div className="link">
+                <Button onClick={() => navigateToCartProduct(productDetail)}>장바구니</Button>
                 <Button onClick={navigateToCartPurchase}>구매하기</Button>
               </div>
             </div>
@@ -157,8 +175,8 @@ const ProductDetail = () => {
         </div>
       </Section>
       <Section>
-        <div className='inner'>
-          <img src={productDetail.photo} alt='Loading image'/>
+        <div className="inner">
+          <img src={productDetail.photo} alt="Loading image" />
         </div>
       </Section>
     </div>

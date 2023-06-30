@@ -1,5 +1,23 @@
 import axios from 'axios'
 
+
+const headers = {
+  'Content-Type': 'application/json',
+  apikey: 'KDT5_nREmPe9B',
+  username: 'KDT5_Team4',
+}
+
+const requestApi = axios.create({
+  baseURL: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api',
+  headers,
+  
+})
+export const signIn = async (email: string, password: string) => {
+  try {
+    const { data } = await requestApi.post('auth/login', { email, password });
+    return data;
+=======
+
 const headers = {
   'Content-Type': 'application/json',
   apikey: 'KDT5_nREmPe9B',
@@ -19,6 +37,18 @@ export const signIn = async (email: string, password: string) => {
   } catch (error) {
     console.warn(error)
     console.warn('로그인에 실패했습니다.')
+    return false
+  }
+}
+
+//사용자: 로그아웃
+export const signOut = async () => {
+  try {
+    const { data } = await requestApi.post('auth/logout')
+    return data
+  } catch (error) {
+    console.warn(error)
+    console.warn('로그아웃에 실패했습니다.')
     return false
   }
 }
@@ -181,11 +211,13 @@ export const getPurchaseDetail = async (id) => {
       },
     )
     return data
+
   } catch (error) {
     console.warn(error)
     console.warn('fail to load purchasedetail')
     return false
   }
+
 }
 
 
@@ -203,3 +235,4 @@ export const getProductList = async  ({ searchText,searchTags }) => {
     return false
   }
 }
+
