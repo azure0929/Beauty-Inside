@@ -1,8 +1,9 @@
-
 import GlobalStyle from '../styles/GlobalStyles';
 import styled from 'styled-components';
+import SignUp from './SignUp';
 import { useState, FormEvent } from 'react';
 import { signIn } from '../apis/api';
+import { useNavigate } from 'react-router-dom';
 
 const SignInBox = styled.div`
   font-family: 'Noto Sans KR';
@@ -24,11 +25,11 @@ const SignInBox = styled.div`
       margin-top: 10px;
       margin-bottom: 50px;
       font-size: 20px;
-      color: #8e8e8e;
+      color: #8E8E8E;
       flex-direction: row;
 
       h2 {
-        color: #ffa9be;
+        color: #FFA9BE;
       }
     }
   }
@@ -44,12 +45,12 @@ const SignInBox = styled.div`
     margin-top: 10px;
     width: 500px;
     height: 46px;
-    border: 1px solid #8e8e8e;
+    border: 1px solid #8E8E8E;
     border-radius: 7px;
   }
 
   input:focus {
-    border: 2px solid #ffa9be;
+    border: 2px solid #FFA9BE;
     outline: none;
   }
 
@@ -66,79 +67,84 @@ const SignInBox = styled.div`
     justify-content: center;
     align-items: center;
   }
-`
+`;
+
 
 const SignIn = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [isValidEmail, setIsValidEmail] = useState(false)
-
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [displayName, setDisplayName] = useState(''); // setUsername -> setDisplayName 변경
   const headers = {
     'content-type': 'application/json',
     apikey: 'KDT5_nREmPe9B',
     username: 'KDT5_Team4',
-  }
+  };
 
   const validateEmail = (input) => {
     // 이메일 유효성 검사
-    const regex = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/
-    // 정규 표현식 이용,
-    //  /^: 정규 표현식의 처음,
-    //  $/: 정규 표현식의 끝,
-    // [] : 문자셋,
-    // [a-zA-z0-9] : 영문 소,대문자 , 숫자만 입력 가능.
-    // {2,3} : 2~3 글자만 입력 가능.
-
-    return regex.test(input)
-  }
+    const regex = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
+    return regex.test(input);
+  };
 
   const handleEmailChange = (e) => {
-    const inputEmail = e.target.value
-    setEmail(inputEmail) // 이메일 값 업데이트
-    setIsValidEmail(validateEmail(inputEmail)) // 이메일 유효성을 검사하여 상태 값을 업데이트
-  }
-
-  const handleSignIn = async (e: FormEvent) => {
-    e.preventDefault()
+    const inputEmail = e.target.value;
+    setEmail(inputEmail);
+    setIsValidEmail(validateEmail(inputEmail));
+  };
+  
+  const handleSignIn = async (e: Event) => { // FormEvent -> Event로 변경
+    e.preventDefault();
 
     try {
-      const response = await signIn(email, password)
-      localStorage.setItem('token', response.accessToken)
-      // 처리 결과에 따른 동작 수행
+      const response = await signIn(email, password);
+      if (response.success) {
+        alert('로그인에 성공하였습니다.');
+        setLoggedIn(true);
+        setDisplayName(response.data.user.displayName); 
+        navigate(-1);
+      } else {
+        alert('비밀번호나 패스워드가 일치하지 않습니다.');
+      }
     } catch (error) {
-      console.warn(error)
-      console.warn('로그인에 실패하였습니다.')
+      console.error('로그인에 실패하였습니다.', error);
+      alert('로그인에 실패하였습니다.');
     }
-  }
+  };
 
   return (
     <SignInBox isValidEmail={isValidEmail}>
       <h1>
         로그인
         <div>
-          <h2>뷰티인사이드</h2>의 다양한 서비스와 퍼스널 진단을 누리세요.
+          <h2>뷰티인사이드</h2>
+          의 다양한 서비스와 퍼스널 진단을 누리세요.
         </div>
       </h1>
-      <form onSubmit={handleSignIn}>
-        <input name="email" value={email} onChange={handleEmailChange} placeholder="이메일" />
-        {/* 값이 변경되면 handleEmailChange 함수 호출. */}
-        <input
-          name="password"
-          value={password}
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="비밀번호"
-        />
-        {/* 값이 변경되면 setPassword 함수 호출 */}
-        <button
-          type="submit"
-          style={{ backgroundColor: isValidEmail && password !== '' ? '#FFA9BE' : '#DEDEDE' }}
-        >
-          로그인
-        </button>
-      </form>
+      {loggedIn ? (
+        <p>{`${displayName}님 안녕하세요`}</p>
+      ) : (
+        <form onSubmit={handleSignIn}>
+          <input name="email" value={email} onChange={handleEmailChange} placeholder="이메일" />
+          <input
+            name="password"
+            value={password}
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="비밀번호"
+          />
+          <button
+            type="submit"
+            style={{ backgroundColor: isValidEmail && password !== '' ? '#FFA9BE' : '#DEDEDE' }}
+          >
+            로그인
+          </button>
+        </form>
+      )}
     </SignInBox>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;
