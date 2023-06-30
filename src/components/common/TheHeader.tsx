@@ -1,13 +1,14 @@
-import companyLogo from '../../../public/assets/logo.png'
-import GlobalStyle from '../../styles/GlobalStyles'
-import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
-import React, { useState } from 'react';
+import companyLogo from '../../../public/assets/logo.png';
+import GlobalStyle from '../../styles/GlobalStyles';
+import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { authVerification } from '../../apis/api';
 
 const Inner = styled.div`
   width: calc(100% - 334px);
   margin: 0 auto;
-`
+`;
 
 const GnbMenu = styled.div`
   position: relative;
@@ -43,7 +44,7 @@ const GnbMenu = styled.div`
       }
     }
   }
-`
+`;
 
 const Nav = styled.ul`
   height: 80px;
@@ -58,7 +59,7 @@ const Nav = styled.ul`
     letter-spacing: -.025em;
     color: #191919;
   }
-`
+`;
 
 const NavStyle = styled(NavLink)`
   color: #191919;
@@ -68,17 +69,39 @@ const NavStyle = styled(NavLink)`
   &.active {
     color: #ffa9be;
   }
-`
+`;
 
 const Header = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [displayName, setDisplayName] = useState('');
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      setLoggedIn(true);
+      authVerification()
+        .then(data => {
+          if (data) {
+            setDisplayName(data.displayName); 
+          } else {
+            setDisplayName('');
+          }
+        })
+        .catch(error => {
+          console.error('Failed to verify token:', error);
+          setDisplayName('');
+        });
+    } else {
+      setLoggedIn(false);
+      setDisplayName('');
+    }
+  }, []);
+
   const handleLogout = () => {
-    // 로그아웃 처리를 수행하는 함수
     setLoggedIn(false);
     setDisplayName('');
   };
+
 
   return (
     <div>
@@ -94,18 +117,28 @@ const Header = () => {
 
             <div>
               {loggedIn ? (
-                <p>{`${displayName}님 안녕하세요`}</p>
+                <>
+                  <li>안녕하세요, {displayName}님</li>
+                  <li>
+                    <button onClick={handleLogout}>로그아웃</button>
+                  </li>
+                </>
               ) : (
                 <>
-                  <NavLink to="/SignIn">로그인</NavLink>
-                  <NavLink to="/SignUp">회원가입</NavLink>
+                  <li>
+                    <NavLink to="/SignIn">로그인</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/SignUp">회원가입</NavLink>
+                  </li>
                 </>
               )}
-              {/* 로그아웃 버튼 */}
-              {loggedIn && <button onClick={handleLogout}>로그아웃</button>}
-              <li><NavLink to='/SignUp'>회원가입</NavLink></li>
-              <li><NavLink to='/Cart'>장바구니</NavLink></li>
-              <li><NavLink to='/MyPage'>마이페이지</NavLink></li>
+              <li>
+                <NavLink to="/Cart">장바구니</NavLink>
+              </li>
+              <li>
+                <NavLink to="/MyPage">마이페이지</NavLink>
+              </li>
             </div>
           </GnbMenu>
           <Nav>
@@ -118,8 +151,11 @@ const Header = () => {
               </NavStyle>
             </li>
             <li>
-              <NavStyle className={({ isActive }) => 'nav-link' + (isActive ? 'a' : '')} to="/Best">
-                BEST
+              <NavStyle
+                className={({ isActive }) => 'nav-link' + (isActive ? 'a' : '')}
+                to="/Best"
+              >
+                베스트
               </NavStyle>
             </li>
             <li>
@@ -134,7 +170,7 @@ const Header = () => {
         </Inner>
       </header>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { useState, FormEvent } from 'react';
-import { signIn } from '../apis/api';
+import { useState, FormEvent, useEffect } from 'react';
+import { signIn, authVerification } from '../apis/api';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -68,6 +68,7 @@ const SignInBox = styled.div`
     align-items: center;
   }
 `
+
 const SignIn = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -84,20 +85,20 @@ const SignIn = () => {
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputEmail = e.target.value;
-    setEmail(inputEmail); // 이메일 값 업데이트
-    setIsValidEmail(validateEmail(inputEmail)); // 이메일 유효성을 검사하여 상태 값을 업데이트
+    setEmail(inputEmail);
+    setIsValidEmail(validateEmail(inputEmail));
   };
 
   const handleSignIn = async (e: FormEvent) => {
     e.preventDefault();
 
     try {
-      const response = await signIn({ email, password });
-      if (response.success) {
+      const response = await signIn(email, password);
+      if (response.accessToken) {
+        localStorage.setItem('accessToken', response.accessToken);
         alert('로그인에 성공하였습니다.');
         setLoggedIn(true);
-        setDisplayName(response.data.user.displayName);
-        navigate(-1);
+        window.location.reload(); 
       } else {
         alert('이메일이나 패스워드가 일치하지 않습니다.');
       }
@@ -106,6 +107,34 @@ const SignIn = () => {
       alert('로그인에 실패하였습니다.');
     }
   };
+  
+  useEffect(() => {
+    const verifyToken = async () => {
+      const accessToken = localStorage.getItem('accessToken');
+      if (accessToken) {
+        try {
+          // 토큰 검증 및 사용자 정보 가져오기
+          const response = await authVerification();
+          console.log('인증 결과:', response); // 인증 결과 콘솔 출력
+          if (response.accessToken) {
+            setLoggedIn(true);
+            setDisplayName(response.displayName);
+          } else {
+            setLoggedIn(false);
+            setDisplayName('');
+            localStorage.removeItem('accessToken');
+          }
+        } catch (error) {
+          console.error('토큰 검증에 실패하였습니다.', error);
+          setLoggedIn(false);
+          setDisplayName('');
+          localStorage.removeItem('accessToken');
+        }
+      }
+    };
+  
+    verifyToken();
+  }, []);
 
   return (
     <SignInBox isValidEmail={isValidEmail}>

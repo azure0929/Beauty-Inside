@@ -2,9 +2,9 @@ import axios from 'axios'
 
 
 const headers = {
-  'Content-Type': 'application/json',
-  apikey: 'KDT5_nREmPe9B',
-  username: 'KDT5_Team4',
+  "content-type": "application/json",
+  apikey: "KDT5_nREmPe9B",
+  username: "KDT5_Team4"
 }
 
 
@@ -13,6 +13,19 @@ const requestApi = axios.create({
   baseURL: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api',
   headers,
 })
+
+
+// 사용자 : 회원가입
+export const signUp = async (email: string, password: string, displayName: string) => {
+  try {
+    const { data } = await requestApi.post('auth/signup', {email,password,displayName})
+    return data;
+  } catch (error) {
+    console.warn(error);
+    console.warn('회원가입에 실패했습니다.');
+    return false;
+  }
+};
 
 //사용자: 로그인
 export const signIn = async (email: string, password: string) => {
@@ -37,6 +50,8 @@ export const signOut = async () => {
     return false
   }
 }
+
+
 
 //사용자: 등록가능한 계좌 조회
 export const getValidAccounts = async () => {
@@ -131,7 +146,7 @@ export const authVerification = async () => {
       {
         headers: {
           ...headers,
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       },
     )

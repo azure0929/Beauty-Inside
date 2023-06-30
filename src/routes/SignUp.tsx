@@ -1,5 +1,7 @@
-import React, { useState,FormEvent } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { signUp } from '../apis/api';
+
 
 const Section = styled.div`
   font-family: 'Noto Sans KR';
@@ -62,33 +64,25 @@ const Section = styled.div`
 `
 
 function Signup() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [displayName, setDisplayName] = useState('')
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
 
-  const headers = {
-      "content-type": "application/json",
-      "apikey": "KDT5_nREmPe9B",
-      "username": "KDT5_Team4"
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await signUp(email, password, displayName);
+      if (response.accessToken) {
+        alert('회원가입에 성공하였습니다.');
+      } else {
+        alert('이미 가입된 회원입니다.');
+      }
+    } catch (error) {
+      console.error('회원가입에 실패하였습니다.', error);
+      alert('회원가입에 실패하였습니다.');
     }
-  
- 
-  async function signUp(event: FormEvent) {
-    event.preventDefault()
-    const res = await fetch('https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/signup', {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({
-        email,
-        password,
-        displayName
-      })
-    })
-    const json = await res.json()
-    console.log(json)
-  }
-
-
+  };
 
   return (
     <div>
@@ -99,7 +93,7 @@ function Signup() {
             <span>뷰티인사이드</span>의 다양한 서비스와 퍼스널 진단을 누리세요.
           </p>
         </div>
-        <form onSubmit={signUp}>
+        <form onSubmit={handleSignup}>
           <input value={email} onChange={e => setEmail(e.target.value)} placeholder='이메일'/>
           <input value={password} type="password" onChange={e => setPassword(e.target.value)} placeholder='비밀번호'/>
           <input value={displayName} onChange={e => setDisplayName(e.target.value)} placeholder='이름'/>
@@ -107,8 +101,7 @@ function Signup() {
         </form>
       </Section>
     </div>
-  )
+  );
 }
 
-export default Signup
-
+export default Signup;
