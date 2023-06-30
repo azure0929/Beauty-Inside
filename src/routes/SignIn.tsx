@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import SignUp from './SignUp';
 import { useState, FormEvent } from 'react';
 import { signIn } from '../apis/api';
+import { useNavigate } from 'react-router-dom';
 
 const SignInBox = styled.div`
   font-family: 'Noto Sans KR';
@@ -70,6 +71,7 @@ const SignInBox = styled.div`
 
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(false);
@@ -104,13 +106,17 @@ const SignIn = () => {
   
     try {
       const response = await signIn(email, password);
-      // 처리 결과에 따른 동작 수행
+      if (response.success) {
+        alert('로그인에 성공하였습니다.');
+        navigate(-1);
+      } else {
+        alert('비밀번호나 패스워드가 일치하지 않습니다.');
+      }
     } catch (error) {
-      console.warn(error);
-      console.warn('로그인에 실패하였습니다.');
+      console.error('로그인에 실패하였습니다.', error);
+      alert('로그인에 실패하였습니다.');
     }
   };
-  
 
   return (
     <SignInBox isValidEmail={isValidEmail}>
