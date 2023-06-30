@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useState, FormEvent, useEffect } from 'react';
 import { signIn, authVerification } from '../apis/api';
-import { useNavigate } from 'react-router-dom';
 
 
 
@@ -70,7 +69,6 @@ const SignInBox = styled.div`
 `
 
 const SignIn = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(false);

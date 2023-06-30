@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { signUp } from '../apis/api';
@@ -84,6 +85,7 @@ function Signup() {
     }
   };
 
+
   return (
     <div>
       <Section>
@@ -97,7 +99,7 @@ function Signup() {
           <input value={email} onChange={e => setEmail(e.target.value)} placeholder='이메일'/>
           <input value={password} type="password" onChange={e => setPassword(e.target.value)} placeholder='비밀번호'/>
           <input value={displayName} onChange={e => setDisplayName(e.target.value)} placeholder='이름'/>
-          <button type="submit">회원가입</button>
+          <button type="submit" onClick={handleSignup}>회원가입</button>
         </form>
       </Section>
     </div>
