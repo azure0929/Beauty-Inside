@@ -1,19 +1,75 @@
+import { useNavigate } from 'react-router-dom'
 import GlobalStyle from '../../styles/GlobalStyles'
 import styled from 'styled-components'
 
 const PersonalColor = () => {
+  const navigate = useNavigate()
 
-  // Title 부분은 테스트용입니다. const Title 부분과 <Title> 줄을 지우고 내용을 넣으시면 됩니다.
-  const Title = styled.h1`
-    font-family: 'InkLipquid';
-    text-align: center;
+  //섹션-퍼스널컬러
+  const Section = styled.div`
     margin-top: 100px;
+    box-sizing: border-box;
+    > div {
+      text-align: center;
+      width: 990px;
+      margin: 0 auto;
+      > p {
+        font-family: 'InkLipquid';
+        font-size: 42px;
+        letter-spacing: -0.05em;
+        > span {
+          color: #ffa9be;
+        }
+      }
+    }
+  `
+  // 이미지
+  const Contents = styled.div`
+    width: 100%;
+    margin-top: 44px;
+    > img {
+      width: 100%;
+      object-fit: cover;
+    }
+  `
+
+  //진단하기 버튼
+  const Button = styled.button`
+    font-family: 'Noto Sans KR';
+    font-size: 26px;
+    color: #fff;
+    background-color: #dedede;
+    margin-top: 50px;
+    padding: 12px 60px;
+    border-radius: 30px;
+    transition: 0.3s;
+    cursor: pointer;
+    &:hover {
+      background-color: #ffa9be;
+    }
   `
 
   return (
     <div>
       <GlobalStyle />
-      <Title>퍼스널 컬러 진단</Title>
+      <Section>
+        <div>
+          <p>
+            나에게 가장 잘 어울리는 <br />
+            <span>퍼스널 컬러</span> 찾기
+          </p>
+          <Contents>
+            <img src="assets/personallogo.png" alt="퍼스널 진단" />
+          </Contents>
+          <Button
+            onClick={() => {
+              navigate('/PersonalColorTest')
+            }}
+          >
+            진단하기
+          </Button>
+        </div>
+      </Section>
     </div>
   )
 }

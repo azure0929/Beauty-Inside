@@ -1,3 +1,4 @@
+
 import styled from 'styled-components';
 import { useState, FormEvent } from 'react';
 import { signIn } from '../apis/api';
@@ -67,6 +68,7 @@ const SignInBox = styled.div`
     align-items: center;
   }
 `
+
 const SignIn = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -102,9 +104,10 @@ const SignIn = () => {
   }
 
   const handleSignIn = async (e: FormEvent) => {
-    e.preventDefault();
-  
+    e.preventDefault()
+
     try {
+
       const response = await signIn({ email, password }); // 이메일과 비밀번호를 body로 전달
       if (response.success) {
         alert('로그인에 성공하였습니다.');
@@ -117,9 +120,9 @@ const SignIn = () => {
     } catch (error) {
       console.error('로그인에 실패하였습니다.', error);
       alert('로그인에 실패하였습니다.');
+
     }
-  };
-  
+  }
 
   return (
     <SignInBox isValidEmail={isValidEmail}>
