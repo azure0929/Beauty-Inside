@@ -1,5 +1,6 @@
-import React, { useState,FormEvent } from 'react';
+import { useState,FormEvent } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const Section = styled.div`
   font-family: 'Noto Sans KR';
@@ -65,14 +66,24 @@ function Signup() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
+  const navigate = useNavigate();
+
+  const handleSignup = () => {
+    if (displayName === '' || email === '' || password === '') {
+      alert('정보를 입력해주세요.');
+      return;
+    }
+
+    // 페이지 이동
+    navigate('/SignUpResult');
+  };
 
   const headers = {
-      "content-type": "application/json",
-      "apikey": "KDT5_nREmPe9B",
-      "username": "KDT5_Team4"
-    }
+    "content-type": "application/json",
+    "apikey": "KDT5_nREmPe9B",
+    "username": "KDT5_Team4"
+  }
   
- 
   async function signUp(event: FormEvent) {
     event.preventDefault()
     const res = await fetch('https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/signup', {
@@ -88,8 +99,6 @@ function Signup() {
     console.log(json)
   }
 
-
-
   return (
     <div>
       <Section>
@@ -103,7 +112,7 @@ function Signup() {
           <input value={email} onChange={e => setEmail(e.target.value)} placeholder='이메일'/>
           <input value={password} type="password" onChange={e => setPassword(e.target.value)} placeholder='비밀번호'/>
           <input value={displayName} onChange={e => setDisplayName(e.target.value)} placeholder='이름'/>
-          <button type="submit">회원가입</button>
+          <button type="submit" onClick={handleSignup}>회원가입</button>
         </form>
       </Section>
     </div>
