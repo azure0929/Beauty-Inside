@@ -187,3 +187,19 @@ export const getPurchaseDetail = async (id) => {
     return false
   }
 }
+
+
+//사용자 : 목록 조회
+export const getProductList = async  ({ searchText,searchTags }) => {
+  try {
+    const { data } = await requestApi.post(
+      'products/search',
+      { searchText, searchTags}
+    )
+    return data
+  } catch (error) {
+    console.warn(error)
+    console.warn('fail to load getProductList')
+    return false
+  }
+}
