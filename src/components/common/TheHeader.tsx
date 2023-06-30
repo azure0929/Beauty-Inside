@@ -2,7 +2,7 @@ import companyLogo from '../../../public/assets/logo.png'
 import GlobalStyle from '../../styles/GlobalStyles'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
-
+import React, { useState } from 'react';
 
 const Inner = styled.div`
   width: calc(100% - 334px);
@@ -63,15 +63,22 @@ const Nav = styled.ul`
 const NavStyle = styled(NavLink)`
   color: #191919;
   &:link {
-    transition : .2s;
+    transition: .2s;
   }
   &.active {
     color: #ffa9be;
   }
 `
 
-
 const Header = () => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [displayName, setDisplayName] = useState('');
+
+  const handleLogout = () => {
+    // 로그아웃 처리를 수행하는 함수
+    setLoggedIn(false);
+    setDisplayName('');
+  };
 
   return (
     <div>
@@ -81,22 +88,24 @@ const Header = () => {
           <GnbMenu>
             <div>
               <NavLink to="/">
-                <img src={companyLogo} />
+                <img src={companyLogo} alt="Company Logo" />
               </NavLink>
             </div>
+
             <div>
-              <li>
-                <NavLink to="/SignIn">로그인</NavLink>
-              </li>
-              <li>
-                <NavLink to="/SignUp">회원가입</NavLink>
-              </li>
-              <li>
-                <NavLink to="/Cart">장바구니</NavLink>
-              </li>
-              <li>
-                <NavLink to="/MyPage/PurchaseList">마이페이지</NavLink>
-              </li>
+              {loggedIn ? (
+                <p>{`${displayName}님 안녕하세요`}</p>
+              ) : (
+                <>
+                  <NavLink to="/SignIn">로그인</NavLink>
+                  <NavLink to="/SignUp">회원가입</NavLink>
+                </>
+              )}
+              {/* 로그아웃 버튼 */}
+              {loggedIn && <button onClick={handleLogout}>로그아웃</button>}
+              <li><NavLink to='/SignUp'>회원가입</NavLink></li>
+              <li><NavLink to='/Cart'>장바구니</NavLink></li>
+              <li><NavLink to='/MyPage'>마이페이지</NavLink></li>
             </div>
           </GnbMenu>
           <Nav>
