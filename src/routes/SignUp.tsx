@@ -1,6 +1,6 @@
 import { useState,FormEvent } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';  
 
 const Section = styled.div`
   font-family: 'Noto Sans KR';
