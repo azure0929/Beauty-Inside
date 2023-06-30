@@ -3,62 +3,69 @@ import styled from 'styled-components';
 
 // 컴포넌트 Props 타입 정의
 interface Props {
-  onSelectCategory: (categories: string[]) => void; // 카테고리 선택 시 실행될 콜백 함수
+  onSelectTags: (tags: string[]) => void; // 태그 선택 시 실행될 콜백 함수
 }
 
 // 필터 컨테이너 스타일드 컴포넌트
 const FilterContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 `;
 
-// 체크박스 스타일드 컴포넌트
 const Checkbox = styled.input`
   margin-right: 5px;
 `;
 
-// 라벨 스타일드 컴포넌트
 const Label = styled.label`
   margin-right: 10px;
 `;
 
 // MakeupFilter 컴포넌트
-const MakeupFilter = ({ onSelectCategory }: Props) => {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+const MakeupFilter = ({ onSelectTags }: Props) => {
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  // 카테고리 변경 이벤트 핸들러
-  const handleCategoryChange = (event: ChangeEvent<HTMLInputElement>) => {
+  // 태그 변경 이벤트 핸들러
+  const handleTagChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
 
     if (checked) {
-      // 선택한 카테고리 추가
-      setSelectedCategories((prevCategories) => [...prevCategories, value]);
+      // 선택한 태그 추가
+      setSelectedTags((prevTags) => [...prevTags, value]);
     } else {
-      // 선택 취소한 카테고리 제거
-      setSelectedCategories((prevCategories) =>
-        prevCategories.filter((category) => category !== value)
-      );
+      // 선택 취소한 태그 제거
+      setSelectedTags((prevTags) => prevTags.filter((tag) => tag !== value));
     }
   };
 
-  // 모든 카테고리 선택 해제 이벤트 핸들러
-  const handleAllCategories = () => {
-    setSelectedCategories([]); // 모든 카테고리 선택 해제
+  // 모든 태그 선택 해제 이벤트 핸들러
+  const handleAllTags = () => {
+    setSelectedTags([]);
   };
 
-  // 선택한 카테고리 배열을 전달하여 분류 처리
+  // 선택한 태그 배열을 전달하여 분류 처리
   useEffect(() => {
-    onSelectCategory(selectedCategories); // onSelectCategory 콜백 함수 호출
-  }, [selectedCategories, onSelectCategory]);
+    onSelectTags(selectedTags); // onSelectTags 콜백 함수 호출
+  }, [selectedTags, onSelectTags]);
+  
+
+  
 
   return (
     <FilterContainer>
       <Label>
         <Checkbox
           type="checkbox"
+          checked={selectedTags.length === 0}
+          onChange={handleAllTags}
+        />
+        전체
+      </Label>
+      <Label>
+        <Checkbox
+          type="checkbox"
           value="페이스"
-          onChange={handleCategoryChange}
+          onChange={handleTagChange}
         />
         페이스
       </Label>
@@ -66,7 +73,7 @@ const MakeupFilter = ({ onSelectCategory }: Props) => {
         <Checkbox
           type="checkbox"
           value="립"
-          onChange={handleCategoryChange}
+          onChange={handleTagChange}
         />
         립
       </Label>
@@ -74,17 +81,9 @@ const MakeupFilter = ({ onSelectCategory }: Props) => {
         <Checkbox
           type="checkbox"
           value="아이"
-          onChange={handleCategoryChange}
+          onChange={handleTagChange}
         />
         아이
-      </Label>
-      <Label>
-        <Checkbox
-          type="checkbox"
-          checked={selectedCategories.length === 0} // 모든 체크박스를 선택 해제할 때 체크 여부 처리
-          onChange={handleAllCategories}
-        />
-        전체
       </Label>
     </FilterContainer>
   );

@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom'
 
-// 상품 객체의 타입 정의
-interface Item {
-  id: number;
-  name: string;
-  category: string;
-  // 다른 필드들...
-}
-
-// MakeupList 컴포넌트의 Props 타입 정의
+// 컴포넌트 Props 타입 정의
 interface Props {
   items: Item[];
 }
@@ -45,6 +38,8 @@ const ItemContainer = styled.div`
   align-items: center;
   margin-bottom: 20px;
   border-radius: 8px;
+  cursor: pointer;
+
 
   &:hover {
     outline: 3px solid #FFA9BE;
@@ -63,6 +58,7 @@ const ButtonWrapper = styled.div`
   margin-top: 50px;
   display: flex;
   flex-direction: row;
+
 
   button {
     padding: 15px 20px;
@@ -91,27 +87,34 @@ const Title = styled.h1`
   margin-top: 10px;
 `;
 
-// 부제목 스타일드 컴포넌트
-const Subtitle = styled.h2`
-  font-size: 16px;
-  margin-top: 5px;
-`;
+
 
 // 가격 스타일드 컴포넌트
 const Price = styled.h3`
   font-size: 16px;
-  margin-top: 5px;
+  margin: 15px 0px;
 `;
 
-const MakeupList = ({ items }: Props) => {
+const MakeupList: React.FC<Props> = ({ items }) => {
   const itemsPerPage = 12; // 페이지당 보여줄 상품 수
+  const [currentPage, setCurrentPage] = React.useState(1); // 현재 페이지 상태 관리
+
   const totalPages = Math.ceil(items.length / itemsPerPage); // 전체 페이지 수 계산
-  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태 관리
+
+  const navigate = useNavigate()
 
   const currentItems = items.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   ); // 현재 페이지에 해당하는 상품 목록
+
+  const handleClickItem = (id) => {
+    navigate('/ProductDetail', {
+      state: {
+        id,
+      },
+    })
+  }
 
   const goToPreviousPage = () => {
     if (currentPage > 1) {
@@ -153,23 +156,22 @@ const MakeupList = ({ items }: Props) => {
         {currentItems.map((item) => (
           <ItemContainer key={item.id}>
             <ImageWrapper>
-              <Image src={item.image} alt="상품 이미지" />
+            <Image
+                src={item.thumbnail}
+                alt="상품 이미지"
+                onClick={() => handleClickItem(item.id)}
+              />
             </ImageWrapper>
-            <Title>{item.name}</Title>
-            <Subtitle>{item.category}</Subtitle>
+            <Title>{item.title}</Title>
             <Price>{item.price.toLocaleString()}원</Price>
           </ItemContainer>
         ))}
       </ListContainer>
       <ButtonWrapper>
-        <button onClick={goToPreviousPage} >
-          이전
-        </button>
+        <button onClick={goToPreviousPage}>이전</button>
         {/* 페이지 번호 버튼들을 렌더링 */}
         {renderPageNumbers()}
-        <button onClick={goToNextPage}>
-          다음
-        </button>
+        <button onClick={goToNextPage}>다음</button>
       </ButtonWrapper>
     </>
   );
