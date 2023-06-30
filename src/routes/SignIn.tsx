@@ -75,7 +75,8 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isValidEmail, setIsValidEmail] = useState(false);
-
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [displayName, setDisplayName] = useState(''); // setUsername -> setDisplayName 변경
   const headers = {
     'content-type': 'application/json',
     apikey: 'KDT5_nREmPe9B',
@@ -85,29 +86,24 @@ const SignIn = () => {
   const validateEmail = (input) => {
     // 이메일 유효성 검사
     const regex = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
-    // 정규 표현식 이용,
-    //  /^: 정규 표현식의 처음,
-    //  $/: 정규 표현식의 끝,
-    // [] : 문자셋,
-    // [a-zA-z0-9] : 영문 소,대문자 , 숫자만 입력 가능.
-    // {2,3} : 2~3 글자만 입력 가능.
-
     return regex.test(input);
   };
 
   const handleEmailChange = (e) => {
     const inputEmail = e.target.value;
-    setEmail(inputEmail); // 이메일 값 업데이트
-    setIsValidEmail(validateEmail(inputEmail)); // 이메일 유효성을 검사하여 상태 값을 업데이트
+    setEmail(inputEmail);
+    setIsValidEmail(validateEmail(inputEmail));
   };
   
-  const handleSignIn = async (e: FormEvent) => {
+  const handleSignIn = async (e: Event) => { // FormEvent -> Event로 변경
     e.preventDefault();
-  
+
     try {
       const response = await signIn(email, password);
       if (response.success) {
         alert('로그인에 성공하였습니다.');
+        setLoggedIn(true);
+        setDisplayName(response.data.user.displayName); // setUsername -> setDisplayName 변경
         navigate(-1);
       } else {
         alert('비밀번호나 패스워드가 일치하지 않습니다.');
@@ -127,18 +123,26 @@ const SignIn = () => {
           의 다양한 서비스와 퍼스널 진단을 누리세요.
         </div>
       </h1>
-      <form onSubmit={handleSignIn}>
-        <input name="email" value={email} onChange={handleEmailChange} placeholder="이메일" />
-        {/* 값이 변경되면 handleEmailChange 함수 호출. */}
-        <input name="password" value={password} type="password" onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호" />
-        {/* 값이 변경되면 setPassword 함수 호출 */}
-        <button
-          type="submit"
-          style={{ backgroundColor: isValidEmail && password !== '' ? '#FFA9BE' : '#DEDEDE' }}
-        >
-          로그인
-        </button>
-      </form>
+      {loggedIn ? (
+        <p>{`${displayName}님 안녕하세요`}</p>
+      ) : (
+        <form onSubmit={handleSignIn}>
+          <input name="email" value={email} onChange={handleEmailChange} placeholder="이메일" />
+          <input
+            name="password"
+            value={password}
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="비밀번호"
+          />
+          <button
+            type="submit"
+            style={{ backgroundColor: isValidEmail && password !== '' ? '#FFA9BE' : '#DEDEDE' }}
+          >
+            로그인
+          </button>
+        </form>
+      )}
     </SignInBox>
   );
 };
