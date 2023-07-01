@@ -1,8 +1,7 @@
-import styled from 'styled-components';
-import { useState, FormEvent, useEffect } from 'react';
-import { signIn, authVerification } from '../apis/api';
-
-
+import styled from 'styled-components'
+import { useState, FormEvent, useEffect } from 'react'
+import { signIn, authVerification } from '../apis/api'
+import { useNavigate } from 'react-router-dom'
 
 const SignInBox = styled.div`
   font-family: 'Noto Sans KR';
@@ -69,70 +68,73 @@ const SignInBox = styled.div`
 `
 
 const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isValidEmail, setIsValidEmail] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [displayName, setDisplayName] = useState('');
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [isValidEmail, setIsValidEmail] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [displayName, setDisplayName] = useState('')
 
   const validateEmail = (input: string) => {
     // 이메일 유효성 검사
-    const regex = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
-    return regex.test(input);
-  };
+    const regex = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/
+    return regex.test(input)
+  }
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputEmail = e.target.value;
-    setEmail(inputEmail);
-    setIsValidEmail(validateEmail(inputEmail));
-  };
+    const inputEmail = e.target.value
+    setEmail(inputEmail)
+    setIsValidEmail(validateEmail(inputEmail))
+  }
 
   const handleSignIn = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
-      const response = await signIn(email, password);
+      const response = await signIn(email, password)
       if (response.accessToken) {
-        localStorage.setItem('accessToken', response.accessToken);
-        alert('로그인에 성공하였습니다.');
-        setLoggedIn(true);
-        window.location.reload(); 
+        localStorage.setItem('accessToken', response.accessToken)
+        alert('로그인에 성공하였습니다.')
+        setLoggedIn(true)
+
+        navigate('/')
+        window.location.reload()
       } else {
-        alert('이메일이나 패스워드가 일치하지 않습니다.');
+        alert('이메일이나 패스워드가 일치하지 않습니다.')
       }
     } catch (error) {
-      console.error('로그인에 실패하였습니다.', error);
-      alert('로그인에 실패하였습니다.');
+      console.error('로그인에 실패하였습니다.', error)
+      alert('로그인에 실패하였습니다.')
     }
-  };
-  
+  }
+
   useEffect(() => {
     const verifyToken = async () => {
-      const accessToken = localStorage.getItem('accessToken');
+      const accessToken = localStorage.getItem('accessToken')
       if (accessToken) {
         try {
           // 토큰 검증 및 사용자 정보 가져오기
-          const response = await authVerification();
-          console.log('인증 결과:', response); // 인증 결과 콘솔 출력
+          const response = await authVerification()
+          console.log('인증 결과:', response) // 인증 결과 콘솔 출력
           if (response.accessToken) {
-            setLoggedIn(true);
-            setDisplayName(response.displayName);
+            setLoggedIn(true)
+            setDisplayName(response.displayName)
           } else {
-            setLoggedIn(false);
-            setDisplayName('');
-            localStorage.removeItem('accessToken');
+            setLoggedIn(false)
+            setDisplayName('')
+            localStorage.removeItem('accessToken')
           }
         } catch (error) {
-          console.error('토큰 검증에 실패하였습니다.', error);
-          setLoggedIn(false);
-          setDisplayName('');
-          localStorage.removeItem('accessToken');
+          console.error('토큰 검증에 실패하였습니다.', error)
+          setLoggedIn(false)
+          setDisplayName('')
+          localStorage.removeItem('accessToken')
         }
       }
-    };
-  
-    verifyToken();
-  }, []);
+    }
+
+    verifyToken()
+  }, [])
 
   return (
     <SignInBox isValidEmail={isValidEmail}>
@@ -159,7 +161,7 @@ const SignIn = () => {
         </button>
       </form>
     </SignInBox>
-  );
-};
+  )
+}
 
-export default SignIn;
+export default SignIn

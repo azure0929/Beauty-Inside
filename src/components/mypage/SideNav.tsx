@@ -11,12 +11,9 @@ export const SideNav = () => {
       <NavButton to="/MyPage/Account" className={({ isActive }) => (isActive ? 'active' : '')}>
         계좌 관리
       </NavButton>
-      <NavButton to="/MyPage/MyInfo" className={({ isActive }) => (isActive ? 'active' : '')}>
-        개인 정보 수정
-      </NavButton>
-      <NavButton to="/MyPage/Logout" className={({ isActive }) => (isActive ? 'active' : '')}>
+      {/* <NavButton to="/MyPage/Logout" className={({ isActive }) => (isActive ? 'active' : '')}>
         로그아웃
-      </NavButton>
+      </NavButton> */}
     </NavWrap>
   )
 }

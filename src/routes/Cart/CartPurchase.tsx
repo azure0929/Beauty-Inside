@@ -99,9 +99,9 @@ const Product = styled.div`
           width: 50px;
           height: 30px;
           font-family: 'Noto Sans KR';
-          letter-spacing: -.05em;
+          letter-spacing: -0.05em;
           font-size: 14px;
-          transition: .3s;
+          transition: 0.3s;
           &:hover {
             background-color: #ffa9be;
             border-color: transparent;
@@ -234,40 +234,40 @@ const CartPurchase = () => {
   const navigateToMain = () => {
     navigate('/')
   }
-  // 주문서로 이동
-  const navigateToPayment = () => {
-    navigate('/Payment', {
-      state: {
-        productList,
-      },
-    })
-  }
 
   useEffect(() => {
-    ;(async () => {
-      try {
-        const list = localStorage.getItem(STORAGE_KEY)
-        setproductList(JSON.parse(list))
-      } catch (error) {
-        console.error('Error fetching products:', error)
-      }
-    })()
+    //로컬스토리지 초기화
+    localStorage.getItem(STORAGE_KEY) ? '' : localStorage.setItem(STORAGE_KEY, JSON.stringify([]))
+
+    const list = localStorage.getItem(STORAGE_KEY)
+    setproductList(JSON.parse(list))
   }, [])
+
+  // 주문서로 이동
+  const navigateToPayment = () => {
+    if (productList.length === 0) {
+      alert('주문할 상품 목록이 없습니다.')
+    } else {
+      navigate('/Payment', {
+        state: {
+          productList,
+        },
+      })
+    }
+  }
 
   let total = 0
   let producttotal = 0
   const DELIVERY_CHARGE = 2500
 
-  productList.map((product) => (producttotal = producttotal + product.price))
+  productList?.map((product) => (producttotal = producttotal + product.price))
   total = producttotal + DELIVERY_CHARGE
-
 
   const deleteProduct = (id) => {
     const newArray = productList.filter((item) => item.id !== id)
-    
-    setproductList (newArray)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newArray))
 
+    setproductList(newArray)
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newArray))
   }
 
   return (
@@ -287,7 +287,7 @@ const CartPurchase = () => {
               <ul className="product-list">
                 {productList === null ? (
                   <p>목록없음</p>
-                  ) : (
+                ) : (
                   productList.map((product, index) => (
                     <li key={index}>
                       <div className="thumbnail">
@@ -298,22 +298,20 @@ const CartPurchase = () => {
                       <div className="contents">
                         <h3>{product.title.split('-')[0]}</h3>
                         <span>{product.title.split('-')[1]}</span>
-                        <p><span>{product.price.toLocaleString('ko-KR')}</span>원</p>
+                        <p>
+                          <span>{product.price.toLocaleString('ko-KR')}</span>원
+                        </p>
                       </div>
 
-                      <button type='button' onClick={() => deleteProduct(product.id)}>삭제</button>
+                      <button type="button" onClick={() => deleteProduct(product.id)}>
+                        삭제
+                      </button>
                     </li>
                   ))
                 )}
               </ul>
-              {/* <div className="price">
-                <p>
-                  <span>49,000</span>원
-                </p>
-              </div> */}
               <div className="link">
                 <Button onClick={navigateToMain}>쇼핑 계속하기</Button>
-                <Button>구매하기</Button>
               </div>
             </div>
           </Product>

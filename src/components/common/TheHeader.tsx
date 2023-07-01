@@ -1,14 +1,14 @@
-import companyLogo from '../../../public/assets/logo.png';
-import GlobalStyle from '../../styles/GlobalStyles';
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { authVerification } from '../../apis/api';
+import companyLogo from '../../../public/assets/logo.png'
+import GlobalStyle from '../../styles/GlobalStyles'
+import styled from 'styled-components'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { authVerification } from '../../apis/api'
 
 const Inner = styled.div`
   width: calc(100% - 334px);
   margin: 0 auto;
-`;
+`
 
 const GnbMenu = styled.div`
   position: relative;
@@ -35,7 +35,7 @@ const GnbMenu = styled.div`
       gap: 30px;
       font-family: 'Noto Sans KR';
       font-size: 14px;
-      letter-spacing: -.025em;
+      letter-spacing: -0.025em;
       color: #191919;
       text-align: right;
       margin-right: 30px;
@@ -44,7 +44,7 @@ const GnbMenu = styled.div`
       }
     }
   }
-`;
+`
 
 const Nav = styled.ul`
   height: 80px;
@@ -56,52 +56,56 @@ const Nav = styled.ul`
   > li {
     font-family: 'Noto Sans KR';
     font-size: 16px;
-    letter-spacing: -.025em;
+    letter-spacing: -0.025em;
     color: #191919;
   }
-`;
+`
 
 const NavStyle = styled(NavLink)`
   color: #191919;
   &:link {
-    transition: .2s;
+    transition: 0.2s;
   }
   &.active {
     color: #ffa9be;
   }
-`;
+`
 
 const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [displayName, setDisplayName] = useState('');
+  const navigate = useNavigate()
+
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [displayName, setDisplayName] = useState('')
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem('accessToken')
     if (accessToken) {
-      setLoggedIn(true);
+      setLoggedIn(true)
       authVerification()
-        .then(data => {
+        .then((data) => {
           if (data) {
-            setDisplayName(data.displayName); 
+            setDisplayName(data.displayName)
           } else {
-            setDisplayName('');
+            setDisplayName('')
           }
         })
-        .catch(error => {
-          console.error('Failed to verify token:', error);
-          setDisplayName('');
-        });
+        .catch((error) => {
+          console.error('Failed to verify token:', error)
+          setDisplayName('')
+        })
     } else {
-      setLoggedIn(false);
-      setDisplayName('');
+      setLoggedIn(false)
+      setDisplayName('')
     }
-  }, []);
+  }, [])
 
   const handleLogout = () => {
-    setLoggedIn(false);
-    setDisplayName('');
-  };
-
+    setLoggedIn(false)
+    setDisplayName('')
+    localStorage.removeItem('accessToken')
+    navigate('/')
+    window.location.reload()
+  }
 
   return (
     <div>
@@ -122,6 +126,12 @@ const Header = () => {
                   <li>
                     <button onClick={handleLogout}>로그아웃</button>
                   </li>
+                  <li>
+                    <NavLink to="/CartPurchase">장바구니</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/MyPage/PurchaseList">마이페이지</NavLink>
+                  </li>
                 </>
               ) : (
                 <>
@@ -133,12 +143,6 @@ const Header = () => {
                   </li>
                 </>
               )}
-              <li>
-                <NavLink to="/Cart">장바구니</NavLink>
-              </li>
-              <li>
-                <NavLink to="/MyPage">마이페이지</NavLink>
-              </li>
             </div>
           </GnbMenu>
           <Nav>
@@ -151,10 +155,7 @@ const Header = () => {
               </NavStyle>
             </li>
             <li>
-              <NavStyle
-                className={({ isActive }) => 'nav-link' + (isActive ? 'a' : '')}
-                to="/Best"
-              >
+              <NavStyle className={({ isActive }) => 'nav-link' + (isActive ? 'a' : '')} to="/Best">
                 베스트
               </NavStyle>
             </li>
@@ -170,7 +171,7 @@ const Header = () => {
         </Inner>
       </header>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
