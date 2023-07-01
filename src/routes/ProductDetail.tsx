@@ -105,16 +105,12 @@ const ProductDetail = () => {
     navigate('/CartPurchase')
   }
 
-  const [dataLoading, setdataLoading] = useState(false)
-
   const [productDetail, setproductDetail] = useState(false)
 
   useEffect(() => {
     ;(async () => {
       try {
-        // setdataLoading(true)
         const data = await getProduct(id)
-        console.log(data)
         setproductDetail(data)
 
         //로컬스토리지 초기화
@@ -122,10 +118,7 @@ const ProductDetail = () => {
           ? ''
           : localStorage.setItem(STORAGE_KEY, JSON.stringify([]))
       } catch (error) {
-        // setdataLoading(false)
         console.error('Error fetching products:', error)
-      } finally {
-        // setdataLoading(false)
       }
     })()
   }, [])

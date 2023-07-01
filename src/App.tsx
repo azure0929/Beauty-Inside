@@ -21,45 +21,11 @@ import { PurchaseDetails } from './routes/MyPage/PurchaseDetails'
 import ProductDetail from './routes/ProductDetail'
 import { PaymentCompleted } from './routes/Payment/PaymentCompleted'
 import { UserLogout } from './routes/MyPage/UserLogout'
-import React, { useState, useEffect } from 'react';
-import { authVerification } from './apis/api';
-
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [displayName, setDisplayName] = useState('');
-
-  useEffect(() => {
-    const verifyToken = async () => {
-      const accessToken = localStorage.getItem('accessToken');
-      if (accessToken) {
-        try {
-          // 토큰 검증 및 사용자 정보 가져오기
-          const response = await authVerification();
-          console.log('인증 결과:', response); // 인증 결과 콘솔 출력
-          if (response.accessToken) {
-            setLoggedIn(true);
-            setDisplayName(response.displayName);
-          } else {
-            setLoggedIn(false);
-            setDisplayName('');
-            localStorage.removeItem('accessToken');
-          }
-        } catch (error) {
-          console.error('토큰 검증에 실패하였습니다.', error);
-          setLoggedIn(false);
-          setDisplayName('');
-          localStorage.removeItem('accessToken');
-        }
-      }
-    };
-
-    verifyToken();
-  }, []);
-
   return (
     <div>
-      <Header loggedIn={undefined} handleLogout={undefined} />
+      <Header />
       <div className="container">
         <Routes>
           <Route path="/" element={<Main />} />

@@ -8,121 +8,11 @@ import { LoadingSpinner } from '../../components/common/LoadingSpinner'
 
 export const PurchaseList = () => {
   const navigate = useNavigate()
-  const mockdata = [
-    {
-      detailId: '9jAoagzrZBkSWI5NctEB',
-      product: {
-        productId: 'nbqtQvEivYwEXTDet7YM',
-        title: 'MacBook Pro 16-스페이스 그레이',
-        price: 3360000,
-        description:
-          '역대 가장 강력한 MacBook Pro가 등장했습니다. 최초의 프로용 Apple Silicon인 M1 Pro 또는 M1 Max 칩을 탑재해 쏜살같이 빠른 속도는 물론, 획기적인 성',
-        tags: ['가전', '노트북', '컴퓨터'],
-        thumbnail: 'https://storage.googleapis.com/heropy-api/vIKMk_jy4Yv195256.png',
-        discountRate: 0,
-      },
-      reservation: null,
-      timePaid: '2021-11-07T20:17:32.112Z',
-      isCanceled: true,
-      done: false,
-    },
-    {
-      detailId: '9jAoagzrZBkSWI5NctEB',
-      product: {
-        productId: 'nbqtQvEivYwEXTDet7YM',
-        title: 'MacBook Pro 16-로즈 골드',
-        price: 3360000,
-        description:
-          '역대 가장 강력한 MacBook Pro가 등장했습니다. 최초의 프로용 Apple Silicon인 M1 Pro 또는 M1 Max 칩을 탑재해 쏜살같이 빠른 속도는 물론, 획기적인 성',
-        tags: ['가전', '노트북', '컴퓨터'],
-        thumbnail: 'https://storage.googleapis.com/heropy-api/vIKMk_jy4Yv195256.png',
-        discountRate: 0,
-      },
-      reservation: null,
-      timePaid: '2021-11-07T20:17:32.112Z',
-      isCanceled: true,
-      done: false,
-    },
-    {
-      detailId: '9jAoagzrZBkSWI5NctEB',
-      product: {
-        productId: 'nbqtQvEivYwEXTDet7YM',
-        title: 'MacBook Pro 16-스타라이트',
-        price: 3360000,
-        description:
-          '역대 가장 강력한 MacBook Pro가 등장했습니다. 최초의 프로용 Apple Silicon인 M1 Pro 또는 M1 Max 칩을 탑재해 쏜살같이 빠른 속도는 물론, 획기적인 성',
-        tags: ['가전', '노트북', '컴퓨터'],
-        thumbnail: 'https://storage.googleapis.com/heropy-api/vIKMk_jy4Yv195256.png',
-        discountRate: 0,
-      },
-      reservation: null,
-      timePaid: '2021-11-07T20:17:32.112Z',
-      isCanceled: true,
-      done: false,
-    },
-    {
-      detailId: '9jAoagzrZBkSWI5NctEB',
-      product: {
-        productId: 'nbqtQvEivYwEXTDet7YM',
-        title: 'MacBook Pro 16-미드나이트',
-        price: 3360000,
-        description:
-          '역대 가장 강력한 MacBook Pro가 등장했습니다. 최초의 프로용 Apple Silicon인 M1 Pro 또는 M1 Max 칩을 탑재해 쏜살같이 빠른 속도는 물론, 획기적인 성',
-        tags: ['가전', '노트북', '컴퓨터'],
-        thumbnail: 'https://storage.googleapis.com/heropy-api/vIKMk_jy4Yv195256.png',
-        discountRate: 0,
-      },
-      reservation: null,
-      timePaid: '2021-11-07T20:17:32.112Z',
-      isCanceled: true,
-      done: false,
-    },
-    {
-      detailId: '9jAoagzrZBkSWI5NctEB',
-      product: {
-        productId: 'nbqtQvEivYwEXTDet7YM',
-        title: 'MacBook Pro 16-실버',
-        price: 3360000,
-        description:
-          '역대 가장 강력한 MacBook Pro가 등장했습니다. 최초의 프로용 Apple Silicon인 M1 Pro 또는 M1 Max 칩을 탑재해 쏜살같이 빠른 속도는 물론, 획기적인 성',
-        tags: ['가전', '노트북', '컴퓨터'],
-        thumbnail: 'https://storage.googleapis.com/heropy-api/vIKMk_jy4Yv195256.png',
-        discountRate: 0,
-      },
-      reservation: null,
-      timePaid: '2021-11-07T20:17:32.112Z',
-      isCanceled: true,
-      done: false,
-    },
-    {
-      detailId: 'dMhfxyrAupQP18OYmywy',
-      product: {
-        productId: 'cFmeC7aY5KjZbBAdJE9y',
-        title: '삼성전자 스마트모니터 M7 S43AM700-화이트',
-        price: 639000,
-        description:
-          '107.9cm(43인치) / 와이드(16:9) / 평면 / VA / 3840 x 2160(4K UHD) / 픽셀피치: 0.2451mm / 8ms(GTG) / 300cd / 5,00',
-        tags: ['가전', '모니터', '컴퓨터'],
-        thumbnail: 'https://storage.googleapis.com/heropy-api/vBAK4MQdH5v195712.png',
-        discountRate: 0,
-      },
-      reservation: {
-        start: '2021-11-12T06:00:00.000Z',
-        end: '2021-11-12T07:00:00.000Z',
-        isCanceled: false,
-        isExpired: true,
-      },
-      timePaid: '2021-11-07T20:01:49.100Z',
-      isCanceled: false,
-      done: true,
-    },
-  ]
+
   const [curPage, setCurPage] = useState(1)
   const [limitPage, setLimitPage] = useState(4) //한번에 보여질 개수
   const [dataLoading, setdataLoading] = useState(false)
   const [purchaseList, setpurchaseList] = useState([])
-
-  const [noList, setnoList] = useState(false)
 
   //페이지 계산
   const lastPage = curPage * limitPage
@@ -150,7 +40,6 @@ export const PurchaseList = () => {
       } catch (error) {
         setdataLoading(false)
         console.error('Error fetching purchase list:', error)
-        setnoList(true)
       } finally {
         setdataLoading(false)
       }
@@ -159,11 +48,9 @@ export const PurchaseList = () => {
 
   return (
     <Wrap>
-      {purchaseList.length === 0 ? <p>구매내역이 없습니다.</p> : ''}
-      <p>구매내역이 없습니다.</p>
-      {/* <PageHeader title="구매 내역" />
-      {noList ? (
-        <p>구매내역이 없습니다.</p>
+      <PageHeader title="구매 내역" />
+      {!purchaseList ? (
+        <EmptyList>구매 내역이 없습니다.</EmptyList>
       ) : (
         <>
           <Total>({purchaseList.length})</Total>
@@ -197,7 +84,7 @@ export const PurchaseList = () => {
           </BottomInner>
           {dataLoading && <LoadingSpinner />}
         </>
-      )} */}
+      )}
     </Wrap>
   )
 }
@@ -268,4 +155,13 @@ const MoreButton = styled.button`
   font-size: 16px;
   color: #8e8e8e;
   text-decoration: underline;
+`
+const EmptyList = styled.div`
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #ffa9be;
 `

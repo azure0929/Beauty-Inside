@@ -8,36 +8,17 @@ export const Payment = () => {
   let total = 0
   let productTotal = 0
   const DELIVERY_CHARGE = 2500
-
-  const items = [
-    {
-      id: 'i3yOg0gUQXpVb6n5Yah6',
-      name: '오리지널립스틱-히트웨이브',
-      src: '',
-      price: 40000,
-    },
-    {
-      id: 'KuVFr4I445aq3zjQoE4M',
-      name: '하드와이어드아이섀도우-멜로즈',
-      src: '',
-      price: 40000,
-    },
-    {
-      id: 'wbzDFBshCidi0naEotyK',
-      name: '립스틱-첼시걸스',
-      src: '',
-      price: 40000,
-    },
-  ]
-  items.map((item) => (productTotal = item.price + productTotal))
-  total = productTotal + DELIVERY_CHARGE
+  const STORAGE_KEY = 'detail'
 
   const [userInfo, setuserInfo] = useState([])
   const [userAccounts, setuserAccounts] = useState([])
-  //const [selectedAccount, setselectedAccount] = useState('')
   const [accountId, setAccountId] = useState('')
 
   const [productList, setproductList] = useState([])
+
+  //금액계산
+  productList.map((item) => (productTotal = item.price + productTotal))
+  total = productTotal + DELIVERY_CHARGE
 
   // navigate
   const navigate = useNavigate()
@@ -48,26 +29,24 @@ export const Payment = () => {
   }
 
   const requestAllBuy = async () => {
-    const list = items.map((item) => item.id)
+    const products = productList.map((item) => item.id)
 
     if (accountId === '' || accountId === '계좌 선택') {
       alert('결제수단을 선택해주세요')
     } else {
       const results = await Promise.all(
-        list.map((productId) => requestBuy({ productId, accountId })),
+        products.map((productId) => requestBuy({ productId, accountId })),
       )
+      navigate('/PaymentCompleted')
+      let locallist = localStorage.getItem(STORAGE_KEY)
+      locallist = []
+      localStorage.setItem(STORAGE_KEY, locallist)
     }
   }
 
   //결제완료
   const handleClickPayment = () => {
-    const STORAGE_KEY = 'detail'
-
     requestAllBuy()
-    navigate('/PaymentCompleted')
-    let list = localStorage.getItem(STORAGE_KEY)
-    list = []
-    localStorage.setItem(STORAGE_KEY, list)
   }
 
   const location = useLocation()

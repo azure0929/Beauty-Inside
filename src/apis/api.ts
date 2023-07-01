@@ -1,31 +1,28 @@
 import axios from 'axios'
-
+const { VITE_API_KEY, VITE_USERNAME } = import.meta.env
 
 const headers = {
-  "content-type": "application/json",
-  apikey: "KDT5_nREmPe9B",
-  username: "KDT5_Team4"
+  'content-type': 'application/json',
+  apikey: VITE_API_KEY,
+  username: VITE_USERNAME,
 }
-
-
 
 const requestApi = axios.create({
   baseURL: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api',
   headers,
 })
 
-
 // 사용자 : 회원가입
 export const signUp = async (email: string, password: string, displayName: string) => {
   try {
-    const { data } = await requestApi.post('auth/signup', {email,password,displayName})
-    return data;
+    const { data } = await requestApi.post('auth/signup', { email, password, displayName })
+    return data
   } catch (error) {
-    console.warn(error);
-    console.warn('회원가입에 실패했습니다.');
-    return false;
+    console.warn(error)
+    console.warn('회원가입에 실패했습니다.')
+    return false
   }
-};
+}
 
 //사용자: 로그인
 export const signIn = async (email: string, password: string) => {
@@ -51,15 +48,13 @@ export const signOut = async () => {
   }
 }
 
-
-
 //사용자: 등록가능한 계좌 조회
 export const getValidAccounts = async () => {
   try {
     const { data } = await requestApi.get('account/banks', {
       headers: {
         ...headers,
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     })
     return data
@@ -76,7 +71,7 @@ export const getUserAccounts = async () => {
     const { data } = await requestApi.get('account', {
       headers: {
         ...headers,
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     })
     return data
@@ -93,7 +88,7 @@ export const addAccount = async (payload) => {
     const { data } = await requestApi.post('account', payload, {
       headers: {
         ...headers,
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     })
     return data
@@ -114,7 +109,7 @@ export const deleteAccount = async ({ id, signature }) => {
       },
       headers: {
         ...headers,
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     })
     return data
@@ -167,7 +162,7 @@ export const requestBuy = async ({ productId, accountId }) => {
       {
         headers: {
           ...headers,
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       },
     )
@@ -186,7 +181,7 @@ export const getPurchaselist = async () => {
     const { data } = await requestApi.get('products/transactions/details', {
       headers: {
         ...headers,
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     })
     return data
@@ -206,28 +201,22 @@ export const getPurchaseDetail = async (id) => {
       {
         headers: {
           ...headers,
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       },
     )
     return data
-
   } catch (error) {
     console.warn(error)
     console.warn('fail to load purchasedetail')
     return false
   }
-
 }
 
-
 //사용자 : 목록 조회
-export const getProductList = async  ({ searchText,searchTags }) => {
+export const getProductList = async ({ searchText, searchTags }) => {
   try {
-    const { data } = await requestApi.post(
-      'products/search',
-      { searchText, searchTags}
-    )
+    const { data } = await requestApi.post('products/search', { searchText, searchTags })
     return data
   } catch (error) {
     console.warn(error)
@@ -235,4 +224,3 @@ export const getProductList = async  ({ searchText,searchTags }) => {
     return false
   }
 }
-
