@@ -112,13 +112,13 @@ const Main = () => {
     },
   ]
 
-  const handleClickItem = (id) => {
+  const handleClickItem = (id: string) => {
     navigate('/ProductDetail', {
       state: {
         id,
       },
-    })
-  }
+    });
+  };
 
   return (
     <div>

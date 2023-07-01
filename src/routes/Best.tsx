@@ -1,12 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import GlobalStyle from '../styles/GlobalStyles';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 const Best = () => {
   const navigate = useNavigate();
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<ItemType[]>([]);
 
+  interface ItemType {
+    id: string;
+    src: string;
+    category: string;
+    name: string;
+    price: string;
+  }
+  
   const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -75,73 +83,70 @@ const Best = () => {
     margin: 15px 0px;
   `;
 
-  const itemList =  [
+
+
+  const itemList = useMemo(() => [
     {
-      id: '6O8YPJIMZbOcyNDMn8YU', 
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw73a7bdcc/hi-res/NARS_SP22_SpringEdit_Afterglow_PDPCrop_Soldier_Afterglow_Lipshine_LoverToLover_GLBL_2000x2000.jpg?sw=856&sh=750&sm=fit', 
+      id: '6O8YPJIMZbOcyNDMn8YU',
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw73a7bdcc/hi-res/NARS_SP22_SpringEdit_Afterglow_PDPCrop_Soldier_Afterglow_Lipshine_LoverToLover_GLBL_2000x2000.jpg?sw=856&sh=750&sm=fit',
       category: '에프터글로우 립 샤인',
-      name: '러버 투 러버', 
+      name: '러버 투 러버',
       price: '37,000'
     },
-
     {
       id: 'i3yOg0gUQXpVb6n5Yah6',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw594c7940/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Heat_Wave_Matte_GLBL_B_square_0607845029618.jpg?sw=856&sh=750&sm=fit', 
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw594c7940/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Heat_Wave_Matte_GLBL_B_square_0607845029618.jpg?sw=856&sh=750&sm=fit',
       category: '오리지널 립스틱',
-      name: '히트 웨이브', 
+      name: '히트 웨이브',
       price: '40,000',
     },
-
     {
       id: 'KuVFr4I445aq3zjQoE4M',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw8f48591b/hi-res/0607845053347.jpg?sw=856&sh=750&sm=fit', 
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw8f48591b/hi-res/0607845053347.jpg?sw=856&sh=750&sm=fit',
       category: '하드와이어 아이섀도우',
-      name: '멜로즈', 
+      name: '멜로즈',
       price: '32,000',
     },
-
     {
       id: 'wbzDFBshCidi0naEotyK',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwab29559f/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Chelsea_Girls_Sheer_GLBL_B_square_0607845029595.jpg?sw=856&sh=750&sm=fit', 
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwab29559f/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Chelsea_Girls_Sheer_GLBL_B_square_0607845029595.jpg?sw=856&sh=750&sm=fit',
       category: '립스틱',
-      name: '첼시 걸스', 
+      name: '첼시 걸스',
       price: '40,000',
     },
-
     {
       id: 'mdUg1DmAkefBYlftcUnq',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw856e9a59/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Casablanca_Satin_GLBL_B_square_0607845029205.jpg?sw=856&sh=750&sm=fit', 
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw856e9a59/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Casablanca_Satin_GLBL_B_square_0607845029205.jpg?sw=856&sh=750&sm=fit',
       category: '오리지널 립스틱',
-      name: '카사블랑카', 
+      name: '카사블랑카',
       price: '40,000',
     },
-
     {
       id: 'v51IqksbGctAov6qMuDn',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw5471c7eb/hi-res/0607845053095.jpg?sw=856&sh=750&sm=fit', 
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw5471c7eb/hi-res/0607845053095.jpg?sw=856&sh=750&sm=fit',
       category: '싱글 아이섀도우',
-      name: '네팔', 
+      name: '네팔',
       price: '30,000',
     },
-
     {
       id: 'L8JdI5hyPUb9g1KU4UXs',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw8f736413/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Instant_Crush_Sheer_GLBL_B_square_0607845029557.jpg?sw=856&sh=750&sm=fit', 
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw8f736413/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Instant_Crush_Sheer_GLBL_B_square_0607845029557.jpg?sw=856&sh=750&sm=fit',
       category: '립스틱',
-      name: '인스턴트 크러쉬', 
+      name: '인스턴트 크러쉬',
       price: '40,000',
     },
-
     {
       id: 'ASGoSP7sbNvePBLvIn0D',
-      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw53a64a5e/hi-res/0607845039273.jpg?sw=856&sh=750&sm=fit', 
+      src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw53a64a5e/hi-res/0607845039273.jpg?sw=856&sh=750&sm=fit',
       category: '듀오 아이섀도우',
-      name: '샤레이드', 
+      name: '샤레이드',
       price: '49,000',
-    }
-  ];
+    },
 
-  const handleClickItem = (id) => {
+  ], []);
+  
+
+  const handleClickItem = (id: string) => {
     navigate('/ProductDetail', {
       state: {
         id,
@@ -158,9 +163,9 @@ const Best = () => {
         console.error('Error fetching product data:', error);
       }
     };
-
+  
     fetchProductData();
-  }, []);
+  }, [itemList]);
 
   return (
     <div>

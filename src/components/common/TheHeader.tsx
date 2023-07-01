@@ -1,4 +1,4 @@
-import companyLogo from '../../../public/assets/logo.png'
+import companyLogo from '../../../public/assets/logo.png';
 import GlobalStyle from '../../styles/GlobalStyles'
 import styled from 'styled-components'
 import { NavLink, useNavigate } from 'react-router-dom'
