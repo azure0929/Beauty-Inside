@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { useState, FormEvent, useEffect } from 'react'
 import { signIn, authVerification } from '../apis/api'
 import { useNavigate } from 'react-router-dom'
+const { VITE_ADMIN_EMAIL } = import.meta.env
 
 const SignInBox = styled.div`
   font-family: 'Noto Sans KR';
@@ -94,11 +95,16 @@ const SignIn = () => {
       const response = await signIn(email, password)
       if (response.accessToken) {
         localStorage.setItem('accessToken', response.accessToken)
-        alert('로그인에 성공하였습니다.')
-        setLoggedIn(true)
-
-        navigate('/')
-        window.location.reload()
+        if (email === VITE_ADMIN_EMAIL) {
+          alert('관리자 로그인에 성공하였습니다.')
+          location.href = 'https://euphonious-florentine-b285d0.netlify.app/'
+        } else {
+          alert('로그인에 성공하였습니다.')
+          setLoggedIn(true)
+          navigate('/')
+          window.location.reload()
+        }
+        console.log()
       } else {
         alert('이메일이나 패스워드가 일치하지 않습니다.')
       }

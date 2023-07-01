@@ -1,9 +1,10 @@
 import axios from 'axios'
+const { VITE_API_KEY, VITE_USERNAME } = import.meta.env
 
 const headers = {
   'content-type': 'application/json',
-  apikey: 'KDT5_nREmPe9B',
-  username: 'KDT5_Team4',
+  apikey: VITE_API_KEY,
+  username: VITE_USERNAME,
 }
 
 const requestApi = axios.create({

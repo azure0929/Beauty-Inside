@@ -1,8 +1,11 @@
 import { styled } from 'styled-components'
 import { useState, useEffect } from 'react'
 import { getValidAccounts, addAccount } from '../../apis/api'
+import { useNavigate } from 'react-router-dom'
 
 export const AccountAddModal = ({ setisModalOpen }) => {
+  const navigate = useNavigate()
+
   const [dataLoading, setdataLoading] = useState(false)
   const [validAccounts, setvalidAccounts] = useState([])
   const [selectBank, setselectBank] = useState('004')
@@ -21,6 +24,9 @@ export const AccountAddModal = ({ setisModalOpen }) => {
 
   const requestAddAccount = async (payload) => {
     const AddAccount = await addAccount(payload)
+    if (!AddAccount) {
+      alert('이미 등록된 계좌 입니다.')
+    }
   }
 
   let maxLength = 0
