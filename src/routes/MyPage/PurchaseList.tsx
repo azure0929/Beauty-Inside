@@ -159,11 +159,9 @@ export const PurchaseList = () => {
 
   return (
     <Wrap>
-      {purchaseList.length === 0 ? <p>구매내역이 없습니다.</p> : ''}
-      <p>구매내역이 없습니다.</p>
-      {/* <PageHeader title="구매 내역" />
-      {noList ? (
-        <p>구매내역이 없습니다.</p>
+      <PageHeader title="구매 내역" />
+      {!purchaseList ? (
+        <EmptyList>구매 내역이 없습니다.</EmptyList>
       ) : (
         <>
           <Total>({purchaseList.length})</Total>
@@ -197,7 +195,7 @@ export const PurchaseList = () => {
           </BottomInner>
           {dataLoading && <LoadingSpinner />}
         </>
-      )} */}
+      )}
     </Wrap>
   )
 }
@@ -268,4 +266,13 @@ const MoreButton = styled.button`
   font-size: 16px;
   color: #8e8e8e;
   text-decoration: underline;
+`
+const EmptyList = styled.div`
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #ffa9be;
 `

@@ -1,8 +1,7 @@
-
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { signUp } from '../apis/api';
-
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { signUp } from '../apis/api'
+import { useNavigate } from 'react-router-dom'
 
 const Section = styled.div`
   font-family: 'Noto Sans KR';
@@ -15,22 +14,22 @@ const Section = styled.div`
     font-size: 26px;
     margin-bottom: 12px;
     font-weight: 500;
-    letter-spacing: -.05em;
+    letter-spacing: -0.05em;
   }
   > div {
     > p {
       font-size: 20px;
       text-align: center;
       margin-bottom: 58px;
-      color: #8E8E8E;
-      letter-spacing: -.05em;
+      color: #8e8e8e;
+      letter-spacing: -0.05em;
       > span {
-      font-size: 20px;
-      color: #ffa9be;
+        font-size: 20px;
+        color: #ffa9be;
       }
     }
   }
-    
+
   > form {
     display: flex;
     flex-direction: column;
@@ -43,7 +42,7 @@ const Section = styled.div`
       padding: 10px;
       border: 1px solid #8e8e8e;
       &:focus {
-        border: 2px solid #FFA9BE;
+        border: 2px solid #ffa9be;
         outline: none;
       }
     }
@@ -55,36 +54,38 @@ const Section = styled.div`
       color: #fff;
       background-color: #dedede;
       margin-top: 50px;
-      transition: .3s;
+      transition: 0.3s;
       cursor: pointer;
       &:hover {
         background-color: #ffa9be;
       }
     }
-  }    
+  }
 `
 
 function Signup() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
+  const navigate = useNavigate()
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [displayName, setDisplayName] = useState('')
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
-      const response = await signUp(email, password, displayName);
+      const response = await signUp(email, password, displayName)
       if (response.accessToken) {
-        alert('회원가입에 성공하였습니다.');
+        alert('회원가입에 성공하였습니다.')
+        navigate('/SignIn')
       } else {
-        alert('이미 가입된 회원입니다.');
+        alert('이미 가입된 회원입니다.')
       }
     } catch (error) {
-      console.error('회원가입에 실패하였습니다.', error);
-      alert('회원가입에 실패하였습니다.');
+      console.error('회원가입에 실패하였습니다.', error)
+      alert('회원가입에 실패하였습니다.')
     }
-  };
-
+  }
 
   return (
     <div>
@@ -96,14 +97,25 @@ function Signup() {
           </p>
         </div>
         <form onSubmit={handleSignup}>
-          <input value={email} onChange={e => setEmail(e.target.value)} placeholder='이메일'/>
-          <input value={password} type="password" onChange={e => setPassword(e.target.value)} placeholder='비밀번호'/>
-          <input value={displayName} onChange={e => setDisplayName(e.target.value)} placeholder='이름'/>
-          <button type="submit" onClick={handleSignup}>회원가입</button>
+          <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="이메일" />
+          <input
+            value={password}
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="비밀번호"
+          />
+          <input
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            placeholder="이름"
+          />
+          <button type="submit" onClick={handleSignup}>
+            회원가입
+          </button>
         </form>
       </Section>
     </div>
-  );
+  )
 }
 
-export default Signup;
+export default Signup
