@@ -96,7 +96,6 @@ const SignIn = () => {
         localStorage.setItem('accessToken', response.accessToken);
         alert('로그인에 성공하였습니다.');
         setLoggedIn(true);
-        window.location.reload(); 
       } else {
         alert('이메일이나 패스워드가 일치하지 않습니다.');
       }
@@ -105,8 +104,7 @@ const SignIn = () => {
       alert('로그인에 실패하였습니다.');
     }
   };
-  
-  useEffect(() => {
+
     const verifyToken = async () => {
       const accessToken = localStorage.getItem('accessToken');
       if (accessToken) {
@@ -130,9 +128,9 @@ const SignIn = () => {
         }
       }
     };
-  
-    verifyToken();
-  }, []);
+    useEffect(() => {
+      verifyToken();
+    }, []);
 
   return (
     <SignInBox isValidEmail={isValidEmail}>
