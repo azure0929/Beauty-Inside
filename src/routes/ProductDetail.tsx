@@ -129,20 +129,27 @@ const ProductDetail = () => {
   }, [id])
 
   const navigateToCartProduct = (product: ProductDetailType | null) => {
-    if (product) {
-      storage = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-      storage.push(product)
-      // 중복제거
-      const newArray = storage.filter((item, i) => {
-        return (
-          storage.findIndex((item2) => {
-            return item.id === item2.id
-          }) === i
-        )
-      })
+    const accessToken = localStorage.getItem('accessToken')
 
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newArray))
-      navigate('/CartPurchase')
+    if (product) {
+      if (accessToken === null) {
+        alert('로그인이 필요합니다.')
+        navigate('/SignIn')
+      } else {
+        storage = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+        storage.push(product)
+        // 중복제거
+        const newArray = storage.filter((item, i) => {
+          return (
+            storage.findIndex((item2) => {
+              return item.id === item2.id
+            }) === i
+          )
+        })
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newArray))
+        navigate('/CartPurchase')
+      }
     }
   }
 
