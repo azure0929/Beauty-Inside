@@ -5,8 +5,8 @@ const GlobalStyle = createGlobalStyle`
   // InkLipquid font 적용
   @font-face {
     font-family: 'InkLipquid';
-    src: local('InkLipquid'), url('src/font/InkLipquid.woff') format('woff');
-    src: url('src/font/InkLipquid.woff') format('woff');
+    src: local('InkLipquid'), url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/InkLipquid.woff') format('woff');
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/InkLipquid.woff') format('woff');
     font-weight: normal;
     font-style: normal;
   }
