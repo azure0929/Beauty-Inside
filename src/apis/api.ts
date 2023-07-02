@@ -1,7 +1,6 @@
 import axios from 'axios'
 
-const { VITE_API_KEY, VITE_USERNAME }: { VITE_API_KEY: string; VITE_USERNAME: string } = import.meta
-  .env
+const { VITE_API_KEY, VITE_USERNAME } = (import.meta as any).env
 
 const headers = {
   'content-type': 'application/json',
