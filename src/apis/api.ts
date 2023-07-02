@@ -107,8 +107,8 @@ export const addAccount = async (payload: AccountPayload) => {
   }
 }
 
-// 사용자: 계좌 삭제
-export const deleteAccount = async ({ id, signature }: { id: string; signature: string }) => {
+//사용자: 계좌 삭제
+export const deleteAccount = async ({ id, signature }: { id: string; signature: boolean }) => {
   try {
     const { data } = await requestApi.delete('account', {
       data: {
@@ -161,6 +161,7 @@ export const authVerification = async () => {
   }
 }
 
+
 // 사용자: 구매 신청
 export const requestBuy = async ({ productId, accountId }: { productId: string; accountId: string }) => {
   try {
@@ -200,6 +201,7 @@ export const getPurchaselist = async () => {
   }
 }
 
+
 // 사용자: 구매 내역 상세 조회
 export const getPurchaseDetail = async (id: string) => {
   try {
@@ -221,6 +223,7 @@ export const getPurchaseDetail = async (id: string) => {
   }
 }
 
+
 // 사용자 : 목록 조회
 export const getProductList = async ({ searchText, searchTags }: { searchText: string; searchTags: string[] }) => {
   try {
@@ -232,4 +235,5 @@ export const getProductList = async ({ searchText, searchTags }: { searchText: s
     return false
   }
 }
+
 

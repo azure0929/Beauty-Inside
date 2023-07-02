@@ -1,7 +1,14 @@
 import { styled } from 'styled-components'
 import { useState, useEffect } from 'react'
 import { getValidAccounts, addAccount } from '../../apis/api'
-import { useNavigate } from 'react-router-dom'
+
+interface Bank {
+  // 선택 가능한 은행 정보
+  name: string // 은행 이름
+  code: string // 은행 코드
+  digits: number[] // 은행 계좌 자릿수
+  disabled: boolean // 사용자가 추가한 계좌 여부
+}
 
 interface AddAccountPayload {
   bankCode: string;
@@ -14,61 +21,15 @@ interface BankImageProps {
   bank: string;
 }
 
-
-
-
-
 export const AccountAddModal = ({ setisModalOpen }: { setisModalOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
 
-  const navigate = useNavigate()
-  console.log(navigate);
-
+export const AccountAddModal = ({
+  setisModalOpen,
+}: {
+  setisModalOpen: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
   const [dataLoading, setdataLoading] = useState(false)
-  const [validAccounts, setValidAccounts] = useState([
-    {
-      name: "KB국민은행",
-      code: "004",
-      digits: [3, 2, 4, 3],
-      disabled: false
-    },
-    {
-      name: "신한은행",
-      code: "088",
-      digits: [3, 3, 6],
-      disabled: true
-    },
-    {
-      name: "우리은행",
-      code: "020",
-      digits: [4, 3, 6],
-      disabled: true
-    },
-    {
-      name: "하나은행",
-      code: "081",
-      digits: [3, 6, 5],
-      disabled: false
-    },
-    {
-      name: "케이뱅크",
-      code: "089",
-      digits: [3, 3, 6],
-      disabled: false
-    },
-    {
-      name: "카카오뱅크",
-      code: "090",
-      digits: [4, 2, 7],
-      disabled: false
-    },
-    {
-      name: "NH농협은행",
-      code: "011",
-      digits: [3, 4, 4, 2],
-      disabled: false
-    }
-  ]);
-  
+  const [validAccounts, setvalidAccounts] = useState<Bank[]>([])
   const [selectBank, setselectBank] = useState('004')
   const [phoneNumber, setphoneNumber] = useState('')
   const [checkedAgree, setcheckedAgree] = useState(false)
@@ -183,7 +144,7 @@ export const AccountAddModal = ({ setisModalOpen }: { setisModalOpen: React.Disp
             validAccounts.length > 0 ? (
               <>
                 <BankList>
-                  {validAccounts.map((account, index) => (
+                  {validAccounts.map((account: Bank, index) => (
                     <BankItem key={index} onClick={() => handleClickBank(account.code)}>
                       <BankImage
                         bank={
@@ -199,16 +160,21 @@ export const AccountAddModal = ({ setisModalOpen }: { setisModalOpen: React.Disp
                 
                 <InputList>
                   {validAccounts.map(
-                    (account, index) =>
+                    (account: Bank, index) =>
                       account.code === selectBank &&
                       validAccounts[index].digits.map((number, idx) => (
                         <input
                           key={account.code + idx}
                           name={
-                            ((idx === 0 && 'first') ||
-                            (idx === 1 && 'second') ||
-                            (idx === 2 && 'third') ||
-                            (idx === 3 && 'fourth')) as string
+                            idx === 0
+                              ? 'first'
+                              : idx === 1
+                              ? 'second'
+                              : idx === 2
+                              ? 'third'
+                              : idx === 3
+                              ? 'fourth'
+                              : ''
                           }
                           maxLength={number}
                           type="text"

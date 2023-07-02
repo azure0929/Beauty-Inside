@@ -23,6 +23,7 @@ export const AccountManage = () => {
     setisModalOpen(true)
   }
 
+
   const requestDeleteAccount = async (id: string, signature: boolean) => {
     const response = await deleteAccount({ id, signature })
     if (response) {

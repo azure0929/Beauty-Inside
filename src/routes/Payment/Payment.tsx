@@ -1,20 +1,44 @@
-import styled from 'styled-components';
-import GlobalStyle from '../../styles/GlobalStyles';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { authVerification, getUserAccounts, requestBuy } from '../../apis/api';
+import styled from 'styled-components'
+import GlobalStyle from '../../styles/GlobalStyles'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useState, useEffect, useMemo } from 'react'
+import { authVerification, getUserAccounts, requestBuy } from '../../apis/api'
 
 interface Product {
-  id: string;
-  thumbnail: string;
-  title: string;
-  price: number;
+  // 제품의 상세 내용
+  id: string // 제품 ID
+  title: string // 제품 이름
+  price: number // 제품 가격
+  description: string // 제품 상세 설명
+  tags: string[] // 제품 태그
+  thumbnail: string | null // 제품 썸네일 이미지(URL)
+  photo: string | null // 제품 상세 이미지(URL)
+  isSoldOut: boolean // 제품 매진 여부
 }
 
-interface UserInfo {
-  displayName: string;
-  email: string;
+interface User {
+  email: string // 사용자 아이디
+  displayName: string // 사용자 표시 이름
+  profileImg: string | null // 사용자 프로필 이미지(URL)
 }
+
+interface Bank {
+  // 사용자 계좌 정보
+  id: string // 계좌 ID
+  bankName: string // 은행 이름
+  bankCode: string // 은행 코드
+  accountNumber: string // 계좌 번호
+  balance: number // 계좌 잔액
+}
+
+export const Payment = () => {
+  let total = 0
+  const DELIVERY_CHARGE = 2500
+  const STORAGE_KEY = 'detail'
+
+  const [userInfo, setuserInfo] = useState<User>()
+  const [userAccounts, setuserAccounts] = useState<Bank[]>([])
+  const [accountId, setAccountId] = useState('')
 
 interface UserAccount {
   id: string;
@@ -22,37 +46,46 @@ interface UserAccount {
   accountNumber: string;
 }
 
-export const Payment = () => {
-  let total = 0;
-  let productTotal = 0;
-  const DELIVERY_CHARGE = 2500;
-  const STORAGE_KEY = 'detail';
-  
-  
+  const location = useLocation()
+  const navigate = useNavigate()
 
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    displayName: '',
-    email: '',
-  });
-  const [userAccounts, setUserAccounts] = useState<UserAccount[]>([]);
-  const [accountId, setAccountId] = useState<string>('');
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const account = await getUserAccounts()
+        const data = await authVerification()
+        setuserInfo(data)
+        setuserAccounts(account.accounts)
+      } catch (error) {
+        console.error('Error fetching:', error)
+      }
+    })()
+  }, [])
 
-  const [productList, setProductList] = useState<Product[]>([]);
+  useEffect(() => {
+    const list = location.state
+    const listArray = Object.values(list)[0]
+    setproductList(listArray as never[])
+  }, [])
 
-  // 금액계산
-  productList.map((item) => (productTotal = item.price + productTotal));
-  total = productTotal + DELIVERY_CHARGE;
+  //금액계산
+  function countTotal(lists: Product[]) {
+    let productTotal = 0
+    lists.forEach((list) => (productTotal = list.price + productTotal))
+    return productTotal
+  }
+  const counttotal = useMemo(() => countTotal(productList), [productList])
 
-  // navigate
-  const navigate = useNavigate();
+  total = counttotal + DELIVERY_CHARGE
 
-  // 계좌 선택
+  //계좌 선택
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setAccountId(e.target.value);
-  };
+    setAccountId(e.target.value)
+  }
 
   const requestAllBuy = async () => {
-    const products = productList.map((item) => item.id);
+    const products = productList.map((item: Product) => item.id)
+
 
     if (accountId === '' || accountId === '계좌 선택') {
       alert('결제수단을 선택해주세요');
@@ -64,7 +97,6 @@ export const Payment = () => {
       let locallist: string[] | null = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
       locallist = [];
       localStorage.setItem(STORAGE_KEY, JSON.stringify(locallist));
-      
     }
   };
 
@@ -75,8 +107,6 @@ export const Payment = () => {
 
   const location = useLocation();
 const list = location.state as Product[];
-
-
 
 useEffect(() => {
   (async () => {
@@ -104,7 +134,7 @@ useEffect(() => {
           {productList.map((item: Product, index: number) => (
             <OrderItem key={index}>
               <ImageBox>
-                <img src={item.thumbnail} alt="" />
+                <img src={item.thumbnail || ''} alt="" />
               </ImageBox>
               <Info>
                 <p className="item-title">{item.title.split('-')[0]}</p>
@@ -121,11 +151,11 @@ useEffect(() => {
           <Infowrap>
             <InnerInfo>
               <p className="info-label">주문자 이름</p>
-              <p>{userInfo.displayName}</p>
+              <p>{userInfo?.displayName}</p>
             </InnerInfo>
             <InnerInfo>
               <p className="info-label">주문자 이메일</p>
-              <p>{userInfo.email}</p>
+              <p>{userInfo?.email}</p>
             </InnerInfo>
           </Infowrap>
         </Inner>
@@ -145,7 +175,7 @@ useEffect(() => {
           <Infowrap>
             <InnerInfo>
               <p className="info-label">총 주문 금액</p>
-              <p>{productTotal.toLocaleString('ko-KR')}원</p>
+              <p>{counttotal.toLocaleString('ko-KR')}원</p>
             </InnerInfo>
             <InnerInfo>
               <p className="info-label">배송비</p>
