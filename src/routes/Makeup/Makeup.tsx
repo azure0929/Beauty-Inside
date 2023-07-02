@@ -1,9 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import GlobalStyle from '../../styles/GlobalStyles';
 import styled from 'styled-components';
 import MakeupList from './MakeupList';
 import MakeupFilter from './MakeupFilter';
 import { getProductList } from '../../apis/api';
+
+interface Item {
+  id: number;
+  title: string;
+  thumbnail: string;
+  price: number;
+}
+
 
 const Container = styled.div`
   display: flex;
@@ -35,7 +43,7 @@ function Makeup() {
       try {
         let data = [];
         if (tags.length === 0) {
-          data = await getProductList({ searchText: '' });
+          data = await getProductList({ searchText: '', searchTags: tags });
         } else {
           const promises = tags.map((tag) =>
             getProductList({ searchText: '', searchTags: [tag] })

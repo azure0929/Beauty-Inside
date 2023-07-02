@@ -36,17 +36,9 @@ const Contents = styled.div`
     }
   }
 `
-
 export const UserLogout = () => {
-
   // navigate
   const navigate = useNavigate()
-
-  const headers = {
-    'content-type': 'application/json',
-    apikey: 'KDT5_nREmPe9B',
-    username: 'KDT5_Team4',
-  }
 
   const [isLoggeIn, setisLoggedIn] = useState(true);
 
@@ -55,7 +47,8 @@ export const UserLogout = () => {
       // 로그아웃 성공 시 상태 업데이트
       setisLoggedIn(false);
 
-      const response = await signOut()
+      const response = await signOut(); // headers는 내부적으로 처리되므로 별도로 전달하지 않아도 됩니다.
+
       localStorage.setItem('token', response.accessToken)
       console.log('로그아웃 성공')
     } catch (error) {

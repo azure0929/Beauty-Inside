@@ -3,6 +3,16 @@ import { useEffect, useState } from 'react'
 import GlobalStyle from '../../styles/GlobalStyles'
 import styled from 'styled-components'
 
+type Product = {
+  id: number;
+  title: string;
+  thumbnail: string;
+  price: number;
+};
+
+
+
+
 const Section = styled.div`
   margin-top: 152px;
   margin-bottom: 60px;
@@ -223,52 +233,50 @@ const Button = styled.button`
   }
 `
 
-const CartPurchase = () => {
-  const STORAGE_KEY = 'detail'
-  const [productList, setproductList] = useState([])
+const CartPurchase = (): JSX.Element => {
+  const STORAGE_KEY = 'detail';
+  const [productList, setProductList] = useState<Product[]>([]);
 
-  // navigate
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  // 메인으로 이동
-  const navigateToMain = () => {
-    navigate('/')
-  }
+  const navigateToMain = (): void => {
+    navigate('/');
+  };
 
   useEffect(() => {
-    //로컬스토리지 초기화
-    localStorage.getItem(STORAGE_KEY) ? '' : localStorage.setItem(STORAGE_KEY, JSON.stringify([]))
+    localStorage.getItem(STORAGE_KEY) ? '' : localStorage.setItem(STORAGE_KEY, JSON.stringify([]));
 
-    const list = localStorage.getItem(STORAGE_KEY)
-    setproductList(JSON.parse(list))
-  }, [])
+    const list: string | null = localStorage.getItem(STORAGE_KEY);
+    if (list) {
+      setProductList(JSON.parse(list));
+    }
+  }, []);
 
-  // 주문서로 이동
-  const navigateToPayment = () => {
+  const navigateToPayment = (): void => {
     if (productList.length === 0) {
-      alert('주문할 상품 목록이 없습니다.')
+      alert('주문할 상품 목록이 없습니다.');
     } else {
       navigate('/Payment', {
         state: {
           productList,
         },
-      })
+      });
     }
-  }
+  };
 
-  let total = 0
-  let producttotal = 0
-  const DELIVERY_CHARGE = 2500
+  let total = 0;
+  let productTotal = 0;
+  const DELIVERY_CHARGE = 2500;
 
-  productList?.map((product) => (producttotal = producttotal + product.price))
-  total = producttotal + DELIVERY_CHARGE
+  productList?.forEach((product) => (productTotal += product.price));
+  total = productTotal + DELIVERY_CHARGE;
 
-  const deleteProduct = (id) => {
-    const newArray = productList.filter((item) => item.id !== id)
+  const deleteProduct = (id: number): void => {
+    const newArray = productList.filter((item) => item.id !== id);
 
-    setproductList(newArray)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newArray))
-  }
+    setProductList(newArray);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(newArray));
+  };
 
   return (
     <div>
@@ -302,7 +310,6 @@ const CartPurchase = () => {
                           <span>{product.price.toLocaleString('ko-KR')}</span>원
                         </p>
                       </div>
-
                       <button type="button" onClick={() => deleteProduct(product.id)}>
                         삭제
                       </button>
@@ -326,7 +333,7 @@ const CartPurchase = () => {
                 <div>
                   <h3>총 상품금액</h3>
                   <p>
-                    <span>{producttotal.toLocaleString('ko-KR')}</span>원
+                    <span>{productTotal.toLocaleString('ko-KR')}</span>원
                   </p>
                 </div>
                 <div>
@@ -352,7 +359,7 @@ const CartPurchase = () => {
         </div>
       </Section>
     </div>
-  )
-}
+  );
+};
 
-export default CartPurchase
+export default CartPurchase;

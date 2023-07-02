@@ -1,6 +1,6 @@
 import { styled } from 'styled-components'
 
-export const PageHeader = ({ title }) => {
+export const PageHeader = ({ title }: { title: string }) => {
   return <HeaderWrap>{title}</HeaderWrap>
 }
 

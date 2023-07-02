@@ -93,27 +93,32 @@ const Button = styled.button`
   }
 `
 
+interface ProductDetailType {
+  id?: number
+  thumbnail?: string
+  title?: string
+  description?: string
+  price?: number
+  photo?: string
+}
+
 const ProductDetail = () => {
   const navigate = useNavigate()
   const location = useLocation()
-  const id = location.state.id
+  const id = location.state?.id
 
   const STORAGE_KEY = 'detail'
-  let storage = [{}]
+  let storage: ProductDetailType[] = []
 
-  const navigateToCartPurchase = () => {
-    navigate('/CartPurchase')
-  }
-
-  const [productDetail, setproductDetail] = useState(false)
+  const [productDetail, setProductDetail] = useState<ProductDetailType | null>(null)
 
   useEffect(() => {
     ;(async () => {
       try {
         const data = await getProduct(id)
-        setproductDetail(data)
+        setProductDetail(data)
 
-        //로컬스토리지 초기화
+        // 로컬스토리지 초기화
         localStorage.getItem(STORAGE_KEY)
           ? ''
           : localStorage.setItem(STORAGE_KEY, JSON.stringify([]))
@@ -121,23 +126,24 @@ const ProductDetail = () => {
         console.error('Error fetching products:', error)
       }
     })()
-  }, [])
+  }, [id])
 
-  const navigateToCartProduct = (product) => {
-    storage = localStorage.getItem(STORAGE_KEY)
-    storage = JSON.parse(storage)
-    storage.push(product)
-    //중복제거
-    const newArray = storage.filter((item, i) => {
-      return (
-        storage.findIndex((item2, j) => {
-          return item.id === item2.id
-        }) === i
-      )
-    })
+  const navigateToCartProduct = (product: ProductDetailType | null) => {
+    if (product) {
+      storage = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+      storage.push(product)
+      // 중복제거
+      const newArray = storage.filter((item, i) => {
+        return (
+          storage.findIndex((item2) => {
+            return item.id === item2.id
+          }) === i
+        )
+      })
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newArray))
-    navigate('/CartPurchase')
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newArray))
+      navigate('/CartPurchase')
+    }
   }
 
   return (
@@ -147,21 +153,20 @@ const ProductDetail = () => {
         <div className="inner">
           <div className="product-info">
             <div className="photo">
-              <img src={productDetail.thumbnail} alt="" />
+              <img src={productDetail?.thumbnail} alt="" />
             </div>
             <div className="product-detail">
               <div className="detail-info">
-                <h3>{productDetail.title}</h3>
-                <p>{productDetail.description}</p>
+                <h3>{productDetail?.title}</h3>
+                <p>{productDetail?.description}</p>
               </div>
               <div className="price">
                 <p>
-                  <span>{productDetail.price}</span>원
+                  <span>{productDetail?.price}</span>원
                 </p>
               </div>
               <div className="link">
                 <Button onClick={() => navigateToCartProduct(productDetail)}>장바구니</Button>
-                <Button onClick={navigateToCartPurchase}>구매하기</Button>
               </div>
             </div>
           </div>
@@ -169,7 +174,7 @@ const ProductDetail = () => {
       </Section>
       <Section>
         <div className="inner">
-          <img src={productDetail.photo} alt="Loading image" />
+          <img src={productDetail?.photo} alt="Loading image" />
         </div>
       </Section>
     </div>
