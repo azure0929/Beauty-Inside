@@ -1,70 +1,98 @@
-import styled from 'styled-components'
-import GlobalStyle from '../../styles/GlobalStyles'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import { authVerification, getUserAccounts, requestBuy } from '../../apis/api'
+import styled from 'styled-components';
+import GlobalStyle from '../../styles/GlobalStyles';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { authVerification, getUserAccounts, requestBuy } from '../../apis/api';
+
+interface Product {
+  id: string;
+  thumbnail: string;
+  title: string;
+  price: number;
+}
+
+interface UserInfo {
+  displayName: string;
+  email: string;
+}
+
+interface UserAccount {
+  id: string;
+  bankName: string;
+  accountNumber: string;
+}
 
 export const Payment = () => {
-  let total = 0
-  let productTotal = 0
-  const DELIVERY_CHARGE = 2500
-  const STORAGE_KEY = 'detail'
+  let total = 0;
+  let productTotal = 0;
+  const DELIVERY_CHARGE = 2500;
+  const STORAGE_KEY = 'detail';
+  
+  
 
-  const [userInfo, setuserInfo] = useState([])
-  const [userAccounts, setuserAccounts] = useState([])
-  const [accountId, setAccountId] = useState('')
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    displayName: '',
+    email: '',
+  });
+  const [userAccounts, setUserAccounts] = useState<UserAccount[]>([]);
+  const [accountId, setAccountId] = useState<string>('');
 
-  const [productList, setproductList] = useState([])
+  const [productList, setProductList] = useState<Product[]>([]);
 
-  //금액계산
-  productList.map((item) => (productTotal = item.price + productTotal))
-  total = productTotal + DELIVERY_CHARGE
+  // 금액계산
+  productList.map((item) => (productTotal = item.price + productTotal));
+  total = productTotal + DELIVERY_CHARGE;
 
   // navigate
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  //계좌 선택
-  const handleChangeSelect = (e) => {
-    setAccountId(e.target.value)
-  }
+  // 계좌 선택
+  const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setAccountId(e.target.value);
+  };
 
   const requestAllBuy = async () => {
-    const products = productList.map((item) => item.id)
+    const products = productList.map((item) => item.id);
 
     if (accountId === '' || accountId === '계좌 선택') {
-      alert('결제수단을 선택해주세요')
+      alert('결제수단을 선택해주세요');
     } else {
-      const results = await Promise.all(
-        products.map((productId) => requestBuy({ productId, accountId })),
-      )
-      navigate('/PaymentCompleted')
-      let locallist = localStorage.getItem(STORAGE_KEY)
-      locallist = []
-      localStorage.setItem(STORAGE_KEY, locallist)
+      await Promise.all(
+        products.map((productId) => requestBuy({ productId, accountId }))
+      );      
+      navigate('/PaymentCompleted');
+      let locallist: string[] | null = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+      locallist = [];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(locallist));
+      
     }
-  }
+  };
 
-  //결제완료
+  // 결제완료
   const handleClickPayment = () => {
-    requestAllBuy()
-  }
+    requestAllBuy();
+  };
 
-  const location = useLocation()
-  const list = location.state
+  const location = useLocation();
+const list = location.state as Product[];
 
-  useEffect(() => {
-    ;(async () => {
-      try {
-        const account = await getUserAccounts()
-        const data = await authVerification()
-        setuserInfo(data)
-        setuserAccounts(account.accounts)
-        setproductList(Object.values(list)[0])
-      } catch (error) {
-        console.error('Error fetching:', error)
+
+
+useEffect(() => {
+  (async () => {
+    try {
+      const account = await getUserAccounts();
+      const data = await authVerification();
+      setUserInfo(data);
+      setUserAccounts(account.accounts);
+      if (Array.isArray(list)) {
+        setProductList(list);
       }
-    })()
-  }, [])
+    } catch (error) {
+      console.error('Error fetching:', error);
+    }
+  })();
+}, [list]);
 
   return (
     <>
@@ -73,7 +101,7 @@ export const Payment = () => {
         <Title>주문서</Title>
         <Inner>
           <p className="inner-title">주문상품 {productList.length}개</p>
-          {productList.map((item, index) => (
+          {productList.map((item: Product, index: number) => (
             <OrderItem key={index}>
               <ImageBox>
                 <img src={item.thumbnail} alt="" />
@@ -105,7 +133,7 @@ export const Payment = () => {
           <p className="inner-title">결제 수단</p>
           <Select onChange={(e) => handleChangeSelect(e)}>
             <option>계좌 선택</option>
-            {userAccounts.map((account, index) => (
+            {userAccounts.map((account: UserAccount, index: number) => (
               <option key={index} value={account.id}>
                 {account.bankName} {account.accountNumber}
               </option>
@@ -134,8 +162,8 @@ export const Payment = () => {
         </PaymentButton>
       </PaymentWrap>
     </>
-  )
-}
+  );
+};
 
 const PaymentWrap = styled.div`
   width: 100%;
@@ -144,10 +172,10 @@ const PaymentWrap = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 152px;
-`
+`;
 const Title = styled.p`
   font-size: 26px;
-`
+`;
 const Inner = styled.div`
   width: 900px;
   display: flex;
@@ -170,18 +198,18 @@ const Inner = styled.div`
   &:nth-child(5) {
     border: none;
   }
-`
+`;
 const OrderItem = styled.div`
   width: 1100px;
   display: flex;
   gap: 20px;
-`
+`;
 const ImageBox = styled.div`
   img {
     width: 120px;
     height: 120px;
   }
-`
+`;
 
 const Info = styled.div`
   .item-title {
@@ -195,25 +223,25 @@ const Info = styled.div`
     font-size: 20px;
     margin-top: 20px;
   }
-`
+`;
 
 const Infowrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-`
+`;
 
 const InnerInfo = styled.div`
   display: flex;
   .info-label {
     width: 140px;
   }
-`
+`;
 
 const Select = styled.select`
   width: 340px;
-  height: 46px;f
-`
+  height: 46px;
+`;
 
 const PaymentButton = styled.button`
   width: 305px;
@@ -223,4 +251,4 @@ const PaymentButton = styled.button`
   color: #fff;
   border-radius: 6px;
   margin-top: 120px;
-`
+`;

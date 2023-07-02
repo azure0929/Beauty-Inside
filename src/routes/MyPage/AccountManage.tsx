@@ -6,35 +6,44 @@ import { useState, useEffect } from 'react'
 import { getUserAccounts, deleteAccount } from '../../apis/api'
 import { LoadingSpinner } from '../../components/common/LoadingSpinner'
 
+interface Account {
+  id: string;
+  bankCode: string;
+  bankName: string;
+  accountNumber: string;
+  balance: number;
+}
+
 export const AccountManage = () => {
   const [dataLoading, setdataLoading] = useState(false)
   const [isModalOpen, setisModalOpen] = useState(false)
-  const [accountList, setAccountList] = useState({})
+  const [accountList, setAccountList] = useState<Account[]>([])
 
   const handleClickAddAccount = () => {
     setisModalOpen(true)
   }
 
-  const requestAddAccount = async ({ id, signature }) => {
-    const AddAccount = await deleteAccount({ id, signature })
-    window.location.reload()
+  const requestDeleteAccount = async (id: string, signature: boolean) => {
+    const response = await deleteAccount({ id, signature })
+    if (response) {
+      window.location.reload()
+    }
   }
 
-  const handleClickDeleteAccount = (id) => {
+  const handleClickDeleteAccount = (id: string) => {
     const signature = confirm('삭제하시겠습니까?')
     if (signature) {
-      requestAddAccount({ id, signature })
+      requestDeleteAccount(id, signature)
     }
   }
 
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       try {
         setdataLoading(true)
         const data = await getUserAccounts()
         setAccountList(data.accounts)
       } catch (error) {
-        setdataLoading(false)
         console.error('Error fetching account list:', error)
       } finally {
         setdataLoading(false)
@@ -51,8 +60,8 @@ export const AccountManage = () => {
           <p>등록된 계좌</p>
           {!dataLoading ? (
             accountList.length > 0 ? (
-              accountList.map((account, index) => (
-                <AccountWrap key={index}>
+              accountList.map((account) => (
+                <AccountWrap key={account.id}>
                   <img src={`/assets/mypage/${account.bankCode}.svg`} alt="" />
                   <p>{account.bankName}</p>
                   <p>{account.accountNumber}</p>
@@ -65,13 +74,9 @@ export const AccountManage = () => {
                 </AccountWrap>
               ))
             ) : (
-              <>
-                <EmptyList>등록된 계좌가 없습니다.</EmptyList>
-              </>
+              <EmptyList>등록된 계좌가 없습니다.</EmptyList>
             )
-          ) : (
-            ''
-          )}
+          ) : null}
         </Inner>
         {dataLoading && <LoadingSpinner />}
         {!dataLoading && (
@@ -82,6 +87,9 @@ export const AccountManage = () => {
     </>
   )
 }
+
+
+
 const Wrap = styled.div`
   width: 100%;
   height: 100%;

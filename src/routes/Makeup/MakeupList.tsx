@@ -3,6 +3,13 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom'
 
 // 컴포넌트 Props 타입 정의
+interface Item {
+  id: number;
+  thumbnail: string;
+  title: string;
+  price: number;
+}
+
 interface Props {
   items: Item[];
 }
@@ -108,13 +115,13 @@ const MakeupList: React.FC<Props> = ({ items }) => {
     currentPage * itemsPerPage
   ); // 현재 페이지에 해당하는 상품 목록
 
-  const handleClickItem = (id) => {
+  const handleClickItem = (id: number) => {
     navigate('/ProductDetail', {
       state: {
         id,
       },
-    })
-  }
+    });
+  };
 
   const goToPreviousPage = () => {
     if (currentPage > 1) {
