@@ -6,59 +6,60 @@ import GlobalStyle from '../../styles/GlobalStyles'
 const PersonalColorTest = () => {
   const navigate = useNavigate();
   
-  const checkOne = (checkThis) => {
-    const checkboxes = document.getElementsByName('test1')
+  const checkOne = (checkThis: HTMLInputElement) => {
+    const checkboxes = document.getElementsByName('test1');
     for (let i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i] !== checkThis) {
-        checkboxes[i].checked = false
+        (checkboxes[i] as HTMLInputElement).checked = false;
       }
     }
-  }
+  };
 
-  const checkTwo = (checkThis) => {
-    const checkboxes = document.getElementsByName('test2')
+  const checkTwo = (checkThis: HTMLInputElement) => {
+    const checkboxes = document.getElementsByName('test2');
     for (let i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i] !== checkThis) {
-        checkboxes[i].checked = false
+        (checkboxes[i] as HTMLInputElement).checked = false;
       }
     }
-  }
-
-  const checkThree = (checkThis) => {
-    const checkboxes = document.getElementsByName('test3')
+  };
+  
+  const checkThree = (checkThis: HTMLInputElement) => {
+    const checkboxes = document.getElementsByName('test3');
     for (let i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i] !== checkThis) {
-        checkboxes[i].checked = false
+        (checkboxes[i] as HTMLInputElement).checked = false;
       }
     }
-  }
-
-  const checkFour = (checkThis) => {
-    const checkboxes = document.getElementsByName('test4')
+  };
+  
+  const checkFour = (checkThis: HTMLInputElement) => {
+    const checkboxes = document.getElementsByName('test4');
     for (let i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i] !== checkThis) {
-        checkboxes[i].checked = false
+        (checkboxes[i] as HTMLInputElement).checked = false;
       }
     }
-  }
-
-  const checkFive = (checkThis) => {
-    const checkboxes = document.getElementsByName('test5')
+  };
+  
+  const checkFive = (checkThis: HTMLInputElement) => {
+    const checkboxes = document.getElementsByName('test5');
     for (let i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i] !== checkThis) {
-        checkboxes[i].checked = false
+        (checkboxes[i] as HTMLInputElement).checked = false;
       }
     }
-  }
-
-  const checkSix = (checkThis) => {
-    const checkboxes = document.getElementsByName('test6')
+  };
+  
+  const checkSix = (checkThis: HTMLInputElement) => {
+    const checkboxes = document.getElementsByName('test6');
     for (let i = 0; i < checkboxes.length; i++) {
       if (checkboxes[i] !== checkThis) {
-        checkboxes[i].checked = false
+        (checkboxes[i] as HTMLInputElement).checked = false;
       }
     }
-  }
+  };
+  
 
 
   const Section = styled.div`

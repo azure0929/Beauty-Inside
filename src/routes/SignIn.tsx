@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import { useState, FormEvent, useEffect } from 'react'
+import React, { useState, FormEvent, useEffect } from 'react'
 import { signIn, authVerification } from '../apis/api'
 import { useNavigate } from 'react-router-dom'
-const { VITE_ADMIN_EMAIL } = import.meta.env
+process.env.VITE_ADMIN_EMAIL
 
-const SignInBox = styled.div`
+const SignInBox = styled.div<{ isValidEmail: boolean }>`
   font-family: 'Noto Sans KR';
   text-align: center;
   margin-top: 100px;
@@ -73,8 +73,8 @@ const SignIn = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isValidEmail, setIsValidEmail] = useState(false)
-  const [loggedIn, setLoggedIn] = useState(false)
-  const [displayName, setDisplayName] = useState('')
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [displayName, setDisplayName] = useState<string>('');
 
   const validateEmail = (input: string) => {
     // 이메일 유효성 검사
@@ -95,16 +95,18 @@ const SignIn = () => {
       const response = await signIn(email, password)
       if (response.accessToken) {
         localStorage.setItem('accessToken', response.accessToken)
-        if (email === VITE_ADMIN_EMAIL) {
+        if (email === process.env.VITE_ADMIN_EMAIL) {
           alert('관리자 로그인에 성공하였습니다.')
           location.href = 'https://euphonious-florentine-b285d0.netlify.app/'
         } else {
           alert('로그인에 성공하였습니다.')
-          setLoggedIn(true)
+          setLoggedIn(true); // 값을 업데이트함
+          setDisplayName(response.displayName); // 값을 업데이트함
           navigate('/')
           window.location.reload()
         }
         console.log()
+
       } else {
         alert('이메일이나 패스워드가 일치하지 않습니다.')
       }
@@ -112,9 +114,11 @@ const SignIn = () => {
       console.error('로그인에 실패하였습니다.', error)
       alert('로그인에 실패하였습니다.')
     }
+
   }
 
   useEffect(() => {
+
     const verifyToken = async () => {
       const accessToken = localStorage.getItem('accessToken')
       if (accessToken) {
@@ -137,10 +141,14 @@ const SignIn = () => {
           localStorage.removeItem('accessToken')
         }
       }
+
     }
 
     verifyToken()
-  }, [])
+    console.log('loggedIn:', loggedIn)
+    console.log('displayName:', displayName)
+  }, [displayName, loggedIn]);
+
 
   return (
     <SignInBox isValidEmail={isValidEmail}>

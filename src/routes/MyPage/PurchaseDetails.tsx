@@ -3,69 +3,78 @@ import { PageHeader } from '../../components/mypage/PageHeader'
 import { getPurchaseDetail } from '../../apis/api'
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { LoadingSpinner } from '../../components/common/LoadingSpinner'
+
+interface PurchaseDetail {
+  thumbnail?: string;
+  title?: string;
+  price?: number;
+  timePaid?: string;
+  bankName?: string;
+  accountNumber?: string;
+}
 
 export const PurchaseDetails = () => {
   const [dataLoading, setdataLoading] = useState(false)
-  const [purchaseDetails, setpurchaseDetails] = useState([])
-  const [purchaseProduct, setpurchaseProduct] = useState([])
-  const [purchaseAccount, setpurchaseAccount] = useState([])
+  const [purchaseDetails, setpurchaseDetails] = useState<PurchaseDetail[]>([])
+  const [purchaseProduct, setpurchaseProduct] = useState<PurchaseDetail>({});
+  const [purchaseAccount, setpurchaseAccount] = useState<PurchaseDetail[]>([])
 
   const location = useLocation()
   const id = location.state.id
 
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       try {
-        setdataLoading(true)
-        const data = await getPurchaseDetail(id)
-        setpurchaseDetails(data)
-        setpurchaseProduct(data.product)
-        setpurchaseAccount(data.account)
+        console.log(dataLoading); // dataLoading 값 확인
+        setdataLoading(true);
+        const data = await getPurchaseDetail(id);
+        setpurchaseDetails(data);
+        setpurchaseProduct(data.product);
+        setpurchaseAccount(data.account);
       } catch (error) {
-        setdataLoading(false)
-        console.error('Error fetching purchase list:', error)
+        setdataLoading(false);
+        console.error('Error fetching purchase list:', error);
       } finally {
-        setdataLoading(false)
+        setdataLoading(false);
       }
     })()
-  }, [])
+  }, [id, dataLoading]);
 
   return (
     <Wrap>
       <PageHeader title="구매 내역 상세 정보" />
       <Inner>
         <ImageBox>
-          <img src={purchaseProduct.thumbnail} alt="" />
+          <img src={purchaseProduct?.thumbnail || ''} alt="" />
         </ImageBox>
         <DataWrap className="product">
           <p>상품 정보</p>
           <Info>
             <span>분류</span>
-            <span className="info">{(purchaseProduct.title || '').split('-')[0]}</span>
+            <span className="info">{(purchaseProduct?.title || '').split('-')[0]}</span>
           </Info>
           <Info>
             <span>제품명/개수</span>
-            <span className="info">{(purchaseProduct.title || '').split('-')[1]} / 1개</span>
+            <span className="info">{(purchaseProduct?.title || '').split('-')[1]} / 1개</span>
           </Info>
           <Info>
             <span>가격</span>
-            <span className="info">{(purchaseProduct.price || '').toLocaleString('ko-KR')}원</span>
+            <span className="info">{(purchaseProduct?.price || '').toLocaleString('ko-KR')}원</span>
           </Info>
         </DataWrap>
         <DataWrap className="purchase">
           <p>거래 정보</p>
           <Info>
             <span>구매 일자</span>
-            <span className="info">{(purchaseDetails.timePaid || '').slice(0, 10)}</span>
+            <span className="info">{(purchaseDetails[0]?.timePaid || '').slice(0, 10)}</span>
           </Info>
           <Info>
             <span>거래 은행</span>
-            <span className="info">{purchaseAccount.bankName}</span>
+            <span className="info">{purchaseAccount[0]?.bankName}</span>
           </Info>
           <Info>
             <span>거래 계좌 번호</span>
-            <span className="info">{purchaseAccount.accountNumber}</span>
+            <span className="info">{purchaseAccount[0]?.accountNumber}</span>
           </Info>
         </DataWrap>
       </Inner>

@@ -6,33 +6,35 @@ import { useNavigate } from 'react-router-dom'
 import { getPurchaselist } from '../../apis/api'
 import { LoadingSpinner } from '../../components/common/LoadingSpinner'
 
+
 export const PurchaseList = () => {
   const navigate = useNavigate()
 
   const [curPage, setCurPage] = useState(1)
-  const [limitPage, setLimitPage] = useState(4) //한번에 보여질 개수
   const [dataLoading, setdataLoading] = useState(false)
   const [purchaseList, setpurchaseList] = useState([])
 
   //페이지 계산
+  const limitPage = 4
   const lastPage = curPage * limitPage
   const firstPage = lastPage - limitPage
-  const currentPages = (page) => {
-    let currentPages = 0
-    currentPages = page.slice(firstPage, lastPage)
-    return currentPages
-  }
+  const currentPages = (page: Array<{ product: { thumbnail: string; title: string; price: number; }, timePaid: string, detailId: string }>) => {
+    return page.slice(firstPage, lastPage);
+  };
+  
+  
+  
 
-  const handleClickMore = (id) => {
+  const handleClickMore = (id: string) => {
     navigate('/MyPage/PurchaseDetails', {
       state: {
         id,
       },
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       try {
         setdataLoading(true)
         const data = await getPurchaselist()

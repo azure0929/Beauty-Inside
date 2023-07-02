@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
-import InkLipquid from '../fonts/InkLipquid.woff'
+import InkLipquid from '../../src/fonts/InkLipquid.woff'
 
 const GlobalStyle = createGlobalStyle`
 

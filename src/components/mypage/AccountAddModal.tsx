@@ -2,13 +2,6 @@ import { styled } from 'styled-components'
 import { useState, useEffect } from 'react'
 import { getValidAccounts, addAccount } from '../../apis/api'
 
-interface Account {
-  bankCode: string // 연결할 은행 코드 (필수!)
-  accountNumber: string // 연결할 계좌번호 (필수!)
-  phoneNumber: string // 사용자 전화번호 (필수!)
-  signature: boolean // 사용자 서명 (필수!)
-}
-
 interface Bank {
   // 선택 가능한 은행 정보
   name: string // 은행 이름
@@ -16,6 +9,19 @@ interface Bank {
   digits: number[] // 은행 계좌 자릿수
   disabled: boolean // 사용자가 추가한 계좌 여부
 }
+
+interface AddAccountPayload {
+  bankCode: string;
+  accountNumber: string;
+  phoneNumber: string;
+  signature: boolean;
+}
+
+interface BankImageProps {
+  bank: string;
+}
+
+export const AccountAddModal = ({ setisModalOpen }: { setisModalOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
 
 export const AccountAddModal = ({
   setisModalOpen,
@@ -32,13 +38,12 @@ export const AccountAddModal = ({
     second: '',
     third: '',
     fourth: '',
-  })
+  } as Record<string, string>);
 
   const handleClickCancelButton = () => {
     setisModalOpen(false)
   }
-
-  const requestAddAccount = async (payload: Account) => {
+  const requestAddAccount = async (payload: AddAccountPayload) => {
     const AddAccount = await addAccount(payload)
     if (!AddAccount) {
       alert('이미 등록된 계좌 입니다.')
@@ -92,6 +97,7 @@ export const AccountAddModal = ({
     const { name, value } = e.target
     setbankInputs({ ...bankInputs, [name]: value })
   }
+  
 
   const handleClickBank = (code: string) => {
     setselectBank(code)
@@ -100,21 +106,24 @@ export const AccountAddModal = ({
   const handleOnInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
   }
+  
 
   const InputPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setphoneNumber(e.target.value)
   }
+  
+  
 
   const checkedAgreeChange = () => {
     setcheckedAgree(!checkedAgree)
   }
 
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       try {
         setdataLoading(true)
         const data = await getValidAccounts()
-        setvalidAccounts(data)
+        setValidAccounts(data)
       } catch (error) {
         setdataLoading(false)
         console.error('Error fetching valid account:', error)
@@ -148,6 +157,7 @@ export const AccountAddModal = ({
                     </BankItem>
                   ))}
                 </BankList>
+                
                 <InputList>
                   {validAccounts.map(
                     (account: Bank, index) =>
@@ -316,13 +326,13 @@ const BankItem = styled.div`
   align-items: center;
 `
 
-const BankImage = styled.div<{ bank: string }>`
+const BankImage = styled.div<BankImageProps>` // 'styled.div' 함수에 제네릭으로 인터페이스를 전달합니다.
   width: 48px;
   height: 48px;
   background-image: url(${(props) => props.bank});
   background-size: contain;
   cursor: pointer;
-`
+`;
 
 const BankName = styled.p`
   font-size: 10px;

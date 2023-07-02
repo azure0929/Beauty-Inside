@@ -1,16 +1,7 @@
 import { styled } from 'styled-components'
 
-export const ListPagination = ({
-  limitPage,
-  total,
-  paginate,
-  curpage,
-}: {
-  limitPage: number
-  total: number
-  paginate: (page: number) => void
-  curpage: number
-}) => {
+export const ListPagination = ({ limitPage, total, paginate, curpage }: { limitPage: number, total: number, paginate: (page: number) => void, curpage: number }) => {
+  
   const pageNumbers: number[] = []
 
   for (let i = 1; i <= Math.ceil(total / limitPage); i += 1) {

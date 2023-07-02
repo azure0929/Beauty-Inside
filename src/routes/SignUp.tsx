@@ -71,7 +71,7 @@ function Signup() {
   const [displayName, setDisplayName] = useState('')
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
       const response = await signUp(email, password, displayName)
@@ -109,9 +109,7 @@ function Signup() {
             onChange={(e) => setDisplayName(e.target.value)}
             placeholder="이름"
           />
-          <button type="submit" onClick={handleSignup}>
-            회원가입
-          </button>
+          <button type="submit">회원가입</button>
         </form>
       </Section>
     </div>
