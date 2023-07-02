@@ -1,5 +1,7 @@
 import axios from 'axios'
-const { VITE_API_KEY, VITE_USERNAME } = import.meta.env
+
+const { VITE_API_KEY, VITE_USERNAME }: { VITE_API_KEY: string, VITE_USERNAME: string } = import.meta.env;
+
 
 const headers = {
   'content-type': 'application/json',
@@ -11,6 +13,12 @@ const requestApi = axios.create({
   baseURL: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api',
   headers,
 })
+
+interface AccountPayload {
+  accountId: string;
+  signature: string;
+}
+
 
 // 사용자 : 회원가입
 export const signUp = async (email: string, password: string, displayName: string) => {
@@ -24,7 +32,7 @@ export const signUp = async (email: string, password: string, displayName: strin
   }
 }
 
-//사용자: 로그인
+// 사용자: 로그인
 export const signIn = async (email: string, password: string) => {
   try {
     const { data } = await requestApi.post('auth/login', { email, password })
@@ -36,7 +44,7 @@ export const signIn = async (email: string, password: string) => {
   }
 }
 
-//사용자: 로그아웃
+// 사용자: 로그아웃
 export const signOut = async () => {
   try {
     const { data } = await requestApi.post('auth/logout')
@@ -48,7 +56,7 @@ export const signOut = async () => {
   }
 }
 
-//사용자: 등록가능한 계좌 조회
+// 사용자: 등록가능한 계좌 조회
 export const getValidAccounts = async () => {
   try {
     const { data } = await requestApi.get('account/banks', {
@@ -65,7 +73,7 @@ export const getValidAccounts = async () => {
   }
 }
 
-//사용자: 계좌 목록 및 잔액 조회
+// 사용자: 계좌 목록 및 잔액 조회
 export const getUserAccounts = async () => {
   try {
     const { data } = await requestApi.get('account', {
@@ -82,8 +90,8 @@ export const getUserAccounts = async () => {
   }
 }
 
-//사용자: 계좌 연결
-export const addAccount = async (payload) => {
+// 사용자: 계좌 연결
+export const addAccount = async (payload: AccountPayload) => {
   try {
     const { data } = await requestApi.post('account', payload, {
       headers: {
@@ -99,8 +107,8 @@ export const addAccount = async (payload) => {
   }
 }
 
-//사용자: 계좌 삭제
-export const deleteAccount = async ({ id, signature }) => {
+// 사용자: 계좌 삭제
+export const deleteAccount = async ({ id, signature }: { id: string; signature: string }) => {
   try {
     const { data } = await requestApi.delete('account', {
       data: {
@@ -120,19 +128,19 @@ export const deleteAccount = async ({ id, signature }) => {
   }
 }
 
-//단일제품상세조회 // products/:productId
+// 단일제품상세조회 // products/:productId
 export const getProduct = async (id: string) => {
   try {
     const { data } = await requestApi.get('products/' + id)
     return data
   } catch (error) {
     console.warn(error)
-    console.warn('fail to load product')
+    console.warn('상품 로드 실패')
     return false
   }
 }
 
-//사용자: 인증 확인
+// 사용자: 인증 확인
 export const authVerification = async () => {
   try {
     const { data } = await requestApi.post(
@@ -153,8 +161,8 @@ export const authVerification = async () => {
   }
 }
 
-//사용자: 구매 신청
-export const requestBuy = async ({ productId, accountId }) => {
+// 사용자: 구매 신청
+export const requestBuy = async ({ productId, accountId }: { productId: string; accountId: string }) => {
   try {
     const { data } = await requestApi.post(
       'products/buy',
@@ -175,7 +183,7 @@ export const requestBuy = async ({ productId, accountId }) => {
   }
 }
 
-//사용자: 구매 내역 조회
+// 사용자: 구매 내역 조회
 export const getPurchaselist = async () => {
   try {
     const { data } = await requestApi.get('products/transactions/details', {
@@ -187,13 +195,13 @@ export const getPurchaselist = async () => {
     return data
   } catch (error) {
     console.warn(error)
-    console.warn('fail to load purchaselist')
+    console.warn('구매 내역 로드 실패')
     return false
   }
 }
 
-//사용자: 구매 내역 상세 조회
-export const getPurchaseDetail = async (id) => {
+// 사용자: 구매 내역 상세 조회
+export const getPurchaseDetail = async (id: string) => {
   try {
     const { data } = await requestApi.post(
       'products/transactions/detail',
@@ -208,19 +216,20 @@ export const getPurchaseDetail = async (id) => {
     return data
   } catch (error) {
     console.warn(error)
-    console.warn('fail to load purchasedetail')
+    console.warn('구매 내역 상세 로드 실패')
     return false
   }
 }
 
-//사용자 : 목록 조회
-export const getProductList = async ({ searchText, searchTags }) => {
+// 사용자 : 목록 조회
+export const getProductList = async ({ searchText, searchTags }: { searchText: string; searchTags: string[] }) => {
   try {
     const { data } = await requestApi.post('products/search', { searchText, searchTags })
     return data
   } catch (error) {
     console.warn(error)
-    console.warn('fail to load getProductList')
+    console.warn('상품 목록 로드 실패')
     return false
   }
 }
+
