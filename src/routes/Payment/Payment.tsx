@@ -39,12 +39,7 @@ export const Payment = () => {
   const [userInfo, setuserInfo] = useState<User>()
   const [userAccounts, setuserAccounts] = useState<Bank[]>([])
   const [accountId, setAccountId] = useState('')
-
-interface UserAccount {
-  id: string;
-  bankName: string;
-  accountNumber: string;
-}
+  const [productList, setproductList] = useState([])
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -86,43 +81,21 @@ interface UserAccount {
   const requestAllBuy = async () => {
     const products = productList.map((item: Product) => item.id)
 
-
     if (accountId === '' || accountId === '계좌 선택') {
-      alert('결제수단을 선택해주세요');
+      alert('결제수단을 선택해주세요')
     } else {
-      await Promise.all(
-        products.map((productId) => requestBuy({ productId, accountId }))
-      );      
-      navigate('/PaymentCompleted');
-      let locallist: string[] | null = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-      locallist = [];
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(locallist));
+      await Promise.all(products.map((productId) => requestBuy({ productId, accountId })))
+      navigate('/PaymentCompleted')
+      let locallist: string[] | null = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null')
+      locallist = []
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(locallist))
     }
-  };
+  }
 
   // 결제완료
   const handleClickPayment = () => {
-    requestAllBuy();
-  };
-
-  const location = useLocation();
-const list = location.state as Product[];
-
-useEffect(() => {
-  (async () => {
-    try {
-      const account = await getUserAccounts();
-      const data = await authVerification();
-      setUserInfo(data);
-      setUserAccounts(account.accounts);
-      if (Array.isArray(list)) {
-        setProductList(list);
-      }
-    } catch (error) {
-      console.error('Error fetching:', error);
-    }
-  })();
-}, [list]);
+    requestAllBuy()
+  }
 
   return (
     <>
@@ -163,7 +136,7 @@ useEffect(() => {
           <p className="inner-title">결제 수단</p>
           <Select onChange={(e) => handleChangeSelect(e)}>
             <option>계좌 선택</option>
-            {userAccounts.map((account: UserAccount, index: number) => (
+            {userAccounts.map((account: Bank, index: number) => (
               <option key={index} value={account.id}>
                 {account.bankName} {account.accountNumber}
               </option>
@@ -192,8 +165,8 @@ useEffect(() => {
         </PaymentButton>
       </PaymentWrap>
     </>
-  );
-};
+  )
+}
 
 const PaymentWrap = styled.div`
   width: 100%;
@@ -202,10 +175,10 @@ const PaymentWrap = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 152px;
-`;
+`
 const Title = styled.p`
   font-size: 26px;
-`;
+`
 const Inner = styled.div`
   width: 900px;
   display: flex;
@@ -228,18 +201,18 @@ const Inner = styled.div`
   &:nth-child(5) {
     border: none;
   }
-`;
+`
 const OrderItem = styled.div`
   width: 1100px;
   display: flex;
   gap: 20px;
-`;
+`
 const ImageBox = styled.div`
   img {
     width: 120px;
     height: 120px;
   }
-`;
+`
 
 const Info = styled.div`
   .item-title {
@@ -253,25 +226,25 @@ const Info = styled.div`
     font-size: 20px;
     margin-top: 20px;
   }
-`;
+`
 
 const Infowrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-`;
+`
 
 const InnerInfo = styled.div`
   display: flex;
   .info-label {
     width: 140px;
   }
-`;
+`
 
 const Select = styled.select`
   width: 340px;
   height: 46px;
-`;
+`
 
 const PaymentButton = styled.button`
   width: 305px;
@@ -281,4 +254,4 @@ const PaymentButton = styled.button`
   color: #fff;
   border-radius: 6px;
   margin-top: 120px;
-`;
+`

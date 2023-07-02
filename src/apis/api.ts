@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const { VITE_API_KEY, VITE_USERNAME }: { VITE_API_KEY: string, VITE_USERNAME: string } = import.meta.env;
-
+const { VITE_API_KEY, VITE_USERNAME }: { VITE_API_KEY: string; VITE_USERNAME: string } = import.meta
+  .env
 
 const headers = {
   'content-type': 'application/json',
@@ -13,12 +13,6 @@ const requestApi = axios.create({
   baseURL: 'https://asia-northeast3-heropy-api.cloudfunctions.net/api',
   headers,
 })
-
-interface AccountPayload {
-  accountId: string;
-  signature: string;
-}
-
 
 // 사용자 : 회원가입
 export const signUp = async (email: string, password: string, displayName: string) => {
@@ -91,7 +85,7 @@ export const getUserAccounts = async () => {
 }
 
 // 사용자: 계좌 연결
-export const addAccount = async (payload: AccountPayload) => {
+export const addAccount = async (payload: AddAccount) => {
   try {
     const { data } = await requestApi.post('account', payload, {
       headers: {
@@ -161,9 +155,14 @@ export const authVerification = async () => {
   }
 }
 
-
 // 사용자: 구매 신청
-export const requestBuy = async ({ productId, accountId }: { productId: string; accountId: string }) => {
+export const requestBuy = async ({
+  productId,
+  accountId,
+}: {
+  productId: string
+  accountId: string
+}) => {
   try {
     const { data } = await requestApi.post(
       'products/buy',
@@ -201,7 +200,6 @@ export const getPurchaselist = async () => {
   }
 }
 
-
 // 사용자: 구매 내역 상세 조회
 export const getPurchaseDetail = async (id: string) => {
   try {
@@ -223,9 +221,14 @@ export const getPurchaseDetail = async (id: string) => {
   }
 }
 
-
 // 사용자 : 목록 조회
-export const getProductList = async ({ searchText, searchTags }: { searchText: string; searchTags: string[] }) => {
+export const getProductList = async ({
+  searchText,
+  searchTags,
+}: {
+  searchText: string
+  searchTags: string[]
+}) => {
   try {
     const { data } = await requestApi.post('products/search', { searchText, searchTags })
     return data
@@ -236,4 +239,9 @@ export const getProductList = async ({ searchText, searchTags }: { searchText: s
   }
 }
 
-
+interface AddAccount {
+  bankCode: string // 연결할 은행 코드 (필수!)
+  accountNumber: string // 연결할 계좌번호 (필수!)
+  phoneNumber: string // 사용자 전화번호 (필수!)
+  signature: boolean // 사용자 서명 (필수!)
+}

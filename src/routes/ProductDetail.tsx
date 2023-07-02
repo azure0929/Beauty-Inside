@@ -94,12 +94,12 @@ const Button = styled.button`
 `
 
 interface ProductDetailType {
-  id?: number;
-  thumbnail?: string;
-  title?: string;
-  description?: string;
-  price?: number;
-  photo?: string;
+  id?: number
+  thumbnail?: string
+  title?: string
+  description?: string
+  price?: number
+  photo?: string
 }
 
 const ProductDetail = () => {
@@ -110,14 +110,10 @@ const ProductDetail = () => {
   const STORAGE_KEY = 'detail'
   let storage: ProductDetailType[] = []
 
-  const navigateToCartPurchase = () => {
-    navigate('/CartPurchase')
-  }
-
   const [productDetail, setProductDetail] = useState<ProductDetailType | null>(null)
 
   useEffect(() => {
-    (async () => {
+    ;(async () => {
       try {
         const data = await getProduct(id)
         setProductDetail(data)
@@ -171,7 +167,6 @@ const ProductDetail = () => {
               </div>
               <div className="link">
                 <Button onClick={() => navigateToCartProduct(productDetail)}>장바구니</Button>
-                <Button onClick={navigateToCartPurchase}>구매하기</Button>
               </div>
             </div>
           </div>
@@ -179,10 +174,7 @@ const ProductDetail = () => {
       </Section>
       <Section>
         <div className="inner">
-          <img
-            src={productDetail?.photo}
-            alt="Loading image"
-          />
+          <img src={productDetail?.photo} alt="Loading image" />
         </div>
       </Section>
     </div>
