@@ -3,11 +3,72 @@ import { useState, useEffect } from 'react'
 import { getValidAccounts, addAccount } from '../../apis/api'
 import { useNavigate } from 'react-router-dom'
 
-export const AccountAddModal = ({ setisModalOpen }) => {
+interface AddAccountPayload {
+  bankCode: string;
+  accountNumber: string;
+  phoneNumber: string;
+  signature: boolean;
+}
+
+interface BankImageProps {
+  bank: string;
+}
+
+
+
+
+
+export const AccountAddModal = ({ setisModalOpen }: { setisModalOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
+
   const navigate = useNavigate()
+  console.log(navigate);
 
   const [dataLoading, setdataLoading] = useState(false)
-  const [validAccounts, setvalidAccounts] = useState([])
+  const [validAccounts, setValidAccounts] = useState([
+    {
+      name: "KB국민은행",
+      code: "004",
+      digits: [3, 2, 4, 3],
+      disabled: false
+    },
+    {
+      name: "신한은행",
+      code: "088",
+      digits: [3, 3, 6],
+      disabled: true
+    },
+    {
+      name: "우리은행",
+      code: "020",
+      digits: [4, 3, 6],
+      disabled: true
+    },
+    {
+      name: "하나은행",
+      code: "081",
+      digits: [3, 6, 5],
+      disabled: false
+    },
+    {
+      name: "케이뱅크",
+      code: "089",
+      digits: [3, 3, 6],
+      disabled: false
+    },
+    {
+      name: "카카오뱅크",
+      code: "090",
+      digits: [4, 2, 7],
+      disabled: false
+    },
+    {
+      name: "NH농협은행",
+      code: "011",
+      digits: [3, 4, 4, 2],
+      disabled: false
+    }
+  ]);
+  
   const [selectBank, setselectBank] = useState('004')
   const [phoneNumber, setphoneNumber] = useState('')
   const [checkedAgree, setcheckedAgree] = useState(false)
@@ -16,13 +77,12 @@ export const AccountAddModal = ({ setisModalOpen }) => {
     second: '',
     third: '',
     fourth: '',
-  })
+  } as Record<string, string>);
 
   const handleClickCancelButton = () => {
     setisModalOpen(false)
   }
-
-  const requestAddAccount = async (payload) => {
+  const requestAddAccount = async (payload: AddAccountPayload) => {
     const AddAccount = await addAccount(payload)
     if (!AddAccount) {
       alert('이미 등록된 계좌 입니다.')
@@ -72,33 +132,37 @@ export const AccountAddModal = ({ setisModalOpen }) => {
     }
   }
 
-  const InputChange = (e) => {
+  const InputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setbankInputs({ ...bankInputs, [name]: value })
   }
+  
 
-  const handleClickBank = (code) => {
+  const handleClickBank = (code: string) => {
     setselectBank(code)
   }
 
-  const handleOnInput = (e) => {
+  const handleOnInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
   }
+  
 
-  const InputPhoneChange = (e) => {
+  const InputPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setphoneNumber(e.target.value)
   }
+  
+  
 
   const checkedAgreeChange = () => {
     setcheckedAgree(!checkedAgree)
   }
 
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       try {
         setdataLoading(true)
         const data = await getValidAccounts()
-        setvalidAccounts(data)
+        setValidAccounts(data)
       } catch (error) {
         setdataLoading(false)
         console.error('Error fetching valid account:', error)
@@ -132,6 +196,7 @@ export const AccountAddModal = ({ setisModalOpen }) => {
                     </BankItem>
                   ))}
                 </BankList>
+                
                 <InputList>
                   {validAccounts.map(
                     (account, index) =>
@@ -140,10 +205,10 @@ export const AccountAddModal = ({ setisModalOpen }) => {
                         <input
                           key={account.code + idx}
                           name={
-                            (idx === 0 && 'first') ||
+                            ((idx === 0 && 'first') ||
                             (idx === 1 && 'second') ||
                             (idx === 2 && 'third') ||
-                            (idx === 3 && 'fourth')
+                            (idx === 3 && 'fourth')) as string
                           }
                           maxLength={number}
                           type="text"
@@ -295,13 +360,13 @@ const BankItem = styled.div`
   align-items: center;
 `
 
-const BankImage = styled.div`
+const BankImage = styled.div<BankImageProps>` // 'styled.div' 함수에 제네릭으로 인터페이스를 전달합니다.
   width: 48px;
   height: 48px;
   background-image: url(${(props) => props.bank});
   background-size: contain;
   cursor: pointer;
-`
+`;
 
 const BankName = styled.p`
   font-size: 10px;
