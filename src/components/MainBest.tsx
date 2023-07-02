@@ -149,7 +149,7 @@ const MainBest = () => {
     },
   ]
 
-  const handleClickItem = (id) => {
+  const handleClickItem = (id: string) => {
     navigate('/ProductDetail', {
       state: {
         id,

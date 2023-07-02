@@ -1,6 +1,6 @@
 import GlobalStyle from '../styles/GlobalStyles'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Navigation } from 'swiper'
+import SwiperCore, { Autoplay, Navigation } from 'swiper'
 import SlideNextButton from './SlideNextButton'
 import SlidePrevButton from './SlidePrevButton'
 import styled from 'styled-components'
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 
 import 'swiper/css'
 import 'swiper/css/effect-fade'
+SwiperCore.use([Autoplay, Navigation])
 
 const CoolList = styled.div`
   margin-top: 180px;
@@ -150,7 +151,7 @@ const CoolProduct = () => {
     },
   ]
 
-  const handleClickItem = (id) => {
+  const handleClickItem = (id: string) => {
     navigate('/ProductDetail', {
       state: {
         id,

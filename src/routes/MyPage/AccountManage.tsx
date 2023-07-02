@@ -15,12 +15,12 @@ export const AccountManage = () => {
     setisModalOpen(true)
   }
 
-  const requestAddAccount = async ({ id, signature }) => {
-    const AddAccount = await deleteAccount({ id, signature })
+  const requestAddAccount = async ({ id, signature }: { id: string; signature: boolean }) => {
+    await deleteAccount({ id, signature })
     window.location.reload()
   }
 
-  const handleClickDeleteAccount = (id) => {
+  const handleClickDeleteAccount = (id: string) => {
     const signature = confirm('삭제하시겠습니까?')
     if (signature) {
       requestAddAccount({ id, signature })

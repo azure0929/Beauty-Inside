@@ -150,7 +150,7 @@ const WarmProduct = () => {
     },
   ]
 
-  const handleClickItem = (id) => {
+  const handleClickItem = (id: string) => {
     navigate('/ProductDetail', {
       state: {
         id,

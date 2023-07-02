@@ -83,7 +83,7 @@ export const getUserAccounts = async () => {
 }
 
 //사용자: 계좌 연결
-export const addAccount = async (payload) => {
+export const addAccount = async (payload: AddAccount) => {
   try {
     const { data } = await requestApi.post('account', payload, {
       headers: {
@@ -100,7 +100,7 @@ export const addAccount = async (payload) => {
 }
 
 //사용자: 계좌 삭제
-export const deleteAccount = async ({ id, signature }) => {
+export const deleteAccount = async ({ id, signature }: { id: string; signature: boolean }) => {
   try {
     const { data } = await requestApi.delete('account', {
       data: {
@@ -154,7 +154,13 @@ export const authVerification = async () => {
 }
 
 //사용자: 구매 신청
-export const requestBuy = async ({ productId, accountId }) => {
+export const requestBuy = async ({
+  productId,
+  accountId,
+}: {
+  productId: string
+  accountId: string
+}) => {
   try {
     const { data } = await requestApi.post(
       'products/buy',
@@ -193,7 +199,7 @@ export const getPurchaselist = async () => {
 }
 
 //사용자: 구매 내역 상세 조회
-export const getPurchaseDetail = async (id) => {
+export const getPurchaseDetail = async (id: string) => {
   try {
     const { data } = await requestApi.post(
       'products/transactions/detail',
@@ -214,7 +220,13 @@ export const getPurchaseDetail = async (id) => {
 }
 
 //사용자 : 목록 조회
-export const getProductList = async ({ searchText, searchTags }) => {
+export const getProductList = async ({
+  searchText,
+  searchTags,
+}: {
+  searchText: string
+  searchTags: string[]
+}) => {
   try {
     const { data } = await requestApi.post('products/search', { searchText, searchTags })
     return data
@@ -223,4 +235,11 @@ export const getProductList = async ({ searchText, searchTags }) => {
     console.warn('fail to load getProductList')
     return false
   }
+}
+
+interface AddAccount {
+  bankCode: string // 연결할 은행 코드 (필수!)
+  accountNumber: string // 연결할 계좌번호 (필수!)
+  phoneNumber: string // 사용자 전화번호 (필수!)
+  signature: boolean // 사용자 서명 (필수!)
 }
