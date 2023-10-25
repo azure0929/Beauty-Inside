@@ -3,11 +3,13 @@ import banner01 from '../../public/assets/main/banner/banner01.jpg'
 import banner02 from '../../public/assets/main/banner/banner02.jpg'
 import banner03 from '../../public/assets/main/banner/banner03.jpg'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { EffectFade, Autoplay, Navigation } from 'swiper/modules'
 import SlideNextButton from './SlideNextButton'
 import SlidePrevButton from './SlidePrevButton'
 import styled from 'styled-components'
 
 import 'swiper/css'
+import 'swiper/css/navigation'
 import 'swiper/css/effect-fade'
 
 const BannerList = styled.div`
@@ -44,7 +46,9 @@ const Banner = () => {
       <BannerList>
         <div className="inner">
           <Swiper
+            modules={[EffectFade, Autoplay, Navigation]}
             effect="fade"
+            autoplay={{ delay: 6000, disableOnInteraction: false }}
             loop={true}
             navigation={{
               nextEl: '.next-button',

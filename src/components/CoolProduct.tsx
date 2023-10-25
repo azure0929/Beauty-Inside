@@ -1,12 +1,13 @@
-import GlobalStyle from '../styles/GlobalStyles';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SlideNextButton from './SlideNextButton';
-import SlidePrevButton from './SlidePrevButton';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import GlobalStyle from '../styles/GlobalStyles'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, Navigation } from 'swiper/modules'
+import SlideNextButton from './SlideNextButton'
+import SlidePrevButton from './SlidePrevButton'
+import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
 
-import 'swiper/css';
-import 'swiper/css/navigation';
+import 'swiper/css'
+import 'swiper/css/navigation'
 
 const CoolList = styled.div`
   margin-top: 180px;
@@ -21,7 +22,7 @@ const CoolList = styled.div`
       font-weight: 500;
     }
   }
-`;
+`
 
 const Listitem = styled.div`
   margin-top: 40px;
@@ -62,7 +63,7 @@ const Listitem = styled.div`
       font-weight: 700;
     }
   }
-`;
+`
 
 const Prevbtn = styled.div`
   position: absolute;
@@ -70,7 +71,7 @@ const Prevbtn = styled.div`
   left: 0;
   transform: translateY(-50%);
   z-index: 9;
-`;
+`
 
 const Nextbtn = styled.div`
   position: absolute;
@@ -78,10 +79,10 @@ const Nextbtn = styled.div`
   right: 0;
   transform: translateY(-50%);
   z-index: 9;
-`;
+`
 
 const CoolProduct = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const Product = [
     {
@@ -91,6 +92,7 @@ const CoolProduct = () => {
       name: '멜로즈',
       price: '32,000',
     },
+
     {
       id: '4XrXRmzHQpuk0hWRspZO',
       src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw638bf00a/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Roman_Holliday_Sheer_GLBL_B_square_0607845029489.jpg?sw=856&sh=750&sm=fit',
@@ -98,6 +100,7 @@ const CoolProduct = () => {
       name: '로만 홀리데이',
       price: '40,000',
     },
+
     {
       id: 'VNcxrsNJGhNPiRTmqYfu',
       src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwe698e13a/hi-res/0607845053101.jpg?sw=856&sh=750&sm=fit',
@@ -105,6 +108,7 @@ const CoolProduct = () => {
       name: '카보 산 루카스',
       price: '30,000',
     },
+
     {
       id: 'HVUfcgBBKR2iVPEjci79',
       src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwf16c17e3/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Tolede_Satin_GLBL_B_square_0607845029137.jpg?sw=856&sh=750&sm=fit',
@@ -112,6 +116,7 @@ const CoolProduct = () => {
       name: '톨레도',
       price: '40,000',
     },
+
     {
       id: 'lMwtCFaYYlscqrXxSPZh',
       src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw2a7d68cf/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Red_Lizard_Matte_GLBL_B_square_0607845029632.jpg?sw=856&sh=750&sm=fit',
@@ -119,6 +124,7 @@ const CoolProduct = () => {
       name: '레드 리자드',
       price: '40,000',
     },
+
     {
       id: 'HSyGIMka7PkaKdsFVxM2',
       src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dw34453553/hi-res/NARS_FA19_Lipstick_Soldier_LPS_Impulse_Satin_GLBL_B_square_0607845029298.jpg?sw=856&sh=750&sm=fit',
@@ -134,22 +140,23 @@ const CoolProduct = () => {
       name: '트랜스 시베리안',
       price: '40,000',
     },
+
     {
       id: 'CvHwdrBls4NpkxmD93Px',
       src: 'https://www.narscosmetics.co.kr/dw/image/v2/BCSK_PRD/on/demandware.static/-/Sites-itemmaster_NARS/default/dwa5506e71/hi-res/0607845053446.jpg?sw=856&sh=750&sm=fit',
       category: '하드와이어드 아이섀도우',
       name: '피렌체',
       price: '32,000',
-    }
-  ];
+    },
+  ]
 
   const handleClickItem = (id: string) => {
     navigate('/ProductDetail', {
       state: {
         id,
       },
-    });
-  };
+    })
+  }
 
   return (
     <div>
@@ -158,7 +165,9 @@ const CoolProduct = () => {
         <div className="inner">
           <h1>추천 제품</h1>
           <Swiper
+            modules={[Autoplay, Navigation]}
             slidesPerView={4}
+            autoplay={{ delay: 6000, disableOnInteraction: false }}
             loop={true}
             navigation={{
               nextEl: '.next-button',
@@ -166,7 +175,7 @@ const CoolProduct = () => {
             }}
           >
             {Product.map((product) => (
-              <SwiperSlide key={product.id}>
+              <SwiperSlide>
                 <Listitem>
                   <div className="thumbnail">
                     <img
@@ -185,17 +194,17 @@ const CoolProduct = () => {
                 </Listitem>
               </SwiperSlide>
             ))}
+            <Prevbtn>
+              <SlidePrevButton />
+            </Prevbtn>
+            <Nextbtn>
+              <SlideNextButton />
+            </Nextbtn>
           </Swiper>
         </div>
-        <Prevbtn className="prev-button">
-          <SlidePrevButton />
-        </Prevbtn>
-        <Nextbtn className="next-button">
-          <SlideNextButton />
-        </Nextbtn>
       </CoolList>
     </div>
-  );
-};
+  )
+}
 
-export default CoolProduct;
+export default CoolProduct

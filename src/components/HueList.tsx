@@ -1,12 +1,13 @@
 import GlobalStyle from '../styles/GlobalStyles'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, Navigation } from 'swiper/modules'
 import SlideNextButton from './SlideNextButton'
 import SlidePrevButton from './SlidePrevButton'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 
 import 'swiper/css'
-import 'swiper/css/effect-fade'
+import 'swiper/css/navigation'
 
 const Hue = styled.div`
   margin-top: 180px;
@@ -235,7 +236,9 @@ const HueList = () => {
             </ul>
           </div>
           <Swiper
+            modules={[Autoplay, Navigation]}
             slidesPerView={4}
+            autoplay={{ delay: 6000, disableOnInteraction: false }}
             loop={true}
             navigation={{
               nextEl: '.next-button',
