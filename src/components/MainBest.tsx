@@ -1,6 +1,5 @@
 import GlobalStyle from '../styles/GlobalStyles'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Navigation } from 'swiper'
 import SlideNextButton from './SlideNextButton'
 import SlidePrevButton from './SlidePrevButton'
 import styled from 'styled-components'
@@ -164,12 +163,12 @@ const MainBest = () => {
         <div className="inner">
           <h1>BEST</h1>
           <Swiper
-            modules={[Autoplay, Navigation]}
             slidesPerView={4}
-            // onSlideChange={() => console.log('slide change')}
-            // onSwiper={(swiper) => console.log(swiper)}
-            autoplay={{ delay: 6000, disableOnInteraction: false }}
             loop={true}
+            navigation={{
+              nextEl: '.next-button',
+              prevEl: '.prev-button',
+            }}
           >
             {Product.map((product) => (
               <SwiperSlide key={product.id}>
