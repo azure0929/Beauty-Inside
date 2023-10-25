@@ -22,7 +22,7 @@
 
 ## 🔗 배포 링크
 
-[뷰티인사이드](https://beautyinside.netlify.app/)
+[뷰티인사이드](https://beauty-inside.netlify.app/)
 
 <br>
 
